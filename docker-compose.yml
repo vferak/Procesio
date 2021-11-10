@@ -1,0 +1,24 @@
+version: '3.4'
+services:
+  backend:
+    container_name: backend
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    volumes:
+      - ./backend:/var/www
+      - /var/www/vendor
+    ports:
+      - "8081:80"
+  frontend:
+    container_name: frontend
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - ./frontend:/var/www
+      - /var/www/node_modules
+    ports:
+      - "8080:8080"
