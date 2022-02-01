@@ -1,8 +1,8 @@
 <?php
 declare(strict_types=1);
 
-use App\Application\Settings\Settings;
-use App\Application\Settings\SettingsInterface;
+use Procesio\Application\Settings\Settings;
+use Procesio\Application\Settings\SettingsInterface;
 use DI\ContainerBuilder;
 use Monolog\Logger;
 
@@ -20,6 +20,8 @@ return function (ContainerBuilder $containerBuilder) {
                     'path' => isset($_ENV['docker']) ? 'php://stdout' : __DIR__ . '/../logs/app.log',
                     'level' => Logger::DEBUG,
                 ],
+                'jwt_secret' => 'superSecretPassphrase**8896',
+                'jwt_algorithm' => 'HS256'
             ]);
         }
     ]);

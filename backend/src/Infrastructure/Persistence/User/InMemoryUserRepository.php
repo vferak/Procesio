@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Persistence\User;
+namespace Procesio\Infrastructure\Persistence\User;
 
-use App\Domain\User\User;
-use App\Domain\User\UserNotFoundException;
-use App\Domain\User\UserRepository;
+use Procesio\Domain\User\User;
+use Procesio\Domain\User\UserNotFoundException;
+use Procesio\Domain\User\UserRepository;
 
 class InMemoryUserRepository implements UserRepository
 {
@@ -23,11 +23,11 @@ class InMemoryUserRepository implements UserRepository
     public function __construct(array $users = null)
     {
         $this->users = $users ?? [
-            1 => new User(1, 'bill.gates', 'Bill', 'Gates'),
-            2 => new User(2, 'steve.jobs', 'Steve', 'Jobs'),
-            3 => new User(3, 'mark.zuckerberg', 'Mark', 'Zuckerberg'),
-            4 => new User(4, 'evan.spiegel', 'Evan', 'Spiegel'),
-            5 => new User(5, 'jack.dorsey', 'Jack', 'Dorsey'),
+            1 => new User(1, 'bill.gates', 'asd', 'Bill', 'Gates'),
+            2 => new User(2, 'steve.jobs', 'asd', 'Steve', 'Jobs'),
+            3 => new User(3, 'mark.zuckerberg', 'asd', 'Mark', 'Zuckerberg'),
+            4 => new User(4, 'evan.spiegel', 'asd', 'Evan', 'Spiegel'),
+            5 => new User(5, 'jack.dorsey', 'asd', 'Jack', 'Dorsey'),
         ];
     }
 
@@ -49,5 +49,18 @@ class InMemoryUserRepository implements UserRepository
         }
 
         return $this->users[$id];
+    }
+
+    public function findUserByUsername(string $username): User
+    {
+        $users = array_filter($this->users, function ($user) use ($username) {
+            return $user->getUsername() === $username;
+        });
+
+        if (count($users) === 0) {
+            throw new UserNotFoundException();
+        }
+
+        return reset($users);
     }
 }

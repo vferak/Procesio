@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Handlers;
+namespace Procesio\Application\Handlers;
 
-use App\Application\Actions\ActionError;
-use App\Application\Actions\ActionPayload;
+use Procesio\Application\Actions\ActionError;
+use Procesio\Application\Actions\ActionPayload;
 use Exception;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Exception\HttpBadRequestException;

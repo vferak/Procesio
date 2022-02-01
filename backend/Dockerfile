@@ -38,6 +38,8 @@ RUN apt-get install -y libpng-dev \
 #php-ext sysvsem
 RUN docker-php-ext-install sysvsem
 
-COPY backend/composer.* ./
+#php-ext xdebug
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug
 
-RUN composer install
+USER www-data

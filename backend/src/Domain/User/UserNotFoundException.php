@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\User;
+namespace Procesio\Domain\User;
 
-use App\Domain\DomainException\DomainRecordNotFoundException;
+use Procesio\Domain\DomainException\DomainRecordNotFoundException;
 
 class UserNotFoundException extends DomainRecordNotFoundException
 {

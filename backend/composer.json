@@ -24,10 +24,12 @@
     "require": {
         "php": "^8.0",
         "ext-json": "*",
+        "firebase/php-jwt": "^6.0",
         "monolog/monolog": "^2.3",
         "php-di/php-di": "^6.3",
         "slim/psr7": "^1.5",
-        "slim/slim": "^4.9"
+        "slim/slim": "^4.9",
+        "tuupola/cors-middleware": "^1.2"
     },
     "require-dev": {
         "jangregor/phpstan-prophecy": "^0.8.1",
@@ -43,7 +45,7 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "Procesio\\": "src/"
         }
     },
     "autoload-dev": {
@@ -56,6 +58,10 @@
         "test": "phpunit",
         "analyse": "./vendor/bin/phpstan analyse",
         "cs": "./vendor/bin/phpcs",
-        "cbf": "./vendor/bin/phpcbf"
+        "cbf": "./vendor/bin/phpcbf",
+
+        "procesio-build": [
+            "composer install"
+        ]
     }
 }
