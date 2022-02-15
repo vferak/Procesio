@@ -1,5 +1,20 @@
 version: '3.4'
 services:
+  database:
+    container_name: database
+    image: mariadb:10.0.38
+    restart: always
+    volumes:
+      - type: bind
+        source: ./database
+        target: /var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: procesio
+    ports:
+      - "33306:3306"
   backend:
     container_name: backend
     build:
@@ -7,6 +22,8 @@ services:
       dockerfile: backend/Dockerfile
     volumes:
       - ./backend:/var/www
+    depends_on:
+      - database
     ports:
       - "8081:80"
   frontend:
@@ -18,5 +35,7 @@ services:
       - CHOKIDAR_USEPOLLING=true
     volumes:
       - ./frontend:/var/www
+    depends_on:
+      - backend
     ports:
       - "8080:8080"
