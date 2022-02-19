@@ -42,4 +42,12 @@ RUN docker-php-ext-install sysvsem
 RUN pecl install xdebug \
     && docker-php-ext-enable xdebug
 
+# mysqli
+RUN docker-php-ext-install \
+    mysqli \
+    pdo_mysql
+
+# mysql client for mysql commands
+RUN apt-get install -y default-mysql-client
+
 USER www-data

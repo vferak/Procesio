@@ -1,11 +1,13 @@
 <?php
 declare(strict_types=1);
 
+use Doctrine\ORM\EntityManager;
 use Procesio\Application\Settings\SettingsInterface;
 use DI\ContainerBuilder;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\UidProcessor;
+use Procesio\Infrastructure\Doctrine\EntityManagerFactory;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 
@@ -25,5 +27,10 @@ return function (ContainerBuilder $containerBuilder) {
 
             return $logger;
         },
+        EntityManager::class => function (ContainerInterface $c) {
+            /** @var EntityManagerFactory $entityManagerFactory */
+            $entityManagerFactory = $c->get(EntityManagerFactory::class);
+            return $entityManagerFactory->createEntityManager();
+        }
     ]);
 };

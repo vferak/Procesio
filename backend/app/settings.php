@@ -12,7 +12,7 @@ return function (ContainerBuilder $containerBuilder) {
     $containerBuilder->addDefinitions([
         SettingsInterface::class => function () {
             return new Settings([
-                'displayErrorDetails' => true, // Should be set to false in production
+                'development' => true, // Should be set to false in production
                 'logError'            => false,
                 'logErrorDetails'     => false,
                 'logger' => [
@@ -21,7 +21,15 @@ return function (ContainerBuilder $containerBuilder) {
                     'level' => Logger::DEBUG,
                 ],
                 'jwt_secret' => 'superSecretPassphrase**8896',
-                'jwt_algorithm' => 'HS256'
+                'jwt_algorithm' => 'HS256',
+                'database' => [
+                    'driver' => 'pdo_mysql',
+                    'user' => 'user',
+                    'password' => 'password',
+                    'dbname' => 'procesio',
+                    'host' => 'database',
+                    'port' => 3306
+                ]
             ]);
         }
     ]);
