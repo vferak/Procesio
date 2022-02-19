@@ -6,16 +6,25 @@ namespace Procesio\Domain\User;
 
 use JsonSerializable;
 
+/**
+ * @Entity
+ * @Table(name="users")
+ */
 class User implements JsonSerializable
 {
+    /** @Id @Column(type="integer", name="id") @GeneratedValue */
     private int $id;
 
+    /** @Column(type="string", name="username") */
     private string $username;
 
+    /** @Column(type="string", name="password") */
     private string $password;
 
+    /** @Column(type="string", name="firstName") */
     private string $firstName;
 
+    /** @Column(type="string", name="lastName") */
     private string $lastName;
 
     public function __construct(int $id, string $username, string $password, string $firstName, string $lastName)
