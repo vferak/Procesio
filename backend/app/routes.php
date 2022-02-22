@@ -27,6 +27,14 @@ return function (App $app) {
     $app->group('/v1', function (Group $group) {
         $group->post('/login', LoginAction::class);
         $group->post('/register', RegisterAction::class);
+
+        $group->group('/workspace',function (Group $group) {
+            //$group->get('/{id}', RegisterAction::class);
+            $group->post('/', RegisterAction::class);
+            //$group->put('/{id}', RegisterAction::class);
+            //$group->delete('/{id}', RegisterAction::class);
+        });
+
     });
 
     $app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function ($request, $response) {
