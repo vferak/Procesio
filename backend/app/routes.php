@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use Procesio\Application\Actions\Authentication\LoginAction;
 use Procesio\Application\Actions\User\ViewUserAction;
+use Procesio\Application\Actions\Workspace\CreateWorkspaceAction;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
@@ -30,7 +31,7 @@ return function (App $app) {
 
         $group->group('/workspace',function (Group $group) {
             //$group->get('/{id}', RegisterAction::class);
-            $group->post('/', RegisterAction::class);
+            $group->post('/', CreateWorkspaceAction::class);
             //$group->put('/{id}', RegisterAction::class);
             //$group->delete('/{id}', RegisterAction::class);
         });

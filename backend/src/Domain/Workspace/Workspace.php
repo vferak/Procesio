@@ -12,34 +12,29 @@ use Procesio\Domain\UuidDomainObjectTrait;
 class Workspace implements JsonSerializable
 {
     use UuidDomainObjectTrait;
-    //private string name;
 
-    /** @Column(type="string", name="email", unique=true) */
-    private string $email;
+    /** @Column(type="string", name="name") */
+    private string $name;
 
-    /** @Column(type="string", name="password") */
-    private string $password;
-
-    /** @Column(type="string", name="firstName") */
-    private string $firstName;
-
-    /** @Column(type="string", name="lastName") */
-    private string $lastName;
-
-    public function __construct(UserData $userData)
+    public function __construct(WorkspaceData $workspace)
     {
         $this->generateAndSetUuid();
 
-        $this->email = $userData->getEmail();
-        $this->password = $userData->getPassword();
+        $this->name = $workspace->getName();
+        //$this->password = $workspace->getPassword();
     }
 
     public function jsonSerialize(): array
     {
         return [
             'uuid' => $this->getUuid(),
-            'username' => $this->getEmail(),
-            'password' => $this->getPassword()
+            'name' => $this->getName(),
+            /*'password' => $this->getPassword()*/
         ];
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
     }
 }
