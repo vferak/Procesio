@@ -33,7 +33,7 @@ return function (App $app) {
         $group->group('/workspace',function (Group $group) {
             $group->get('/{id}', ViewWorkspaceAction::class);
             $group->post('/', CreateWorkspaceAction::class);
-            //$group->put('/{id}', RegisterAction::class);
+            $group->put('/{id}', RegisterAction::class);
             //$group->delete('/{id}', RegisterAction::class);
         });
 

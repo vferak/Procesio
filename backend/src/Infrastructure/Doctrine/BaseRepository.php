@@ -105,4 +105,20 @@ abstract class BaseRepository
             throw CouldNotPersistDomainObjectException::createFromDomainObjectClass($this->getDomainClass());
         }
     }
+
+    /**
+     * @return User|Workspace
+     * @throws \Procesio\Domain\Exceptions\CouldNotPersistDomainObjectException
+     */
+    /*protected function merge(object $object): object
+    {
+        try {
+
+            $this->entityManager->persist($object);
+            $this->entityManager->flush();
+            return $object;
+        } catch (ORMException) {
+            throw CouldNotPersistDomainObjectException::createFromDomainObjectClass($this->getDomainClass());
+        }
+    }*/
 }

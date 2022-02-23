@@ -23,4 +23,10 @@ class WorkspaceFacade
         return $this->workspaceRepository->persistWorkspace($workspace);
     }
 
+    /*public function updateWorkspace(WorkspaceData $workspace,object $dataDB): Workspace {
+        $dataDB = $workspace;
+
+        return $this->workspaceRepository->updateWorkspace($dataDB);
+    }*/
+
 }
