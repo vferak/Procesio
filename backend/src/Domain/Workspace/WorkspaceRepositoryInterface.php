@@ -9,7 +9,7 @@ interface WorkspaceRepositoryInterface
     /**
      * @throws \Procesio\Domain\Exceptions\DomainObjectNotFoundException
      */
-    //public function getUserByUuid(string $uuid): Workspace;
+    public function getWorkspaceByUuid(string $uuid): Workspace;
 
     /**
      * @throws \Procesio\Domain\Exceptions\DomainObjectNotFoundException

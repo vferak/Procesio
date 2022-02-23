@@ -13,9 +13,9 @@ class WorkspaceFacade
     ) {
     }
 
-    /*public function registerWorkspace(string $id): Workspace {
-        return $this->workspaceRepository->getUserByUuid($id);
-    }*/
+    public function getWorkspaceByUuid(string $id): Workspace {
+        return $this->workspaceRepository->getWorkspaceByUuid($id);
+    }
 
     public function registerWorkspace(WorkspaceData $workspace): Workspace {
         $workspace = new Workspace($workspace);
