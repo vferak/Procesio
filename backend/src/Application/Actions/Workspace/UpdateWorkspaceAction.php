@@ -28,7 +28,5 @@ class UpdateWorkspaceAction extends WorkspaceAction
 
         return $this->respondWithData(statusCode: 201);
 
-
-        //zavolat facade
     }
 }

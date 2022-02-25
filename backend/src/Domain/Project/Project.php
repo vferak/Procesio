@@ -2,30 +2,27 @@
 
 declare(strict_types=1);
 
-namespace Procesio\Domain\Package;
+namespace Procesio\Domain\Project;
 
 use JsonSerializable;
 use Procesio\Domain\UuidDomainObjectTrait;
 
 /**
  * @Entity
- * @Table(name="package")
+ * @Table(name="project")
  */
-class Package implements JsonSerializable
+class Project implements JsonSerializable
 {
     use UuidDomainObjectTrait;
 
     /** @Column(type="string", name="name") */
     private string $name;
 
-
-
-    public function __construct(PackageData $packageData)
+    public function __construct(ProjectData $projectData)
     {
         $this->generateAndSetUuid();
 
-        $this->name = $packageData->getName();
-        //$this->password = $userData->getPassword();
+        $this->name = $projectData->getName();
     }
 
     public function jsonSerialize(): array

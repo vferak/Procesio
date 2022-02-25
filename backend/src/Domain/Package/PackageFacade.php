@@ -2,29 +2,28 @@
 
 declare(strict_types=1);
 
-namespace Procesio\Domain\User;
+namespace Procesio\Domain\Package;
 
-use Procesio\Domain\Package\Package;
-use Procesio\Domain\Package\PackageData;
+use Procesio\Infrastructure\Doctrine\Repositories\PackageRepository;
 
 class PackageFacade
 {
     public function __construct(
-        private UserRepositoryInterface $userRepository
+        private PackageRepository $packageRepository
     ) {
     }
 
     public function getPackageByUuid(string $id): Package {
-        return $this->userRepository->getUserByUuid($id);
+        return $this->packageRepository->getPackageByUuid($id);
     }
 
-    /*public function getUserByEmail(string $email): Package {
-        return $this->userRepository->getUserByEmail($email);
+    /*public function getPackageByEmail(string $email): Package {
+        return $this->packageRepository->getPackageByName($email);
     }*/
 
-    public function createPackage(PackageData $packageData): Package {
-        $user = new Package($packageData);
+    public function createWorkspace(PackageData $packageData): Package {
+        $package = new Package($packageData);
 
-        return $this->userRepository->persistPackage($user);
+        return $this->packageRepository->persistPackage($package);
     }
 }

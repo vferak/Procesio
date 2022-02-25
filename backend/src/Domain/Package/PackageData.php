@@ -6,13 +6,11 @@ namespace Procesio\Domain\Package;
 
 class PackageData
 {
-    public function __construct(
-        private string $name
-    )
+    public function __construct(private string $name)
     {
     }
 
-    public function getEmail(): string
+    public function getName(): string
     {
         return $this->name;
     }

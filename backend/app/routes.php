@@ -2,6 +2,10 @@
 declare(strict_types=1);
 
 use Procesio\Application\Actions\Authentication\LoginAction;
+use Procesio\Application\Actions\Package\CreatePackageAction;
+use Procesio\Application\Actions\Package\ViewPackageAction;
+use Procesio\Application\Actions\Project\CreateProjectAction;
+use Procesio\Application\Actions\Project\ViewProjectAction;
 use Procesio\Application\Actions\User\ViewUserAction;
 use Procesio\Application\Actions\Workspace\CreateWorkspaceAction;
 use Procesio\Application\Actions\Workspace\ViewWorkspaceAction;
@@ -33,7 +37,21 @@ return function (App $app) {
         $group->group('/workspace',function (Group $group) {
             $group->get('/{id}', ViewWorkspaceAction::class);
             $group->post('/', CreateWorkspaceAction::class);
-            $group->put('/{id}', RegisterAction::class);
+            //$group->put('/{id}', RegisterAction::class);
+            //$group->delete('/{id}', RegisterAction::class);
+        });
+
+        $group->group('/package',function (Group $group) {
+            $group->get('/{id}', ViewPackageAction::class);
+            $group->post('/', CreatePackageAction::class);
+            //$group->put('/{id}', RegisterAction::class);
+            //$group->delete('/{id}', RegisterAction::class);
+        });
+
+        $group->group('/project',function (Group $group) {
+            $group->get('/{id}', ViewProjectAction::class);
+            $group->post('/', CreateProjectAction::class);
+            //$group->put('/{id}', RegisterAction::class);
             //$group->delete('/{id}', RegisterAction::class);
         });
 

@@ -9,6 +9,8 @@ use Doctrine\ORM\ORMException;
 use Doctrine\ORM\TransactionRequiredException;
 use Procesio\Domain\Exceptions\CouldNotPersistDomainObjectException;
 use Procesio\Domain\Exceptions\DomainObjectNotFoundException;
+use Procesio\Domain\Package\Package;
+use Procesio\Domain\Project\Project;
 use Procesio\Domain\User\User;
 use Procesio\Domain\Workspace\Workspace;
 
@@ -29,7 +31,7 @@ abstract class BaseRepository
     abstract protected function getDomainClass(): string;
 
     /**
-     * @return null|User|Workspace
+     * @return null|User|Workspace|Package|Project
      */
     protected function findByUuid(string $uuid): ?object
     {
@@ -37,7 +39,7 @@ abstract class BaseRepository
     }
 
     /**
-     * @return User|Workspace
+     * @return User|Workspace|Package|Project
      * @throws \Procesio\Domain\Exceptions\DomainObjectNotFoundException
      */
     protected function getByUuid(string $uuid): object
@@ -77,7 +79,7 @@ abstract class BaseRepository
     }
 
     /**
-     * @return User
+     * @return User|Package|Workspace|Project
      * @throws \Procesio\Domain\Exceptions\DomainObjectNotFoundException
      */
     protected function getById(string $uuid): object
@@ -92,7 +94,7 @@ abstract class BaseRepository
     }
 
     /**
-     * @return User
+     * @return User|Package|Workspace|Project
      * @throws \Procesio\Domain\Exceptions\CouldNotPersistDomainObjectException
      */
     protected function persist(object $object): object
@@ -107,7 +109,7 @@ abstract class BaseRepository
     }
 
     /**
-     * @return User|Workspace
+     * @return User|Workspace|Project|Package
      * @throws \Procesio\Domain\Exceptions\CouldNotPersistDomainObjectException
      */
     /*protected function merge(object $object): object
