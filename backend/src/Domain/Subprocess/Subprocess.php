@@ -18,6 +18,12 @@ class Subprocess implements JsonSerializable
     /** @Column(type="string", name="name") */
     private string $name;
 
+    /**
+     * @ManyToOne(targetEntity="Procesio\Domain\Subprocess\Subprocess")
+     * @JoinColumn(name="process_uuid", referencedColumnName="uuid")
+     */
+    private $process;
+
     public function __construct(SubprocessData $subprocessData)
     {
         $this->generateAndSetUuid();
