@@ -2,6 +2,7 @@
 
 namespace Procesio\Domain\Workspace;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use JsonSerializable;
 use Procesio\Domain\UuidDomainObjectTrait;
 
@@ -16,10 +17,10 @@ class Workspace implements JsonSerializable
     /** @Column(type="string", name="name") */
     private string $name;
 
+
     public function __construct(WorkspaceData $workspace)
     {
         $this->generateAndSetUuid();
-
         $this->name = $workspace->getName();
         //$this->password = $workspace->getPassword();
     }

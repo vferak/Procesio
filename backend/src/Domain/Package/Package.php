@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Procesio\Domain\Package;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use JsonSerializable;
 use Procesio\Domain\UuidDomainObjectTrait;
 
@@ -18,14 +19,11 @@ class Package implements JsonSerializable
     /** @Column(type="string", name="name") */
     private string $name;
 
-
-
     public function __construct(PackageData $packageData)
     {
         $this->generateAndSetUuid();
-
         $this->name = $packageData->getName();
-        //$this->password = $userData->getPassword();
+
     }
 
     public function jsonSerialize(): array

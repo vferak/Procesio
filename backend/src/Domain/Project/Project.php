@@ -6,6 +6,8 @@ namespace Procesio\Domain\Project;
 
 use JsonSerializable;
 use Procesio\Domain\UuidDomainObjectTrait;
+use Procesio\Domain\Workspace;
+
 
 /**
  * @Entity
@@ -17,6 +19,13 @@ class Project implements JsonSerializable
 
     /** @Column(type="string", name="name") */
     private string $name;
+
+    /**
+     * @ManyToOne(targetEntity="Procesio\Domain\Workspace\Workspace")
+     * @JoinColumn(name="workspace_uuid", referencedColumnName="uuid")
+     */
+    private $workspace;
+
 
     public function __construct(ProjectData $projectData)
     {

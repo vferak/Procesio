@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Procesio\Domain\Process;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use JsonSerializable;
 use Procesio\Domain\UuidDomainObjectTrait;
 
@@ -18,10 +19,11 @@ class Process implements JsonSerializable
     /** @Column(type="string", name="name") */
     private string $name;
 
+
+
     public function __construct(ProcessData $processData)
     {
         $this->generateAndSetUuid();
-
         $this->name = $processData->getName();
         //$this->password = $userData->getPassword();
     }
