@@ -17,12 +17,16 @@ class Workspace implements JsonSerializable
     /** @Column(type="string", name="name") */
     private string $name;
 
+    /** @Column(type="string", name="description") */
+    private string $description;
+
 
     public function __construct(WorkspaceData $workspace)
     {
         $this->generateAndSetUuid();
         $this->name = $workspace->getName();
-        //$this->password = $workspace->getPassword();
+        $this->description = $workspace->getDescription();
+
     }
 
     public function jsonSerialize(): array
@@ -30,7 +34,7 @@ class Workspace implements JsonSerializable
         return [
             'uuid' => $this->getUuid(),
             'name' => $this->getName(),
-            /*'password' => $this->getPassword()*/
+            'description' => $this->getDescription()
         ];
     }
 
@@ -45,5 +49,13 @@ class Workspace implements JsonSerializable
     public function setName(string $name): void
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
     }
 }

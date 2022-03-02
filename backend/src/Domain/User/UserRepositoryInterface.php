@@ -18,6 +18,13 @@ interface UserRepositoryInterface
 
     /**
      * @throws \Procesio\Domain\Exceptions\CouldNotPersistDomainObjectException
+     *  @return User[]
+     */
+    //IDK
+    public function getUsersByWorkspace(string $workspace): array;
+
+    /**
+     * @throws \Procesio\Domain\Exceptions\CouldNotPersistDomainObjectException
      */
     public function persistUser(User $user): User;
 }

@@ -19,6 +19,14 @@ class UserFacade
         return $this->userRepository->getUserByEmail($email);
     }
 
+    /**
+     * @return User[]
+     */
+    public function getUsersByWorkspace(string $workspace): array
+    {
+        return $this->userRepository->getUsersByWorkspace($workspace);
+    }
+
     public function registerUser(UserData $userData): User {
         $user = new User($userData);
 

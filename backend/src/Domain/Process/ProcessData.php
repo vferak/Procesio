@@ -6,7 +6,7 @@ namespace Procesio\Domain\Process;
 
 class ProcessData
 {
-    public function __construct(private string $name)
+    public function __construct(private string $name,private string $description)
     {
     }
 
@@ -15,8 +15,8 @@ class ProcessData
         return $this->name;
     }
 
-    /*public function getPassword(): string
+    public function getDescription(): string
     {
-        return $this->password;
-    }*/
+        return $this->description;
+    }
 }

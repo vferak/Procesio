@@ -6,7 +6,7 @@ namespace Procesio\Domain\Package;
 
 class PackageData
 {
-    public function __construct(private string $name)
+    public function __construct(private string $name,private string $description)
     {
     }
 
@@ -15,8 +15,8 @@ class PackageData
         return $this->name;
     }
 
-    /*public function getPassword(): string
+    public function getDescription(): string
     {
-        return $this->password;
-    }*/
+        return $this->description;
+    }
 }

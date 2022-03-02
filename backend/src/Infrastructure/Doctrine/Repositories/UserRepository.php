@@ -2,6 +2,7 @@
 
 namespace Procesio\Infrastructure\Doctrine\Repositories;
 
+use Doctrine\Common\Collections\Collection;
 use Procesio\Domain\User\User;
 use Procesio\Domain\User\UserRepositoryInterface;
 use Procesio\Infrastructure\Doctrine\BaseRepository;
@@ -39,5 +40,15 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     {
         $this->persist($user);
         return $user;
+    }
+
+    /**
+     * @return User[]
+     */
+    public function getUsersByWorkspace(string $workspace): array
+    {
+        $users = $this->getBy(['workspace_uuid'=>$workspace]);
+        return $users;
+
     }
 }

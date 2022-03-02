@@ -19,25 +19,52 @@ class Process implements JsonSerializable
     /** @Column(type="string", name="name") */
     private string $name;
 
+    /** @Column(type="string", name="description") */
+    private string $description;
+
+    /**
+     * Many Users have Many Groups.
+     * @ManyToMany(targetEntity="Procesio\Domain\Package\Package")
+     * @JoinTable(name="process_package",
+     *      joinColumns={@JoinColumn(name="process_uuid", referencedColumnName="uuid")},
+     *      inverseJoinColumns={@JoinColumn(name="package_uuid", referencedColumnName="uuid")}
+     *      )
+     */
+    private $packages;
+
+    /**
+     * @ManyToOne(targetEntity="Procesio\Domain\Process\Process")
+     * @JoinColumn(name="comes_from", referencedColumnName="uuid", nullable = true, unique=false)
+     */
+    private string $comesFrom;
 
 
     public function __construct(ProcessData $processData)
     {
         $this->generateAndSetUuid();
         $this->name = $processData->getName();
-        //$this->password = $userData->getPassword();
+        $this->description = $processData->getDescription();
     }
 
     public function jsonSerialize(): array
     {
         return [
             'uuid' => $this->getUuid(),
-            'name' => $this->getName()
+            'name' => $this->getName(),
+            'description' => $this->getDescription(),
         ];
     }
 
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
     }
 }

@@ -27,6 +27,16 @@ class User implements JsonSerializable
     /** @Column(type="string", name="lastName") */
     private string $lastName;
 
+    /**
+     * Many Users have Many Groups.
+     * @ManyToMany(targetEntity="Procesio\Domain\Workspace\Workspace")
+     * @JoinTable(name="user_workspace",
+     *      joinColumns={@JoinColumn(name="user_uuid", referencedColumnName="uuid")},
+     *      inverseJoinColumns={@JoinColumn(name="workspace_uuid", referencedColumnName="uuid")}
+     *      )
+     */
+    private $workspaces;
+
     public function __construct(UserData $userData)
     {
         $this->generateAndSetUuid();
@@ -40,7 +50,9 @@ class User implements JsonSerializable
         return [
             'uuid' => $this->getUuid(),
             'username' => $this->getEmail(),
-            'password' => $this->getPassword()
+            'password' => $this->getPassword(),
+            'firstName' => $this->getFirstName(),
+            'lastName' => $this->getLastName()
         ];
     }
 
@@ -52,5 +64,21 @@ class User implements JsonSerializable
     public function getPassword(): string
     {
         return $this->password;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFirstName(): string
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastName(): string
+    {
+        return $this->lastName;
     }
 }
