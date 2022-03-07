@@ -16,7 +16,6 @@
             <div class="mb-6">
               <div class="flex justify-between mb-2">
                 <label for="password" class="text-sm text-gray-600 dark:text-gray-400">Password</label>
-                <a href="#!" class="text-sm text-gray-400 focus:outline-none focus:text-indigo-500 hover:text-indigo-500 dark:hover:text-indigo-300">Forgot password?</a>
               </div>
               <input v-model="password" type="password" name="password" id="password" placeholder="Your password" required class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" />
             </div>
@@ -65,13 +64,13 @@ export default defineComponent({
       AuthRepository.authenticate(email.value, password.value)
         .then((response) => {
           localStorage.setItem('jwt', response.data.data.token)
+
+          store.dispatch('login')
+
+          router.push({
+            name: 'dashboard'
+          })
         })
-
-      store.commit('login')
-
-      router.push({
-        name: 'dashboard'
-      })
     }
 
     return { isModalOpened, closeModal, email, password, submitForm }

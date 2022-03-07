@@ -1,7 +1,7 @@
 <template>
   <div v-if="show" @click="close" class="fixed table z-50 top-0 left-0 w-full h-full bg-black bg-opacity-50">
     <div class="table-cell align-middle">
-      <div @click.stop class="w-1/2 mx-auto py-14 px-16 bg-white text-black text-center divide-y divide-gray-400">
+      <div @click.stop class="w-1/2 mx-auto py-14 px-16 bg-white text-black text-center">
         <div class="text-left mb-4">
           <slot name="header">
             <p>default header</p>
