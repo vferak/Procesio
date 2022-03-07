@@ -6,6 +6,7 @@ namespace Procesio\Application\Actions\Project;
 use DateTime;
 use Exception;
 use Procesio\Domain\Exceptions\DomainObjectNotFoundException;
+use Procesio\Domain\Project\Exceptions\CouldNotCreateProjectException;
 use Procesio\Domain\Project\ProjectData;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -28,7 +29,7 @@ class CreateProjectAction extends ProjectAction
 
         try {
             $createdAt = new DateTime($createdAt);
-        }catch (Exception $exception){
+        } catch (Exception $exception){
             return $this->respondWithData($exception->getMessage(), 400);
         }
 
@@ -36,13 +37,14 @@ class CreateProjectAction extends ProjectAction
             $user = $this->userFacade->getUserByUuid($createdBy);
             $package = $this->packageFacade->getPackageByUuid($package_uuid);
             $workspace = $this->workspaceFacade->getWorkspaceByUuid($workspace_uuid);
-        } catch (DomainObjectNotFoundException $exception){
+
+            $projectData = new ProjectData($name, $description, $user, $createdAt, $workspace, $package);
+            $this->projectFacade->createProject($projectData);
+        } catch (DomainObjectNotFoundException $exception) {
             return $this->respondWithData($exception->getMessage(), 404);
+        } catch (CouldNotCreateProjectException $exception) {
+            return $this->respondWithData($exception->getMessage(), 400);
         }
-
-        $projectData = new ProjectData($name, $description, $user, $createdAt, $workspace, $package);
-
-        $this->projectFacade->createProject($projectData);
 
         return $this->respondWithData(statusCode: 201);
 

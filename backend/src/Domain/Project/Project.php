@@ -6,6 +6,8 @@ namespace Procesio\Domain\Project;
 
 use DateTime;
 use JsonSerializable;
+use Procesio\Domain\Package\Package;
+use Procesio\Domain\Project\Exceptions\CouldNotCreateProjectException;
 use Procesio\Domain\User\User;
 use Procesio\Domain\UuidDomainObjectTrait;
 use Procesio\Domain\Workspace\Workspace;
@@ -49,6 +51,22 @@ class Project implements JsonSerializable
     public function __construct(ProjectData $projectData)
     {
         $this->generateAndSetUuid();
+
+        $invalidWorkspace = array_filter(
+            $projectData->getCreatedBy()->getWorkspaces(),
+            static function ($userWorkspace) use ($projectData) {
+                return $userWorkspace->getUuid() === $projectData->getWorkspace()->getUuid();
+            }
+        );
+
+        if (count($invalidWorkspace) === 0) {
+            throw CouldNotCreateProjectException::createForUserWithDifferentWorkspace($projectData->getCreatedBy());
+        }
+
+        if ($projectData->getPackage()->getWorkspace()->getUuid() !== $projectData->getWorkspace()->getUuid()) {
+            throw CouldNotCreateProjectException::createForPackageWithDifferentWorkspace($projectData->getPackage());
+        }
+
         $this->description = $projectData->getDescription();
         $this->name = $projectData->getName();
         $this->createdAt = $projectData->getCreatedAt();
@@ -70,53 +88,33 @@ class Project implements JsonSerializable
         ];
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * @return DateTime
-     */
     public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
     }
 
-    /**
-     * @return User
-     */
     public function getCreatedBy(): User
     {
         return $this->createdBy;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getWorkspace()
+    public function getWorkspace(): Workspace
     {
         return $this->workspace;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getPackage()
+    public function getPackage(): Package
     {
         return $this->package;
     }
-
-
 }

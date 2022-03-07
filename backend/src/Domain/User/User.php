@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Procesio\Domain\User;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use JsonSerializable;
 use Procesio\Application\Authentication\PasswordManager;
 use Procesio\Domain\Exceptions\DomainObjectNotFoundException;
 use Procesio\Domain\User\Exceptions\UserEmailAlreadyRegisteredException;
 use Procesio\Domain\UuidDomainObjectTrait;
+use Procesio\Domain\Workspace\Workspace;
 use Procesio\Infrastructure\Doctrine\Repositories\UserRepository;
 
 /**
@@ -33,13 +35,14 @@ class User implements JsonSerializable
 
     /**
      * Many Users have Many Groups.
-     * @ManyToMany(targetEntity="Procesio\Domain\Workspace\Workspace")
+     * @var ArrayCollection|Workspace[]
+     * @ManyToMany(targetEntity="Procesio\Domain\Workspace\Workspace", inversedBy="users")
      * @JoinTable(name="user_workspace",
      *      joinColumns={@JoinColumn(name="user_uuid", referencedColumnName="uuid")},
      *      inverseJoinColumns={@JoinColumn(name="workspace_uuid", referencedColumnName="uuid")}
      *      )
      */
-    private $workspaces;
+    private mixed $workspaces;
 
     public function __construct(
         UserData $userData,
@@ -56,6 +59,7 @@ class User implements JsonSerializable
 
         $this->email = $userData->getEmail();
         $this->password = $passwordManager->hashPassword($userData->getPassword());
+        $this->workspaces = new ArrayCollection();
     }
 
     public function jsonSerialize(): array
@@ -93,5 +97,18 @@ class User implements JsonSerializable
     public function getLastName(): string
     {
         return $this->lastName;
+    }
+
+    /**
+     * @return Workspace[]
+     */
+    public function getWorkspaces(): array {
+        return $this->workspaces->toArray();
+    }
+
+    public function addWorkspace(Workspace $workspace): self
+    {
+        $this->workspaces->add($workspace);
+        return $this;
     }
 }

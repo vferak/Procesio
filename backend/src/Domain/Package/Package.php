@@ -7,6 +7,7 @@ namespace Procesio\Domain\Package;
 use Doctrine\Common\Collections\ArrayCollection;
 use JsonSerializable;
 use Procesio\Domain\UuidDomainObjectTrait;
+use Procesio\Domain\Workspace\Workspace;
 
 /**
  * @Entity
@@ -26,13 +27,13 @@ class Package implements JsonSerializable
      * @ManyToOne(targetEntity="Procesio\Domain\Workspace\Workspace")
      * @JoinColumn(name="workspace_uuid", referencedColumnName="uuid")
      */
-    private $workspace;
+    private Workspace $workspace;
 
     /**
      * @ManyToOne(targetEntity="Procesio\Domain\Package\Package")
      * @JoinColumn(name="comes_from", referencedColumnName="uuid", nullable = true, unique=false)
      */
-    private string $comesFrom;
+    private Package $comesFrom;
 
     public function __construct(PackageData $packageData)
     {
@@ -55,11 +56,13 @@ class Package implements JsonSerializable
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getDescription(): string
     {
         return $this->description;
+    }
+
+    public function getWorkspace(): Workspace
+    {
+        return $this->workspace;
     }
 }

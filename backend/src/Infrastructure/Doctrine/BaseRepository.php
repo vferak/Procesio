@@ -111,6 +111,20 @@ abstract class BaseRepository
         }
     }
 
+    public function findAll(): array
+    {
+        return $this->entityRepository->findAll();
+    }
+
+    protected function delete(object $object)
+    {
+        try {
+            $this->entityManager->remove($object);
+        } catch (ORMException $e) {
+            throw CouldNotPersistDomainObjectException::createFromDomainObjectClass($this->getDomainClass());
+        }
+    }
+
     /**
      * @return User|Workspace|Project|Package|Process|Subprocess
      * @throws \Procesio\Domain\Exceptions\CouldNotPersistDomainObjectException

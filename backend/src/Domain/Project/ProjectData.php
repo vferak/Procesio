@@ -42,18 +42,12 @@ class ProjectData
         return $this->createdAt;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getPackage()
+    public function getPackage(): Package
     {
         return $this->package;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getWorkspace()
+    public function getWorkspace(): Workspace
     {
         return $this->workspace;
     }

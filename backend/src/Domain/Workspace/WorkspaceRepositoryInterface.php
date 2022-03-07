@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Procesio\Domain\Workspace;
 
-interface WorkspaceRepositoryInterface
+use Procesio\Domain\BaseRepositoryInterface;
+
+interface WorkspaceRepositoryInterface extends BaseRepositoryInterface
 {
     /**
      * @throws \Procesio\Domain\Exceptions\DomainObjectNotFoundException

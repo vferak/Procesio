@@ -2,9 +2,7 @@
 
 namespace Procesio\Infrastructure\Doctrine\Repositories;
 
-use phpDocumentor\Reflection\Types\This;
 use Procesio\Domain\User\User;
-use Procesio\Domain\User\UserRepositoryInterface;
 use Procesio\Domain\Workspace\Workspace;
 use Procesio\Domain\Workspace\WorkspaceRepositoryInterface;
 use Procesio\Infrastructure\Doctrine\BaseRepository;

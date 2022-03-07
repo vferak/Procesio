@@ -33,13 +33,13 @@ return function (App $app) {
         return $response;
     });
 
-    $app->group('/users', function (Group $group) {
-        $group->get('/{id}', ViewUserAction::class);
-    });
-
     $app->group('/v1', function (Group $group) {
         $group->post('/login', LoginAction::class);
         $group->post('/register', RegisterAction::class);
+
+        $group->group('/users', function (Group $group) {
+            $group->get('/{id}', ViewUserAction::class);
+        });
 
         $group->group('/workspace',function (Group $group) {
             $group->get('/{id}', ViewWorkspaceAction::class);

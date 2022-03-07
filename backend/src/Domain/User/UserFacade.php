@@ -32,9 +32,9 @@ class UserFacade
     /**
      * @return User[]
      */
-    public function getUsersByWorkspace(string $workspace): array
+    public function getUsersByWorkspace(User $user): array
     {
-        return $this->userRepository->getUsersByWorkspace($workspace);
+        return $user->getWorkspaces();
     }
 
     public function registerUser(UserData $userData): User

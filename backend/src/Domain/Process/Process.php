@@ -24,6 +24,7 @@ class Process implements JsonSerializable
 
     /**
      * Many Users have Many Groups.
+     * @var ArrayCollection|Package[]
      * @ManyToMany(targetEntity="Procesio\Domain\Package\Package")
      * @JoinTable(name="process_package",
      *      joinColumns={@JoinColumn(name="process_uuid", referencedColumnName="uuid")},
