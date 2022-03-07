@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Procesio\Application\Actions\Authentication;
 
-use Procesio\Application\Authentication\Exception\AuthenticationException;
 use Procesio\Domain\User\UserData;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -15,9 +14,14 @@ class RegisterAction extends AuthenticationAction
      */
     protected function action(): Response
     {
-        $body = $this->getFormData();
+        $body = $this->request->getParsedBody();
 
-        $userData = new UserData($body->email, $body->password);
+        $userData = new UserData(
+            $body['email'],
+            $body['password'],
+            $body['firstName'],
+            $body['lastName']
+        );
 
         $this->userFacade->registerUser($userData);
 

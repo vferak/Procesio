@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace Procesio\Domain\User;
 
 use JsonSerializable;
+use Procesio\Application\Authentication\PasswordManager;
+use Procesio\Domain\Exceptions\DomainObjectNotFoundException;
+use Procesio\Domain\User\Exceptions\UserEmailAlreadyRegisteredException;
 use Procesio\Domain\UuidDomainObjectTrait;
+use Procesio\Infrastructure\Doctrine\Repositories\UserRepository;
 
 /**
  * @Entity
@@ -37,12 +41,21 @@ class User implements JsonSerializable
      */
     private $workspaces;
 
-    public function __construct(UserData $userData)
-    {
+    public function __construct(
+        UserData $userData,
+        UserRepositoryInterface $userRepository,
+        PasswordManager $passwordManager
+    ) {
+        $passwordManager->validatePassword($userData->getPassword());
+
+        if ($userRepository->findUserByEmail($userData->getEmail()) !== null) {
+            throw UserEmailAlreadyRegisteredException::createFromEmail($userData->getEmail());
+        }
+
         $this->generateAndSetUuid();
 
         $this->email = $userData->getEmail();
-        $this->password = $userData->getPassword();
+        $this->password = $passwordManager->hashPassword($userData->getPassword());
     }
 
     public function jsonSerialize(): array

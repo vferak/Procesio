@@ -36,6 +36,14 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     /**
      * @inheritDoc
      */
+    public function findUserByEmail(string $email): ?array
+    {
+        return $this->findBy(['email' => $email]);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function persistUser(User $user): User
     {
         $this->persist($user);

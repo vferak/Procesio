@@ -17,6 +17,11 @@ interface UserRepositoryInterface
     public function getUserByEmail(string $email): User;
 
     /**
+     * @return ?User[]
+     */
+    public function findUserByEmail(string $email): ?array;
+
+    /**
      * @throws \Procesio\Domain\Exceptions\CouldNotPersistDomainObjectException
      *  @return User[]
      */

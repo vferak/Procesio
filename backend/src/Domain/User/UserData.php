@@ -10,9 +10,8 @@ class UserData
         private string $email,
         private string $password,
         private string $firstName,
-        private string $lastName,
-    )
-    {
+        private string $lastName
+    ) {
     }
 
     public function getEmail(): string
@@ -25,19 +24,13 @@ class UserData
         return $this->password;
     }
 
-    /**
-     * @return string
-     */
-    public function getLastName(): string
-    {
-        return $this->lastName;
-    }
-
-    /**
-     * @return string
-     */
     public function getFirstName(): string
     {
         return $this->firstName;
+    }
+
+    public function getLastName(): string
+    {
+        return $this->lastName;
     }
 }
