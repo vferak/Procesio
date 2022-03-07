@@ -36,4 +36,13 @@ class WorkspaceRepository extends BaseRepository implements WorkspaceRepositoryI
         return $workspace;
     }
 
+    /**
+     * @inheritDoc
+     */
+    /*public function updateWorkspace(Workspace $workspace): Workspace
+    {
+        $this->merge($workspace);
+        return $workspace;
+    }*/
+
 }

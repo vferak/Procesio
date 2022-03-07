@@ -9,6 +9,10 @@ use Doctrine\ORM\ORMException;
 use Doctrine\ORM\TransactionRequiredException;
 use Procesio\Domain\Exceptions\CouldNotPersistDomainObjectException;
 use Procesio\Domain\Exceptions\DomainObjectNotFoundException;
+use Procesio\Domain\Package\Package;
+use Procesio\Domain\Process\Process;
+use Procesio\Domain\Project\Project;
+use Procesio\Domain\Subprocess\Subprocess;
 use Procesio\Domain\User\User;
 use Procesio\Domain\Workspace\Workspace;
 
@@ -29,7 +33,7 @@ abstract class BaseRepository
     abstract protected function getDomainClass(): string;
 
     /**
-     * @return null|User|Workspace
+     * @return null|User|Workspace|Package|Project|Process|Subprocess
      */
     protected function findByUuid(string $uuid): ?object
     {
@@ -37,7 +41,7 @@ abstract class BaseRepository
     }
 
     /**
-     * @return User|Workspace
+     * @return User|Workspace|Package|Project|Process|Subprocess
      * @throws \Procesio\Domain\Exceptions\DomainObjectNotFoundException
      */
     protected function getByUuid(string $uuid): object
@@ -77,7 +81,7 @@ abstract class BaseRepository
     }
 
     /**
-     * @return User
+     * @return User|Package|Workspace|Project|Process|Subprocess
      * @throws \Procesio\Domain\Exceptions\DomainObjectNotFoundException
      */
     protected function getById(string $uuid): object
@@ -92,7 +96,7 @@ abstract class BaseRepository
     }
 
     /**
-     * @return User
+     * @return User|Package|Workspace|Project|Process|Subprocess
      * @throws \Procesio\Domain\Exceptions\CouldNotPersistDomainObjectException
      */
     protected function persist(object $object): object
@@ -105,4 +109,20 @@ abstract class BaseRepository
             throw CouldNotPersistDomainObjectException::createFromDomainObjectClass($this->getDomainClass());
         }
     }
+
+    /**
+     * @return User|Workspace|Project|Package|Process|Subprocess
+     * @throws \Procesio\Domain\Exceptions\CouldNotPersistDomainObjectException
+     */
+    /*protected function merge(object $object): object
+    {
+        try {
+
+            $this->entityManager->persist($object);
+            $this->entityManager->flush();
+            return $object;
+        } catch (ORMException) {
+            throw CouldNotPersistDomainObjectException::createFromDomainObjectClass($this->getDomainClass());
+        }
+    }*/
 }

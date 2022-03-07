@@ -1,6 +1,8 @@
 <?php
 
-namespace Procesio\Domain\Workspace;
+declare(strict_types=1);
+
+namespace Procesio\Domain\Package;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use JsonSerializable;
@@ -8,42 +10,32 @@ use Procesio\Domain\UuidDomainObjectTrait;
 
 /**
  * @Entity
- * @Table(name="workspace")
+ * @Table(name="package")
  */
-class Workspace implements JsonSerializable
+class Package implements JsonSerializable
 {
     use UuidDomainObjectTrait;
 
     /** @Column(type="string", name="name") */
     private string $name;
 
-
-    public function __construct(WorkspaceData $workspace)
+    public function __construct(PackageData $packageData)
     {
         $this->generateAndSetUuid();
-        $this->name = $workspace->getName();
-        //$this->password = $workspace->getPassword();
+        $this->name = $packageData->getName();
+
     }
 
     public function jsonSerialize(): array
     {
         return [
             'uuid' => $this->getUuid(),
-            'name' => $this->getName(),
-            /*'password' => $this->getPassword()*/
+            'name' => $this->getName()
         ];
     }
 
     public function getName(): string
     {
         return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
     }
 }
