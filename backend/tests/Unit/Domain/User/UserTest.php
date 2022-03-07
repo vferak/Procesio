@@ -1,62 +1,53 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Tests\Unit\Domain\User;
 
+use Procesio\Application\Authentication\Exception\InvalidPasswordException;
+use Procesio\Application\Authentication\PasswordManager;
+use PHPUnit\Framework\TestCase;
+use Procesio\Domain\User\Exceptions\UserEmailAlreadyRegisteredException;
 use Procesio\Domain\User\User;
-use Tests\TestCase;
+use Procesio\Domain\User\UserData;
+use Procesio\Domain\User\UserRepositoryInterface;
 
 class UserTest extends TestCase
 {
-    public function userProvider()
+    public function testConstruct(): void
     {
-        return [
-            [1, 'bill.gates', '123', 'Bill', 'Gates'],
-            [2, 'steve.jobs', '123', 'Steve', 'Jobs'],
-            [3, 'mark.zuckerberg', '123', 'Mark', 'Zuckerberg'],
-            [4, 'evan.spiegel', '123', 'Evan', 'Spiegel'],
-            [5, 'jack.dorsey', '123', 'Jack', 'Dorsey'],
-        ];
+        $userData = new UserData('test@test.cz', '123456a', 'Test', 'Testovič');
+        $userRepository = $this->createMock(UserRepositoryInterface::class);
+        $passwordManager = $this->createMock(PasswordManager::class);
+
+        $userRepository->method('findUserByEmail')->willReturn(null);
+
+        $user = new User($userData, $userRepository, $passwordManager);
+        $this->assertIsObject($user);
+        $this->assertSame(User::class, get_class($user));
     }
 
-    /**
-     * @dataProvider userProvider
-     * @param int    $id
-     * @param string $username
-     * @param string $firstName
-     * @param string $lastName
-     */
-    public function testGetters(int $id, string $username, string $password, string $firstName, string $lastName)
+    public function testConstructWithInvalidPassword(): void
     {
-        $user = new User($id, $username, $password, $firstName, $lastName);
+        $userData = new UserData('test@test.cz', '123456a', 'Test', 'Testovič');
+        $userRepository = $this->createMock(UserRepositoryInterface::class);
+        $passwordManager = $this->createMock(PasswordManager::class);
 
-        $this->assertEquals($id, $user->getId());
-        $this->assertEquals($username, $user->getUsername());
-        $this->assertEquals($password, $user->getPassword());
-        $this->assertEquals($firstName, $user->getFirstName());
-        $this->assertEquals($lastName, $user->getLastName());
+        $userRepository->method('findUserByEmail')->willReturn(null);
+        $passwordManager->method('validatePassword')
+            ->willThrowException(InvalidPasswordException::createForShortPassword());
+
+        $this->expectException(InvalidPasswordException::class);
+        new User($userData, $userRepository, $passwordManager);
     }
 
-    /**
-     * @dataProvider userProvider
-     * @param int    $id
-     * @param string $username
-     * @param string $firstName
-     * @param string $lastName
-     */
-    public function testJsonSerialize(int $id, string $username, string $password, string $firstName, string $lastName)
+    public function testConstructWithSameUser(): void
     {
-        $user = new User($id, $username, $password, $firstName, $lastName);
+        $userData = new UserData('test@test.cz', '123456a', 'Test', 'Testovič');
+        $userRepository = $this->createMock(UserRepositoryInterface::class);
+        $passwordManager = $this->createMock(PasswordManager::class);
 
-        $expectedPayload = json_encode([
-            'id' => $id,
-            'username' => $username,
-            'password' => $password,
-            'firstName' => $firstName,
-            'lastName' => $lastName,
-        ], JSON_THROW_ON_ERROR);
+        $userRepository->method('findUserByEmail')->willReturn([$this->createMock(User::class)]);
 
-        $this->assertEquals($expectedPayload, json_encode($user, JSON_THROW_ON_ERROR));
+        $this->expectException(UserEmailAlreadyRegisteredException::class);
+        new User($userData, $userRepository, $passwordManager);
     }
 }

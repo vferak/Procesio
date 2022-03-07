@@ -22,8 +22,7 @@ abstract class BaseRepository
 
     public function __construct(
         protected EntityManager $entityManager
-    )
-    {
+    ) {
         $this->entityRepository = $entityManager->getRepository($this->getDomainClass());
     }
 
@@ -57,11 +56,13 @@ abstract class BaseRepository
 
     /**
      * @param string[] $criteria
-     * @return User[]
+     * @return ?User[]
      */
-    protected function findBy(array $criteria): array
+    protected function findBy(array $criteria): ?array
     {
-        return $this->entityRepository->findBy($criteria);
+        $objects = $this->entityRepository->findBy($criteria);
+
+        return count($objects) === 0 ? null : $objects;
     }
 
     /**
@@ -73,7 +74,7 @@ abstract class BaseRepository
     {
         $objects = $this->findBy($criteria);
 
-        if (count($objects) === 0) {
+        if ($objects === null) {
             throw DomainObjectNotFoundException::createFromDomainObjectClass($this->getDomainClass());
         }
 

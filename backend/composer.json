@@ -65,6 +65,7 @@
     "scripts": {
         "serve": "php -S localhost:8080 -t public public/index.php",
         "test": "phpunit",
+        "test-coverage": "phpunit --coverage-text",
         "analyse": "./vendor/bin/phpstan analyse",
         "cs": "./vendor/bin/phpcs",
         "cbf": "./vendor/bin/phpcbf",

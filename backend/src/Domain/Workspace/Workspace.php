@@ -26,7 +26,6 @@ class Workspace implements JsonSerializable
         $this->generateAndSetUuid();
         $this->name = $workspace->getName();
         $this->description = $workspace->getDescription();
-
     }
 
     public function jsonSerialize(): array
