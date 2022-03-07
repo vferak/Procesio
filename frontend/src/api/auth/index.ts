@@ -1,8 +1,8 @@
 import Api from '@/api'
 
 const AuthRepository = {
-  authenticate (username: string, password: string) {
-    return Api.post('/login', { username: username, password: password })
+  authenticate (email: string, password: string) {
+    return Api.post('/login', { email: email, password: password })
   }
 }
 

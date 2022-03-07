@@ -14,13 +14,13 @@ class LoginAction extends AuthenticationAction
      */
     protected function action(): Response
     {
-        $body = $this->getFormData();
+        $request = $this->request->getParsedBody();
 
-        $username = $body->username;
-        $password = $body->password;
+        $email = $request['email'];
+        $password = $request['password'];
 
         try {
-            $token = $this->authenticator->authenticateUser($username, $password);
+            $token = $this->authenticator->authenticateUser($email, $password);
             $response = $this->respondWithData(['token' => $token]);
         } catch (AuthenticationException) {
             $response = $this->respondWithData('Failure', 403);

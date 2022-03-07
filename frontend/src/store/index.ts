@@ -40,6 +40,9 @@ export const store = createStore<State>({
     }
   },
   actions: {
+    login (context) {
+      context.commit('login')
+    }
   },
   modules: {
   }
