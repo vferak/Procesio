@@ -10,6 +10,7 @@ use Doctrine\ORM\TransactionRequiredException;
 use Procesio\Domain\Exceptions\CouldNotPersistDomainObjectException;
 use Procesio\Domain\Exceptions\DomainObjectNotFoundException;
 use Procesio\Domain\User\User;
+use Procesio\Domain\Workspace\Workspace;
 
 abstract class BaseRepository
 {
@@ -28,7 +29,7 @@ abstract class BaseRepository
     abstract protected function getDomainClass(): string;
 
     /**
-     * @return null|User
+     * @return null|User|Workspace
      */
     protected function findByUuid(string $uuid): ?object
     {
@@ -36,7 +37,7 @@ abstract class BaseRepository
     }
 
     /**
-     * @return User
+     * @return User|Workspace
      * @throws \Procesio\Domain\Exceptions\DomainObjectNotFoundException
      */
     protected function getByUuid(string $uuid): object
