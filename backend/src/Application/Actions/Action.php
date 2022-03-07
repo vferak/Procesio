@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Procesio\Application\Actions;
 
-use Procesio\Domain\DomainException\DomainRecordNotFoundException;
+use Procesio\Domain\Exceptions\DomainObjectNotFoundException;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Log\LoggerInterface;
@@ -51,32 +51,17 @@ abstract class Action
 
         try {
             return $this->action();
-        } catch (DomainRecordNotFoundException $e) {
+        } catch (DomainObjectNotFoundException $e) {
             throw new HttpNotFoundException($this->request, $e->getMessage());
         }
     }
 
     /**
      * @return Response
-     * @throws DomainRecordNotFoundException
+     * @throws DomainObjectNotFoundException
      * @throws HttpBadRequestException
      */
     abstract protected function action(): Response;
-
-    /**
-     * @return array|object
-     * @throws HttpBadRequestException
-     */
-    protected function getFormData()
-    {
-        $input = json_decode(file_get_contents('php://input'));
-
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new HttpBadRequestException($this->request, 'Malformed JSON input.');
-        }
-
-        return $input;
-    }
 
     /**
      * @param  string $name

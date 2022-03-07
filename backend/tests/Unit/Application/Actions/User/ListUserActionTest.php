@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Application\Actions\User;
 
 use Procesio\Application\Actions\ActionPayload;
-use Procesio\Domain\User\UserRepository;
+use Procesio\Domain\User\UserRepositoryInterface;
 use Procesio\Domain\User\User;
 use DI\Container;
 use Tests\TestCase;
@@ -21,13 +21,13 @@ class ListUserActionTest extends TestCase
 
         $user = new User(1, 'bill.gates', '123', 'Bill', 'Gates');
 
-        $userRepositoryProphecy = $this->prophesize(UserRepository::class);
+        $userRepositoryProphecy = $this->prophesize(UserRepositoryInterface::class);
         $userRepositoryProphecy
             ->findAll()
             ->willReturn([$user])
             ->shouldBeCalledOnce();
 
-        $container->set(UserRepository::class, $userRepositoryProphecy->reveal());
+        $container->set(UserRepositoryInterface::class, $userRepositoryProphecy->reveal());
 
         $request = $this->createRequest('GET', '/users');
         $response = $app->handle($request);

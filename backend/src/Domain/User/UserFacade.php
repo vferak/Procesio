@@ -7,21 +7,21 @@ namespace Procesio\Domain\User;
 class UserFacade
 {
     public function __construct(
-        private UserRepository $userRepository
+        private UserRepositoryInterface $userRepository
     ) {
     }
 
-    /**
-     * @throws UserNotFoundException
-     */
-    public function findUserOfId(int $id): User {
-        return $this->userRepository->findUserOfId($id);
+    public function getUserByUuid(string $id): User {
+        return $this->userRepository->getUserByUuid($id);
     }
 
-    /**
-     * @throws UserNotFoundException
-     */
-    public function findUserByUsername(string $username): User {
-        return $this->userRepository->findUserByUsername($username);
+    public function getUserByEmail(string $email): User {
+        return $this->userRepository->getUserByEmail($email);
+    }
+
+    public function registerUser(UserData $userData): User {
+        $user = new User($userData);
+
+        return $this->userRepository->persistUser($user);
     }
 }

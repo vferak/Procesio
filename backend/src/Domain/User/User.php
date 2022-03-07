@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Procesio\Domain\User;
 
 use JsonSerializable;
+use Procesio\Domain\UuidDomainObjectTrait;
 
 /**
  * @Entity
@@ -12,11 +13,10 @@ use JsonSerializable;
  */
 class User implements JsonSerializable
 {
-    /** @Id @Column(type="integer", name="id") @GeneratedValue */
-    private int $id;
+    use UuidDomainObjectTrait;
 
-    /** @Column(type="string", name="username") */
-    private string $username;
+    /** @Column(type="string", name="email", unique=true) */
+    private string $email;
 
     /** @Column(type="string", name="password") */
     private string $password;
@@ -27,48 +27,30 @@ class User implements JsonSerializable
     /** @Column(type="string", name="lastName") */
     private string $lastName;
 
-    public function __construct(int $id, string $username, string $password, string $firstName, string $lastName)
+    public function __construct(UserData $userData)
     {
-        $this->id = $id;
-        $this->username = strtolower($username);
-        $this->password = $password;
-        $this->firstName = ucfirst($firstName);
-        $this->lastName = ucfirst($lastName);
+        $this->generateAndSetUuid();
+
+        $this->email = $userData->getEmail();
+        $this->password = $userData->getPassword();
     }
 
     public function jsonSerialize(): array
     {
         return [
-            'id' => $this->id,
-            'username' => $this->username,
-            'password' => $this->password,
-            'firstName' => $this->firstName,
-            'lastName' => $this->lastName,
+            'uuid' => $this->getUuid(),
+            'username' => $this->getEmail(),
+            'password' => $this->getPassword()
         ];
     }
 
-    public function getId(): int
+    public function getEmail(): string
     {
-        return $this->id;
-    }
-
-    public function getUsername(): string
-    {
-        return $this->username;
+        return $this->email;
     }
 
     public function getPassword(): string
     {
         return $this->password;
-    }
-
-    public function getFirstName(): string
-    {
-        return $this->firstName;
-    }
-
-    public function getLastName(): string
-    {
-        return $this->lastName;
     }
 }

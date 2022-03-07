@@ -4,9 +4,9 @@ namespace Procesio\Application\Authentication;
 
 use Procesio\Application\Authentication\Exception\AuthenticationException;
 use Procesio\Application\Settings\SettingsInterface;
+use Procesio\Domain\Exceptions\DomainObjectNotFoundException;
 use Procesio\Domain\User\User;
 use Procesio\Domain\User\UserFacade;
-use Procesio\Domain\User\UserNotFoundException;
 use DateTime;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -30,8 +30,8 @@ class Authenticator
      */
     public function authenticateUser(string $username, string $requestPassword): string {
         try {
-            $user = $this->userFacade->findUserByUsername($username);
-        } catch (UserNotFoundException) {
+            $user = $this->userFacade->getUserByEmail($username);
+        } catch (DomainObjectNotFoundException) {
             throw new AuthenticationException();
         }
 
@@ -55,8 +55,8 @@ class Authenticator
 
     private function generateJwtPayloadForUser(User $user): array {
         return [
-            'uid' => $user->getId(),
-            'username' => $user->getUsername(),
+            'uid' => $user->getUuid(),
+            'username' => $user->getEmail(),
             'exp' => (new DateTime())->modify('+ 1 hour')->getTimestamp()
         ];
     }

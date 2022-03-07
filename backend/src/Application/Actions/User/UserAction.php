@@ -5,25 +5,16 @@ declare(strict_types=1);
 namespace Procesio\Application\Actions\User;
 
 use Procesio\Application\Actions\Action;
-use Procesio\Domain\User\UserRepository;
+use Procesio\Domain\User\UserFacade;
+use Procesio\Domain\User\UserRepositoryInterface;
 use Psr\Log\LoggerInterface;
 
 abstract class UserAction extends Action
 {
-    /**
-     * @var UserRepository
-     */
-    protected $userRepository;
-
-    /**
-     * @param LoggerInterface $logger
-     * @param UserRepository $userRepository
-     */
     public function __construct(
         LoggerInterface $logger,
-        UserRepository $userRepository
+        protected UserFacade $userFacade
     ) {
         parent::__construct($logger);
-        $this->userRepository = $userRepository;
     }
 }

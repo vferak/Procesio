@@ -2,7 +2,6 @@
 declare(strict_types=1);
 
 use Procesio\Application\Actions\Authentication\LoginAction;
-use Procesio\Application\Actions\User\ListUsersAction;
 use Procesio\Application\Actions\User\ViewUserAction;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -22,12 +21,12 @@ return function (App $app) {
     });
 
     $app->group('/users', function (Group $group) {
-        $group->get('', ListUsersAction::class);
         $group->get('/{id}', ViewUserAction::class);
     });
 
     $app->group('/v1', function (Group $group) {
         $group->post('/login', LoginAction::class);
+        $group->post('/register', RegisterAction::class);
     });
 
     $app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function ($request, $response) {
