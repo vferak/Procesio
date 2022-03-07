@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+use Procesio\Domain\Package\PackageRepositoryInterface;
+use Procesio\Domain\Project\ProjectRepositoryInterface;
 use Procesio\Domain\User\UserRepositoryInterface;
 use DI\ContainerBuilder;
 use Procesio\Infrastructure\Doctrine\Repositories\UserRepository;

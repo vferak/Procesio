@@ -6,7 +6,7 @@ namespace Procesio\Domain\Package;
 
 class PackageData
 {
-    public function __construct(private string $name,private string $description)
+    public function __construct(private string $name, private string $description)
     {
     }
 

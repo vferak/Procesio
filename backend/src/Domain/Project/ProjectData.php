@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Procesio\Domain\Project;
 
 use DateTime;
+use Procesio\Domain\Package\Package;
 use Procesio\Domain\User\User;
+use Procesio\Domain\Workspace\Workspace;
 
 class ProjectData
 {
@@ -14,8 +16,8 @@ class ProjectData
         private string $description,
         private User $createdBy,
         private DateTime $createdAt,
-        private $workspace,
-        private $package,
+        private Workspace $workspace,
+        private Package $package,
     )
     {
     }

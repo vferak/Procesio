@@ -19,8 +19,8 @@ class CreateWorkspaceAction extends WorkspaceAction
         $request = $this->request->getParsedBody();
 
         $name = $request['name'];
-        //$password = $request['password'];
-        $workspaceData = new WorkspaceData($name);
+        $description = $request['description'];
+        $workspaceData = new WorkspaceData($name,$description);
 
         $this->workspaceFacade->registerWorkspace($workspaceData);
 

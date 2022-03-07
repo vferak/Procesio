@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace Procesio\Domain\Workspace;
 
-use Procesio\Infrastructure\Doctrine\Repositories\WorkspaceRepository;
+
+use Doctrine\ORM\EntityManager;
+use Procesio\Domain\Package\PackageRepositoryInterface;
+use Procesio\Domain\Project\ProjectRepositoryInterface;
+use Procesio\Domain\User\User;
 
 class WorkspaceFacade
 {
@@ -23,10 +27,11 @@ class WorkspaceFacade
         return $this->workspaceRepository->persistWorkspace($workspace);
     }
 
-    /*public function updateWorkspace(WorkspaceData $workspace,object $dataDB): Workspace {
-        $dataDB = $workspace;
-
-        return $this->workspaceRepository->updateWorkspace($dataDB);
-    }*/
+    public function addUserToWorkspace(Workspace $workspace, User $user): Workspace
+    {
+        $workspace = $workspace->addUserToWorkspace($user);
+        return $this->workspaceRepository->persistWorkspace($workspace);
+//        $this->entityManager->flush();
+    }
 
 }

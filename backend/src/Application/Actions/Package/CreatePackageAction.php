@@ -14,12 +14,11 @@ class CreatePackageAction extends PackageAction
 
     protected function action(): Response
     {
-        //prijmou data z requestu a poslat do facade nic se zde s nima nedela
         $request = $this->request->getParsedBody();
 
         $name = $request['name'];
-        //$password = $request['password'];
-        $packageData = new PackageData($name);
+        $description = $request['description'];
+        $packageData = new PackageData($name,$description);
 
         $this->packageFacade->createWorkspace($packageData);
 

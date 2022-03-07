@@ -24,6 +24,11 @@ class UserFacade
         return $this->userRepository->getUserByEmail($email);
     }
 
+    public function findAllUsers(): array
+    {
+        return $this->userRepository->findAll();
+    }
+
     /**
      * @return User[]
      */
