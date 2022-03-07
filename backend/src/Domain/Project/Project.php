@@ -8,8 +8,8 @@ use DateTime;
 use JsonSerializable;
 use Procesio\Domain\User\User;
 use Procesio\Domain\UuidDomainObjectTrait;
-use Procesio\Domain\Workspace;
-use Procesio\Domain\Package;
+use Procesio\Domain\Package\Package;
+use Procesio\Domain\Workspace\Workspace;
 
 
 /**
@@ -29,20 +29,23 @@ class Project implements JsonSerializable
     /** @Column(type="datetime", name="created_at") */
     private DateTime $createdAt;
 
-    /** @Column(type="string", name="created_by") */
+    /**
+     * @ManyToOne(targetEntity="Procesio\Domain\User\User")
+     * @JoinColumn(name="created_by", referencedColumnName="uuid")
+     */
     private User $createdBy;
 
     /**
      * @ManyToOne(targetEntity="Procesio\Domain\Workspace\Workspace")
      * @JoinColumn(name="workspace_uuid", referencedColumnName="uuid")
      */
-    private $workspace;
+    private Workspace $workspace;
 
     /**
      * @ManyToOne(targetEntity="Procesio\Domain\Package\Package")
      * @JoinColumn(name="package_uuid", referencedColumnName="uuid")
      */
-    private $package;
+    private Package $package;
 
     public function __construct(ProjectData $projectData)
     {
@@ -51,7 +54,8 @@ class Project implements JsonSerializable
         $this->name = $projectData->getName();
         $this->createdAt = $projectData->getCreatedAt();
         $this->createdBy = $projectData->getCreatedBy();
-        $this->createdBy = $projectData->getCreatedBy();
+        $this->workspace = $projectData->getWorkspace();
+        $this->package = $projectData->getPackage();
     }
 
     public function jsonSerialize(): array

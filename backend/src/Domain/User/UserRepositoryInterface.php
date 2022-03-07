@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Procesio\Domain\User;
 
-interface UserRepositoryInterface
+use Procesio\Domain\BaseRepositoryInterface;
+
+interface UserRepositoryInterface extends BaseRepositoryInterface
 {
     /**
      * @throws \Procesio\Domain\Exceptions\DomainObjectNotFoundException
@@ -20,13 +22,6 @@ interface UserRepositoryInterface
      * @return ?User[]
      */
     public function findUserByEmail(string $email): ?array;
-
-    /**
-     * @throws \Procesio\Domain\Exceptions\CouldNotPersistDomainObjectException
-     *  @return User[]
-     */
-    //IDK
-    public function getUsersByWorkspace(string $workspace): array;
 
     /**
      * @throws \Procesio\Domain\Exceptions\CouldNotPersistDomainObjectException

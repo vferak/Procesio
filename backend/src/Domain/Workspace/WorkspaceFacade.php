@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Procesio\Domain\Workspace;
 
-use Procesio\Infrastructure\Doctrine\Repositories\WorkspaceRepository;
 
 class WorkspaceFacade
 {

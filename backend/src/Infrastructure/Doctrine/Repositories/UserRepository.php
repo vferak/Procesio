@@ -49,14 +49,4 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         $this->persist($user);
         return $user;
     }
-
-    /**
-     * @return User[]
-     */
-    public function getUsersByWorkspace(string $workspace): array
-    {
-        $users = $this->getBy(['workspace_uuid'=>$workspace]);
-        return $users;
-
-    }
 }
