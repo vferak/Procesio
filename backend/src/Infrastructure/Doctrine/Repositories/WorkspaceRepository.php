@@ -39,10 +39,10 @@ class WorkspaceRepository extends BaseRepository implements WorkspaceRepositoryI
     /**
      * @inheritDoc
      */
-    /*public function updateWorkspace(Workspace $workspace): Workspace
+    public function deleteWorkspace(Workspace $workspace): void
     {
-        $this->merge($workspace);
-        return $workspace;
-    }*/
+        $this->delete($workspace);
+    }
+
 
 }

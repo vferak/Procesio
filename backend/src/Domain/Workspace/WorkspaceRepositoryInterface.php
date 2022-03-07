@@ -14,8 +14,11 @@ interface WorkspaceRepositoryInterface
     /**
      * @throws \Procesio\Domain\Exceptions\DomainObjectNotFoundException
      */
-    //public function getUserByEmail(string $email): Workspace;
 
+    /**
+     * @throws \Procesio\Domain\Exceptions\CouldNotDeleteDomainObjectException
+     */
+    public function deleteWorkspace(Workspace $workspace): void;
     /**
      * @throws \Procesio\Domain\Exceptions\CouldNotPersistDomainObjectException
      */

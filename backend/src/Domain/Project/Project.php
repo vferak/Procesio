@@ -8,7 +8,6 @@ use DateTime;
 use JsonSerializable;
 use Procesio\Domain\User\User;
 use Procesio\Domain\UuidDomainObjectTrait;
-use Procesio\Domain\Package\Package;
 use Procesio\Domain\Workspace\Workspace;
 
 

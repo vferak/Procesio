@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use Procesio\Application\Actions\Authentication\LoginAction;
+use Procesio\Application\Actions\Authentication\RegisterAction;
 use Procesio\Application\Actions\Package\CreatePackageAction;
 use Procesio\Application\Actions\Package\ViewPackageAction;
 use Procesio\Application\Actions\Process\CreateProcessAction;
@@ -11,7 +12,9 @@ use Procesio\Application\Actions\Project\ViewProjectAction;
 use Procesio\Application\Actions\Subprocess\CreateSubprocessAction;
 use Procesio\Application\Actions\Subprocess\ViewSubprocessAction;
 use Procesio\Application\Actions\User\ViewUserAction;
+use Procesio\Application\Actions\Workspace\AddUserToWorkspaceAction;
 use Procesio\Application\Actions\Workspace\CreateWorkspaceAction;
+use Procesio\Application\Actions\Workspace\DeleteWorkspaceAction;
 use Procesio\Application\Actions\Workspace\ViewWorkspaceAction;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -41,8 +44,9 @@ return function (App $app) {
         $group->group('/workspace',function (Group $group) {
             $group->get('/{id}', ViewWorkspaceAction::class);
             $group->post('/', CreateWorkspaceAction::class);
+            $group->post('/addUserToWorkspace', AddUserToWorkspaceAction::class);
             //$group->put('/{id}', RegisterAction::class);
-            //$group->delete('/{id}', RegisterAction::class);
+            $group->delete('/{id}', DeleteWorkspaceAction::class);
         });
 
         $group->group('/package',function (Group $group) {
