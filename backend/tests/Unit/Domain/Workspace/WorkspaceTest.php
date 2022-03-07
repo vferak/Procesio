@@ -121,15 +121,13 @@ class WorkspaceTest extends TestCase
         $workspaceData = new WorkspaceData("skupina_1", "testovací skupina");
         $workspace = new Workspace($workspaceData);
 
-        for ($i = 0; $i <= 3; $i++) {
-            $user = $this->createMock(User::class);
-            $user->method("getUuid")->willReturn((string)$i);
-            $workspace->addUser($user);
-        }
+        $user = $this->createMock(User::class);
+        $user->method("getUuid")->willReturn("a");
+        $user->method("getWorkspaces")->willReturn([[],[],[],[],[]]);
 
+        $workspace->addUser($user);
         $user = $this->createMock(User::class);
         $user->method("getUuid")->willReturn("awdwad");
-        $workspace->addUser($user);
         $this->expectException(CouldNotAddUserException::class);
 
         $workspace->addUserToWorkspace($user);
