@@ -5,11 +5,13 @@ namespace Tests\Unit\Application\Authentication;
 use Procesio\Application\Authentication\Authenticator;
 use PHPUnit\Framework\TestCase;
 use Procesio\Application\Authentication\Exception\AuthenticationException;
+use Procesio\Application\Authentication\PasswordManager;
 use Procesio\Application\Settings\Settings;
 use Procesio\Domain\Exceptions\DomainObjectNotFoundException;
 use Procesio\Domain\User\User;
 use Procesio\Domain\User\UserData;
 use Procesio\Domain\User\UserFacade;
+use Procesio\Infrastructure\Doctrine\Repositories\UserRepository;
 
 class AuthenticatorTest extends TestCase
 {
@@ -27,15 +29,24 @@ class AuthenticatorTest extends TestCase
             $userFacade = $this->createMock(UserFacade::class);
         }
 
-        return new Authenticator($this->createSettings(), $userFacade);
+        return new Authenticator($this->createSettings(), $userFacade, new PasswordManager());
     }
 
+    private function createDummyUser(string $username, string $password): User
+    {
+        return new User(
+            new UserData($username, $password, 'asd', 'asd'),
+            $this->createMock(UserRepository::class),
+            new PasswordManager()
+        );
+    }
+    
     public function testAuthenticateUser(): void
     {
         $username = 'vferak@gmail.com';
-        $password = '123456';
+        $password = '123456a';
 
-        $user = new User(new UserData($username, $password, 'asd', 'asd'));
+        $user = $this->createDummyUser($username, $password);
 
         $userFacade = $this->createMock(UserFacade::class);
         $userFacade->method('getUserByEmail')->willReturn($user);
@@ -64,10 +75,9 @@ class AuthenticatorTest extends TestCase
     public function testAuthenticateUserPasswordDoesNotMatch(): void
     {
         $username = 'vferak@gmail.com';
-        $password = '123456';
+        $password = '123456a';
 
-        $userData = new UserData($username, $password, 'asd', 'asd');
-        $user = new User($userData);
+        $user = $this->createDummyUser($username, $password);
 
         $userFacade = $this->createMock(UserFacade::class);
         $userFacade->method('getUserByEmail')->willReturn($user);
