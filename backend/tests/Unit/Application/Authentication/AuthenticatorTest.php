@@ -23,15 +23,6 @@ class AuthenticatorTest extends TestCase
         ]);
     }
 
-    private function createAuthenticator(UserFacade $userFacade = null): Authenticator
-    {
-        if ($userFacade === null) {
-            $userFacade = $this->createMock(UserFacade::class);
-        }
-
-        return new Authenticator($this->createSettings(), $userFacade, new PasswordManager());
-    }
-
     private function createDummyUser(string $username, string $password): User
     {
         return new User(
@@ -40,7 +31,7 @@ class AuthenticatorTest extends TestCase
             new PasswordManager()
         );
     }
-    
+
     public function testAuthenticateUser(): void
     {
         $username = 'vferak@gmail.com';
@@ -50,8 +41,13 @@ class AuthenticatorTest extends TestCase
 
         $userFacade = $this->createMock(UserFacade::class);
         $userFacade->method('getUserByEmail')->willReturn($user);
+        $userFacade->expects($this->once())->method('getUserByEmail');
 
-        $authenticator = $this->createAuthenticator($userFacade);
+        $passwordManager = $this->createMock(PasswordManager::class);
+        $passwordManager->method('isPasswordValidForUser')->willReturn(true);
+        $passwordManager->expects($this->once())->method('isPasswordValidForUser');
+
+        $authenticator = new Authenticator($this->createSettings(), $userFacade, $passwordManager);
 
         $token = $authenticator->authenticateUser($username, $password);
 
@@ -63,8 +59,12 @@ class AuthenticatorTest extends TestCase
         $userFacade = $this->createMock(UserFacade::class);
         $userFacade->method('getUserByEmail')
             ->willThrowException(DomainObjectNotFoundException::createFromDomainObjectClass(User::class));
+        $userFacade->expects($this->once())->method('getUserByEmail');
 
-        $authenticator = $this->createAuthenticator($userFacade);
+        $passwordManager = $this->createMock(PasswordManager::class);
+        $passwordManager->expects($this->never())->method('isPasswordValidForUser');
+
+        $authenticator = new Authenticator($this->createSettings(), $userFacade, $passwordManager);
 
         $this->expectException(AuthenticationException::class);
         $token = $authenticator->authenticateUser('vferak@gmail.com', '123456');
@@ -82,7 +82,10 @@ class AuthenticatorTest extends TestCase
         $userFacade = $this->createMock(UserFacade::class);
         $userFacade->method('getUserByEmail')->willReturn($user);
 
-        $authenticator = $this->createAuthenticator($userFacade);
+        $passwordManager = $this->createMock(PasswordManager::class);
+        $passwordManager->expects($this->once())->method('isPasswordValidForUser');
+
+        $authenticator = new Authenticator($this->createSettings(), $userFacade, $passwordManager);
 
         $this->expectException(AuthenticationException::class);
         $token = $authenticator->authenticateUser($username, '123');

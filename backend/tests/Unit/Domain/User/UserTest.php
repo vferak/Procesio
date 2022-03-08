@@ -16,9 +16,11 @@ class UserTest extends TestCase
     {
         $userData = new UserData('test@test.cz', '123456a', 'Test', 'Testovič');
         $userRepository = $this->createMock(UserRepositoryInterface::class);
-        $passwordManager = $this->createMock(PasswordManager::class);
-
         $userRepository->method('findUserByEmail')->willReturn(null);
+        $userRepository->expects($this->once())->method('findUserByEmail');
+
+        $passwordManager = $this->createMock(PasswordManager::class);
+        $passwordManager->expects($this->once())->method('validatePassword');
 
         $user = new User($userData, $userRepository, $passwordManager);
         $this->assertIsObject($user);
@@ -29,11 +31,12 @@ class UserTest extends TestCase
     {
         $userData = new UserData('test@test.cz', '123456a', 'Test', 'Testovič');
         $userRepository = $this->createMock(UserRepositoryInterface::class);
-        $passwordManager = $this->createMock(PasswordManager::class);
+        $userRepository->expects($this->never())->method('findUserByEmail');
 
-        $userRepository->method('findUserByEmail')->willReturn(null);
+        $passwordManager = $this->createMock(PasswordManager::class);
         $passwordManager->method('validatePassword')
             ->willThrowException(InvalidPasswordException::createForShortPassword());
+        $passwordManager->expects($this->once())->method('validatePassword');
 
         $this->expectException(InvalidPasswordException::class);
         new User($userData, $userRepository, $passwordManager);
@@ -43,9 +46,11 @@ class UserTest extends TestCase
     {
         $userData = new UserData('test@test.cz', '123456a', 'Test', 'Testovič');
         $userRepository = $this->createMock(UserRepositoryInterface::class);
-        $passwordManager = $this->createMock(PasswordManager::class);
-
         $userRepository->method('findUserByEmail')->willReturn([$this->createMock(User::class)]);
+        $userRepository->expects($this->once())->method('findUserByEmail');
+
+        $passwordManager = $this->createMock(PasswordManager::class);
+        $passwordManager->expects($this->once())->method('validatePassword');
 
         $this->expectException(UserEmailAlreadyRegisteredException::class);
         new User($userData, $userRepository, $passwordManager);
