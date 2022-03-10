@@ -41,6 +41,7 @@ class ProjectTest extends TestCase
         $workspace = $this->createMock(Workspace::class);
         $workspace->method('getUuid')->willReturn('a');
         $user->method('getWorkspaces')->willReturn([$workspace]);
+        $user->expects($this->once())->method("getWorkspaces");
 
         $workspace = $this->createMock(Workspace::class);
         $workspace->method('getUuid')->willReturn('b');
@@ -48,6 +49,7 @@ class ProjectTest extends TestCase
 
         $package = $this->createMock(Package::class);
         $package->method('getWorkspace')->willReturn($workspace);
+        $package->expects($this->never())->method("getWorkspace");
         $date = new DateTime("2022-02-02");
 
         $projectData = new ProjectData("ahoj", "popis", $user, $date, $workspace, $package);
@@ -62,6 +64,7 @@ class ProjectTest extends TestCase
 
         $package = $this->createMock(Package::class);
         $package->method('getWorkspace')->willReturn($workspace);
+        $package->expects($this->once())->method("getWorkspace");
 
         $workspace = $this->createMock(Workspace::class);
         $workspace->method('getUuid')->willReturn('b');
