@@ -57,11 +57,17 @@ class User implements JsonSerializable
 
         $this->generateAndSetUuid();
 
+        $this->workspaces = new ArrayCollection();
+
+        $this->edit($userData, $passwordManager);
+    }
+
+    public function edit(UserData $userData, PasswordManager $passwordManager): void
+    {
         $this->email = $userData->getEmail();
         $this->password = $passwordManager->hashPassword($userData->getPassword());
         $this->firstName = $userData->getFirstName();
         $this->lastName = $userData->getLastName();
-        $this->workspaces = new ArrayCollection();
     }
 
     public function jsonSerialize(): array

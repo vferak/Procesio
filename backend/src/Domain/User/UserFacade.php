@@ -43,4 +43,12 @@ class UserFacade
 
         return $this->userRepository->persistUser($user);
     }
+
+    public function editUser(User $user, UserData $userData): User
+    {
+        $user->edit($userData, $this->passwordManager);
+        $this->userRepository->persistUser($user);
+
+        return $user;
+    }
 }
