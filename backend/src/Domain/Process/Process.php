@@ -37,7 +37,7 @@ class Process implements JsonSerializable
      * @ManyToOne(targetEntity="Procesio\Domain\Process\Process")
      * @JoinColumn(name="comes_from", referencedColumnName="uuid", nullable = true, unique=false)
      */
-    private string $comesFrom;
+    private ?Process $comesFrom;
 
 
     public function __construct(ProcessData $processData)
@@ -45,6 +45,16 @@ class Process implements JsonSerializable
         $this->generateAndSetUuid();
         $this->name = $processData->getName();
         $this->description = $processData->getDescription();
+        $this->comesFrom = $processData->getComesFrom();
+
+        $this->edit($processData);
+    }
+
+    public function edit(ProcessData $processData): void
+    {
+        $this->name = $processData->getName();
+        $this->description = $processData->getDescription();
+        $this->comesFrom = $processData->getComesFrom();
     }
 
     public function jsonSerialize(): array
@@ -67,5 +77,13 @@ class Process implements JsonSerializable
     public function getDescription(): string
     {
         return $this->description;
+    }
+
+    /**
+     * @return ?Process
+     */
+    public function getComesFrom(): ?Process
+    {
+        return $this->comesFrom;
     }
 }

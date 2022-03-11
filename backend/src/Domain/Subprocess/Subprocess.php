@@ -4,11 +4,8 @@ declare(strict_types=1);
 
 namespace Procesio\Domain\Subprocess;
 
-use Cassandra\Date;
-use DateTime;
 use JsonSerializable;
-use Procesio\Domain\User\User;
-use Procesio\Domain\Process;
+use Procesio\Domain\Process\Process;
 use Procesio\Domain\UuidDomainObjectTrait;
 
 /**
@@ -29,13 +26,13 @@ class Subprocess implements JsonSerializable
      * @ManyToOne(targetEntity="Procesio\Domain\Process\Process")
      * @JoinColumn(name="process_uuid", referencedColumnName="uuid")
      */
-    private $process;
+    private ?Process $process;
 
     /**
      * @ManyToOne(targetEntity="Procesio\Domain\Subprocess\Subprocess")
      * @JoinColumn(name="comes_from", referencedColumnName="uuid", nullable = true, unique=false)
      */
-    private string $comesFrom;
+    private ?Subprocess $comesFrom;
 
     public function __construct(SubprocessData $subprocessData)
     {
@@ -43,6 +40,18 @@ class Subprocess implements JsonSerializable
 
         $this->name = $subprocessData->getName();
         $this->description = $subprocessData->getDescription();
+        $this->process = $subprocessData->getProcess();
+        $this->comesFrom = $subprocessData->getComesFrom();
+
+        $this->edit($subprocessData);
+    }
+
+    public function edit(SubprocessData $subprocessData): void
+    {
+        $this->name = $subprocessData->getName();
+        $this->description = $subprocessData->getDescription();
+        $this->comesFrom = $subprocessData->getComesFrom();
+        $this->process = $subprocessData->getProcess();
     }
 
     public function jsonSerialize(): array
@@ -65,5 +74,15 @@ class Subprocess implements JsonSerializable
     public function getDescription(): string
     {
         return $this->description;
+    }
+
+    public function getComesFrom(): ?Subprocess
+    {
+        return $this->comesFrom;
+    }
+
+    public function getProcess(): ?Process
+    {
+        return $this->process;
     }
 }

@@ -36,6 +36,7 @@ register_shutdown_function($shutdownHandler);
 
 // Add Routing Middleware
 $app->addRoutingMiddleware();
+$app->addBodyParsingMiddleware();
 
 // Add Error Middleware
 $errorMiddleware = $app->addErrorMiddleware($displayErrorDetails, $logError, $logErrorDetails);

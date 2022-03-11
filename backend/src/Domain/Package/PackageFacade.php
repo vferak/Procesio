@@ -26,4 +26,12 @@ class PackageFacade
 
         return $this->packageRepository->persistPackage($package);
     }
+
+    public function editPackage(Package $package, PackageData $packageData): Package
+    {
+        $package->edit($packageData);
+        $this->packageRepository->persistPackage($package);
+
+        return $package;
+    }
 }

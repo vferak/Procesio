@@ -15,10 +15,12 @@ class EditUserAction extends UserAction
      */
     protected function action(): Response
     {
+        $user = null;
         $request = $this->request->getParsedBody();
 
         try {
             $user = $this->userFacade->getUserByUuid($request['uuid']);
+            print_r($user);
 
             $userData = new UserData(
                 $request['email'] ?? $user->getEmail(),
@@ -31,7 +33,6 @@ class EditUserAction extends UserAction
         } catch (DomainObjectNotFoundException $exception) {
             $this->respondWithData($exception->getMessage(), 404);
         }
-
         return $this->respondWithData($user);
     }
 }

@@ -6,7 +6,11 @@ namespace Procesio\Domain\Process;
 
 class ProcessData
 {
-    public function __construct(private string $name,private string $description)
+    public function __construct(
+        private string $name,
+        private string $description,
+        private ?Process $comesFrom
+    )
     {
     }
 
@@ -18,5 +22,13 @@ class ProcessData
     public function getDescription(): string
     {
         return $this->description;
+    }
+
+    /**
+     * @return Process|null
+     */
+    public function getComesFrom(): mixed
+    {
+        return $this->comesFrom;
     }
 }

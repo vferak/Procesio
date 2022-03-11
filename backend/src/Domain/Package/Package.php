@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Procesio\Domain\Package;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use JsonSerializable;
 use Procesio\Domain\UuidDomainObjectTrait;
 use Procesio\Domain\Workspace\Workspace;
@@ -38,6 +37,15 @@ class Package implements JsonSerializable
     public function __construct(PackageData $packageData)
     {
         $this->generateAndSetUuid();
+        $this->name = $packageData->getName();
+        $this->description = $packageData->getDescription();
+
+        $this->edit($packageData);
+    }
+
+    public function edit(PackageData $packageData): void
+    {
+        //TODO: popřemýšlet jestli se tady bude updatovat i comes_from nebo az v jiné metodě
         $this->name = $packageData->getName();
         $this->description = $packageData->getDescription();
     }

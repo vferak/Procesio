@@ -26,4 +26,12 @@ class SubprocessFacade
 
         return $this->subprocessRepository->persistSubprocess($subprocess);
     }
+
+    public function editSubprocess(Subprocess $subprocess, SubprocessData $subprocessData): Subprocess
+    {
+        $subprocess->edit($subprocessData);
+        $this->subprocessRepository->persistSubprocess($subprocess);
+
+        return $subprocess;
+    }
 }

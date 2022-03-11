@@ -26,4 +26,12 @@ class ProcessFacade
 
         return $this->processRepository->persistProcess($process);
     }
+
+    public function editProcess(Process $process, ProcessData $processData): Process
+    {
+        $process->edit($processData);
+        $this->processRepository->persistProcess($process);
+
+        return $process;
+    }
 }

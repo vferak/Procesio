@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace Procesio\Domain\Workspace;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Procesio\Domain\User\User;
+
 class WorkspaceData
 {
     public function __construct(
         private string $name,
-        private string $description
+        private string $description,
+        //private mixed $users
     )
     {
     }
@@ -32,5 +36,13 @@ class WorkspaceData
     public function getDescription(): string
     {
         return $this->description;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUsers(): mixed
+    {
+        return $this->users;
     }
 }
