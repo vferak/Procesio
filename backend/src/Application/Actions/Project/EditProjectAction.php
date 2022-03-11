@@ -20,8 +20,6 @@ class EditProjectAction extends ProjectAction
         try {
             $project = $this->projectFacade->getProjectByUuid($request['uuid']);
 
-            //TODO takhle dostanu nový workspace který mi byl poslan z formulaře a ten ulozim?..to same pak pro package
-            // createdBy..
             if(empty($request['workspace']))
             {
                 $workspace = $request['workspace'] ?? $project->getWorkspace();
@@ -29,6 +27,12 @@ class EditProjectAction extends ProjectAction
                 $workspace = $this->workspaceFacade->getWorkspaceByUuid($request['workspace']);
             }
 
+            if(empty($request['package']))
+            {
+                $package = $request['package'] ?? $project->getWorkspace();
+            } else{
+                $package = $this->packageFacade->getPackageByUuid($request['package']);
+            }
 
             $projectData = new ProjectData(
                 $request['name'] ?? $project->getName(),
@@ -36,10 +40,8 @@ class EditProjectAction extends ProjectAction
                 $request['createdBy'] ?? $project->getCreatedBy(),
                 $request['createdAt'] ?? $project->getCreatedAt(),
                 $workspace,
-                $request['package'] ?? $project->getPackage(),
+                $package
             );
-
-
 
             $this->projectFacade->editProject($project, $projectData);
         } catch (DomainObjectNotFoundException $exception) {
