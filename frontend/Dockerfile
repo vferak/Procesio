@@ -1,16 +1,9 @@
-FROM node:14-alpine
+FROM node:16-buster
 
 WORKDIR /var/www
 
-COPY ./frontend/package*.json ./
-
-RUN apk add --no-cache --virtual .gyp \
-        python2 \
-        make \
-        g++ \
-    && npm install \
-    && apk del .gyp
+USER www-data
 
 EXPOSE 8080
 
-CMD ["npm", "run", "serve"]
+CMD ["npm", "run", "dev"]

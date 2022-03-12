@@ -1,4 +1,5 @@
 <template>
+
   <!--Hero-->
   <div >
     <div class="container px-3 mx-auto flex flex-wrap flex-col md:flex-row items-center">
@@ -545,3 +546,11 @@
     </div>
   </footer>
 </template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'LandingView'
+})
+</script>
