@@ -1,11 +1,8 @@
 <script setup lang="ts">
-// import LogInModal from "@/components/modal/predefined/LogInModal.vue";
+import LogInModal from "@/components/dialogs/LogInDialog.vue";
+import { useDialogStore } from "@/stores/dialog";
 
-// const store = useStore();
-//
-// const openLoginModal: () => {
-//   store.commit("openLoginModal");
-// }
+const store = useDialogStore();
 </script>
 
 <template>
@@ -56,7 +53,7 @@
         </button>
       </div>
       <div
-        class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 bg-white lg:bg-transparent text-black p-4 lg:p-0 z-20"
+        class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 lg:bg-transparent text-black p-4 lg:p-0 z-20"
         id="nav-content"
       >
         <ul class="list-reset lg:flex justify-end flex-1 items-center">
@@ -82,10 +79,18 @@
             >
           </li>
         </ul>
-        <button @click="openLoginModal" class="btn-primary">Log In</button>
+        <v-btn
+          rounded="pill"
+          color="primary"
+          size="large"
+          @click="store.openDialog"
+          class="font-semibold"
+        >
+          Log In
+        </v-btn>
       </div>
     </div>
     <hr class="border-b border-gray-100 opacity-25 my-0 py-0" />
-<!--    <LogInModal />-->
   </nav>
+  <LogInModal />
 </template>
