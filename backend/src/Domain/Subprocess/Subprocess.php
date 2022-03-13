@@ -60,6 +60,8 @@ class Subprocess implements JsonSerializable
             'uuid' => $this->getUuid(),
             'name' => $this->getName(),
             'description' => $this->getDescription(),
+            'process' => $this->getProcess(),
+            'comesFrom' => $this->getComesFrom(),
         ];
     }
 

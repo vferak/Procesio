@@ -40,4 +40,12 @@ class ProcessRepository extends BaseRepository implements ProcessRepositoryInter
         $this->persist($process);
         return $process;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getProcessesByComesFrom(string $uuid): ?array
+    {
+        return $this->findBy(['comesFrom' => $uuid]);
+    }
 }

@@ -17,6 +17,10 @@ class SubprocessFacade
         return $this->subprocessRepository->getSubprocessByUuid($id);
     }
 
+    public function getSubprocessesByComesFrom(string $id): ?array {
+        return $this->subprocessRepository->getSubprocessesByComesFrom($id);
+    }
+
     /*public function getPackageByEmail(string $email): Package {
         return $this->packageRepository->getPackageByName($email);
     }*/
