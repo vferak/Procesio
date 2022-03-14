@@ -23,7 +23,7 @@ class Process implements JsonSerializable
     private string $description;
 
     /**
-     * Many Users have Many Groups.
+     * Many Processes have Many Packages.
      * @var ArrayCollection|Package[]
      * @ManyToMany(targetEntity="Procesio\Domain\Package\Package")
      * @JoinTable(name="process_package",
@@ -46,6 +46,8 @@ class Process implements JsonSerializable
         $this->name = $processData->getName();
         $this->description = $processData->getDescription();
         $this->comesFrom = $processData->getComesFrom();
+
+        $this->packages = new ArrayCollection();
 
         $this->edit($processData);
     }
@@ -98,10 +100,15 @@ class Process implements JsonSerializable
     }
 
     /**
-     * @return ArrayCollection|Package[]
+     * @return Package[]
      */
-    public function getPackages(): mixed
+    public function getPackages(): array {
+        return $this->packages->toArray();
+    }
+
+    public function addPackage(Package $package): self
     {
-        return $this->packages;
+        $this->packages->add($package);
+        return $this;
     }
 }

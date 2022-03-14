@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Procesio\Domain\Package;
 
+use Procesio\Domain\Process\Process;
 use Procesio\Infrastructure\Doctrine\Repositories\PackageRepository;
 
 class PackageFacade
@@ -20,6 +21,12 @@ class PackageFacade
     /*public function getPackageByEmail(string $email): Package {
         return $this->packageRepository->getPackageByName($email);
     }*/
+
+    public function addProcessToPackage(Package $package, Process $process): Package
+    {
+        $package = $package->addProcessToPackage($process);
+        return $this->packageRepository->persistPackage($package);
+    }
 
     public function createWorkspace(PackageData $packageData): Package {
         $package = new Package($packageData);

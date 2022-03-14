@@ -79,7 +79,6 @@ class Project implements JsonSerializable
 
     public function edit(ProjectData $projectData): void
     {
-
         $this->name = $projectData->getName();
         $this->description = $projectData->getDescription();
         $this->createdBy = $projectData->getCreatedBy();

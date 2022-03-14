@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use Procesio\Application\Actions\Authentication\LoginAction;
 use Procesio\Application\Actions\Authentication\RegisterAction;
+use Procesio\Application\Actions\Package\AddProcessToPackageAction;
 use Procesio\Application\Actions\Package\CreatePackageAction;
 use Procesio\Application\Actions\Package\EditPackageAction;
 use Procesio\Application\Actions\Package\ViewPackageAction;
@@ -65,6 +66,7 @@ return function (App $app) {
             $group->get('/{id}', ViewPackageAction::class);
             $group->post('/', CreatePackageAction::class);
             $group->put('/{id}', EditPackageAction::class);
+            $group->post('/addProcessToPackage', AddProcessToPackageAction::class);
             //$group->delete('/{id}', RegisterAction::class);
         });
 
