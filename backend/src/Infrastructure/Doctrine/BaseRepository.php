@@ -56,7 +56,7 @@ abstract class BaseRepository
 
     /**
      * @param string[] $criteria
-     * @return ?User[]
+     * @return ?User[]|?Process[]|?Subprocess[]
      */
     protected function findBy(array $criteria): ?array
     {

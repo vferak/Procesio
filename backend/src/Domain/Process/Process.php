@@ -6,6 +6,7 @@ namespace Procesio\Domain\Process;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use JsonSerializable;
+use Procesio\Domain\Package\Package;
 use Procesio\Domain\UuidDomainObjectTrait;
 
 /**
@@ -31,7 +32,7 @@ class Process implements JsonSerializable
      *      inverseJoinColumns={@JoinColumn(name="package_uuid", referencedColumnName="uuid")}
      *      )
      */
-    private $packages;
+    private mixed $packages;
 
     /**
      * @ManyToOne(targetEntity="Procesio\Domain\Process\Process")
