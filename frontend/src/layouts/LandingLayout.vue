@@ -1,21 +1,19 @@
-<template>
-  <div class="leading-normal tracking-normal text-white gradient landing-font-family">
-    <LandingNavbar />
-    <div class="pt-24">
-      <router-view/>
-    </div>
-  </div>
-</template>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-import LandingNavbar from '@/components/navbar/LandingNavbar.vue'
-
-export default defineComponent({
-  name: 'LandingLayout',
-  components: { LandingNavbar }
-})
+<script setup lang="ts">
+import LandingNavbar from "@/components/navbars/LandingNavbar.vue";
 </script>
+
+<template>
+  <v-main>
+    <div
+      class="leading-normal tracking-normal text-white gradient landing-font-family"
+    >
+      <LandingNavbar />
+      <div class="pt-24">
+        <router-view />
+      </div>
+    </div>
+  </v-main>
+</template>
 
 <style>
 .gradient {
@@ -23,6 +21,6 @@ export default defineComponent({
 }
 
 .landing-font-family {
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
 }
 </style>

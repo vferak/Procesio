@@ -1,9 +1,13 @@
-import Api from '@/api'
+import Api from "@/api";
 
 const AuthRepository = {
-  authenticate (email: string, password: string) {
-    return Api.post('/login', { email: email, password: password })
-  }
-}
+  authenticate(email: string, password: string) {
+    const formData = new FormData();
+    formData.set("email", email);
+    formData.set("password", password);
 
-export default AuthRepository
+    return Api.post("/login", formData);
+  },
+};
+
+export default AuthRepository;

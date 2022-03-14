@@ -1,13 +1,9 @@
-<template>
-  <div class="bg-gray-800 font-sans leading-normal tracking-normal mt-12">
-    <router-view/>
-  </div>
-</template>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'AdminLayout'
-})
+<script setup lang="ts">
+import AdminNavbar from "@/components/navbars/AdminNavbar.vue";
 </script>
+<template>
+  <AdminNavbar></AdminNavbar>
+  <v-main class="h-max">
+    <router-view />
+  </v-main>
+</template>

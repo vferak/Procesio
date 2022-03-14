@@ -1,60 +1,54 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import { store } from '@/store'
-import LandingView from '../views/LandingView.vue'
-import LandingLayout from '@/layouts/LandingLayout.vue'
-import AdminLayout from '@/layouts/AdminLayout.vue'
-import DashboardView from '@/views/DashboardView.vue'
+import {createRouter, createWebHistory } from "vue-router";
+import LandingView from "@/views/LandingView.vue";
+import LandingLayout from "@/layouts/LandingLayout.vue";
+import {useAuthStore} from "@/stores/auth";
+import {useDialogStore} from "@/stores/dialog";
 
-const routes: Array<RouteRecordRaw> = [
+const routes = [
   {
-    path: '/',
+    path: "/",
     component: LandingLayout,
     children: [
       {
-        path: '/',
-        name: 'landing',
-        component: LandingView
-      }
-    ]
+        path: "/",
+        name: "landing",
+        component: LandingView,
+      },
+    ],
   },
   {
-    path: '/admin',
-    redirect: '/admin/dashboard',
-    component: AdminLayout,
+    path: "/admin",
+    redirect: "/admin/dashboard",
+    component: () => import("@/layouts/AdminLayout.vue"),
     children: [
       {
-        path: '/admin/dashboard',
-        name: 'dashboard',
-        component: DashboardView
-      }
-    ]
-  }
-  // {
-  //   path: '/about',
-  //   name: 'about',
-  //   route level code-splitting
-  //   this generates a separate chunk (about.[hash].js) for this route
-  //   which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  // }
-]
+        path: "/admin/dashboard",
+        name: "dashboard",
+        component: () => import("@/views/DashboardView.vue"),
+      },
+    ],
+  },
+];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes
-})
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes,
+});
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/']
-  const authRequired = !publicPages.includes(to.path)
-  const loggedIn = store.getters.isUserAuthenticated
+  const authStore = useAuthStore();
+  const dialogStore = useDialogStore();
+
+  const publicPages = ["/"];
+  const authRequired = !publicPages.includes(to.path);
+  const loggedIn = authStore.isAuthenticated();
 
   if (authRequired && !loggedIn) {
-    store.commit('openLoginModal')
-    next('/')
+    dialogStore.openDialog();
+    next("/");
   } else {
-    next()
+    next();
   }
-})
+});
 
-export default router
+export default router;
