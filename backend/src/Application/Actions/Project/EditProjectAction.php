@@ -20,17 +20,15 @@ class EditProjectAction extends ProjectAction
         try {
             $project = $this->projectFacade->getProjectByUuid($request['uuid']);
 
-            if(empty($request['workspace']))
-            {
+            if (empty($request['workspace'])) {
                 $workspace = $request['workspace'] ?? $project->getWorkspace();
-            } else{
+            } else {
                 $workspace = $this->workspaceFacade->getWorkspaceByUuid($request['workspace']);
             }
 
-            if(empty($request['package']))
-            {
+            if (empty($request['package'])) {
                 $package = $request['package'] ?? $project->getWorkspace();
-            } else{
+            } else {
                 $package = $this->packageFacade->getPackageByUuid($request['package']);
             }
 

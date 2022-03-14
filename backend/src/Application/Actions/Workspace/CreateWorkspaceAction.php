@@ -20,7 +20,7 @@ class CreateWorkspaceAction extends WorkspaceAction
 
         $name = $request['name'];
         $description = $request['description'];
-        $workspaceData = new WorkspaceData($name,$description);
+        $workspaceData = new WorkspaceData($name, $description);
 
         $this->workspaceFacade->registerWorkspace($workspaceData);
 

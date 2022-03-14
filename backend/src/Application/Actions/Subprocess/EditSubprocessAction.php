@@ -20,31 +20,25 @@ class EditSubprocessAction extends SubprocessAction
 
         try {
             $subprocess = $this->subprocessFacade->getSubprocessByUuid($request['uuid']);
-            $exists_comesFrom = array_key_exists('comesFrom',$request);
-            if($exists_comesFrom)
-            {
-                if($request['comesFrom'] == null)
-                {
+            $exists_comesFrom = array_key_exists('comesFrom', $request);
+            if ($exists_comesFrom) {
+                if ($request['comesFrom'] == null) {
                     $comesFrom = null;
-                }else{
+                } else {
                     $comesFrom = $this->subprocessFacade->getSubprocessByUuid($request['comesFrom']);
                 }
-
-            }else{
+            } else {
                 $comesFrom = $subprocess->getComesFrom();
             }
 
-            $exists_process = array_key_exists('process',$request);
-            if($exists_process)
-            {
-                if($request['process'] == null)
-                {
+            $exists_process = array_key_exists('process', $request);
+            if ($exists_process) {
+                if ($request['process'] == null) {
                     $process = null;
-                }else{
+                } else {
                     $process = $this->processFacade->getProcessByUuid($request['process']);
                 }
-
-            }else{
+            } else {
                 $process = $subprocess->getProcess();
             }
 

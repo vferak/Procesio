@@ -14,7 +14,7 @@ class ViewProcessAction extends ProcessAction
     protected function action(): Response
     {
         $processId = $this->resolveArg('id');
-        $process= $this->processFacade->getProcessByUuid($processId);
+        $process = $this->processFacade->getProcessByUuid($processId);
 
         $this->logger->info("Process of id {$processId} was viewed.");
 

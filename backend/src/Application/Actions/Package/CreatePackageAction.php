@@ -5,7 +5,6 @@ namespace Procesio\Application\Actions\Package;
 use Procesio\Domain\Package\PackageData;
 use Psr\Http\Message\ResponseInterface as Response;
 
-
 class CreatePackageAction extends PackageAction
 {
     /**
@@ -21,12 +20,11 @@ class CreatePackageAction extends PackageAction
         $workspace = $this->workspaceFacade->getWorkspaceByUuid($request['workspace']);
         $comesFrom = $request['comesFrom'] ?? null;
 
-        if($comesFrom !== null)
-        {
+        if ($comesFrom !== null) {
             $comesFrom = $this->packageFacade->getPackageByUuid($comesFrom);
         }
 
-        $packageData = new PackageData($name,$description,$workspace,$comesFrom);
+        $packageData = new PackageData($name, $description, $workspace, $comesFrom);
 
         $this->packageFacade->createWorkspace($packageData);
 

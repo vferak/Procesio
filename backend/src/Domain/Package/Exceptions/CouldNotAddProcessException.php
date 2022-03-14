@@ -19,9 +19,10 @@ class CouldNotAddProcessException extends DomainException
     public static function createForDuplicateProcess(Process $process): self
     {
         return new self(
-          sprintf(
-              'User %s could not be added to workspace!',$process->getUuid()
-          )
+            sprintf(
+                'User %s could not be added to workspace!',
+                $process->getUuid()
+            )
         );
     }
 }

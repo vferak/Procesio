@@ -14,7 +14,8 @@ class ProjectFacade
     ) {
     }
 
-    public function getProjectByUuid(string $id): Project {
+    public function getProjectByUuid(string $id): Project
+    {
         return $this->projectRepository->getProjectByUuid($id);
     }
 
@@ -22,7 +23,8 @@ class ProjectFacade
         return $this->projectRepository->getProjectByName($name);
     }*/
 
-    public function createProject(ProjectData $projectData): Project {
+    public function createProject(ProjectData $projectData): Project
+    {
         $project = new Project($projectData);
 
         return $this->projectRepository->persistProject($project);

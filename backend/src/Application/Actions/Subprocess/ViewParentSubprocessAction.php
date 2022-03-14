@@ -17,8 +17,7 @@ class ViewParentSubprocessAction extends SubprocessAction
     {
         $subprocessId = $this->resolveArg('id');
         $subprocess = $this->subprocessFacade->getSubprocessByUuid($subprocessId);
-        if($subprocess->getComesFrom() === null)
-        {
+        if ($subprocess->getComesFrom() === null) {
             throw CouldNotDisplayParentSubprocessException::displaySubprocessDomainObjectClass();
         }
 

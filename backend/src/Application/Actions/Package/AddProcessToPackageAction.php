@@ -20,10 +20,10 @@ class AddProcessToPackageAction extends PackageAction
         $process_uuid = $request['process_uuid'];
 
         try {
-            $package= $this->packageFacade->getPackageByUuid($package_uuid);
+            $package = $this->packageFacade->getPackageByUuid($package_uuid);
             $process = $this->processFacade->getProcessByUuid($process_uuid);
             $package = $this->packageFacade->addProcessToPackage($package, $process);
-        } catch (DomainObjectNotFoundException|CouldNotAddUserException $exception) {
+        } catch (DomainObjectNotFoundException | CouldNotAddUserException $exception) {
             return $this->respondWithData($exception->getMessage(), 400);
         }
 

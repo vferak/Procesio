@@ -10,8 +10,7 @@ class ProcessData
         private string $name,
         private string $description,
         private ?Process $comesFrom
-    )
-    {
+    ) {
     }
 
     public function getName(): string

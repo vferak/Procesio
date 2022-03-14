@@ -14,7 +14,8 @@ class PackageFacade
     ) {
     }
 
-    public function getPackageByUuid(string $id): Package {
+    public function getPackageByUuid(string $id): Package
+    {
         return $this->packageRepository->getPackageByUuid($id);
     }
 
@@ -28,7 +29,8 @@ class PackageFacade
         return $this->packageRepository->persistPackage($package);
     }
 
-    public function createWorkspace(PackageData $packageData): Package {
+    public function createWorkspace(PackageData $packageData): Package
+    {
         $package = new Package($packageData);
 
         return $this->packageRepository->persistPackage($package);

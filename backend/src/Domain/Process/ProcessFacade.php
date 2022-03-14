@@ -13,11 +13,13 @@ class ProcessFacade
     ) {
     }
 
-    public function getProcessByUuid(string $id): Process {
+    public function getProcessByUuid(string $id): Process
+    {
         return $this->processRepository->getProcessByUuid($id);
     }
 
-    public function getProcessesByComesFrom(string $id): ?array {
+    public function getProcessesByComesFrom(string $id): ?array
+    {
         return $this->processRepository->getProcessesByComesFrom($id);
     }
 
@@ -25,7 +27,8 @@ class ProcessFacade
         return $this->packageRepository->getPackageByName($email);
     }*/
 
-    public function createProcess(ProcessData $processData): Process {
+    public function createProcess(ProcessData $processData): Process
+    {
         $process = new Process($processData);
 
         return $this->processRepository->persistProcess($process);

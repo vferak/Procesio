@@ -41,6 +41,4 @@ class WorkspaceRepository extends BaseRepository implements WorkspaceRepositoryI
     {
         $this->delete($workspace);
     }
-
-
 }

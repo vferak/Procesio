@@ -23,7 +23,7 @@ class AddUserToWorkspaceAction extends WorkspaceAction
             $user = $this->userFacade->getUserByUuid($user_uuid);
             $workspace = $this->workspaceFacade->getWorkspaceByUuid($workspace_uuid);
             $workspace = $this->workspaceFacade->addUserToWorkspace($workspace, $user);
-        } catch (DomainObjectNotFoundException|CouldNotAddUserException $exception) {
+        } catch (DomainObjectNotFoundException | CouldNotAddUserException $exception) {
             return $this->respondWithData($exception->getMessage(), 400);
         }
 

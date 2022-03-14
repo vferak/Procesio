@@ -33,7 +33,8 @@ abstract class Action
      */
     public function __construct(
         protected LoggerInterface $logger
-    ) {}
+    ) {
+    }
 
     /**
      * @param Request $request
@@ -107,7 +108,7 @@ abstract class Action
      * @return array|object
      * @throws HttpBadRequestException
      */
-    protected function getFormData():array|object
+    protected function getFormData(): array|object
     {
         $input = json_decode(file_get_contents('php://input'));
 

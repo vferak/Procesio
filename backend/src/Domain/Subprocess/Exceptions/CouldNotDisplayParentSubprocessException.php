@@ -16,7 +16,7 @@ class CouldNotDisplayParentSubprocessException extends DomainException
     public static function displaySubprocessDomainObjectClass(): self
     {
         return new self(
-          sprintf('This subprocess does not have parent!')
+            sprintf('This subprocess does not have parent!')
         );
     }
 }

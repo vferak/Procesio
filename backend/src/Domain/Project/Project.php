@@ -12,7 +12,6 @@ use Procesio\Domain\User\User;
 use Procesio\Domain\UuidDomainObjectTrait;
 use Procesio\Domain\Workspace\Workspace;
 
-
 /**
  * @Entity
  * @Table(name="project")

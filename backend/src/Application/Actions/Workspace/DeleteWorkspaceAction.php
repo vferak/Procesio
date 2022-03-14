@@ -20,11 +20,9 @@ class DeleteWorkspaceAction extends WorkspaceAction
         try {
             $workspace = $this->workspaceFacade->getWorkspaceByUuid($workspaceId);
             $this->workspaceFacade->deleteWorkspace($workspace);
-        } catch (DomainObjectNotFoundException $exception)
-        {
+        } catch (DomainObjectNotFoundException $exception) {
             return $this->respondWithData($exception->getMessage(), 404);
-        } catch (CouldNotDeleteDomainObjectException|CouldNotDeleteWorkspaceException $exception)
-        {
+        } catch (CouldNotDeleteDomainObjectException | CouldNotDeleteWorkspaceException $exception) {
             return $this->respondWithData($exception->getMessage(), 400);
         }
 

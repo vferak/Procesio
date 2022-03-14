@@ -17,7 +17,7 @@ class DomainObjectNotFoundException extends DomainException
     public static function createFromDomainObjectClass(string $objectClass): self
     {
         return new self(
-          sprintf('Domain object %s not found!', $objectClass)
+            sprintf('Domain object %s not found!', $objectClass)
         );
     }
 }

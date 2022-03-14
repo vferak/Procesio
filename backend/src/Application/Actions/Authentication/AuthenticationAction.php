@@ -12,8 +12,8 @@ use Psr\Log\LoggerInterface;
 abstract class AuthenticationAction extends Action
 {
     public function __construct(
-        LoggerInterface         $logger,
-        protected UserFacade    $userFacade,
+        LoggerInterface $logger,
+        protected UserFacade $userFacade,
         protected Authenticator $authenticator
     ) {
         parent::__construct($logger);

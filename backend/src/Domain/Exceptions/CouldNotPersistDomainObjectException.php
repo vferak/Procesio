@@ -19,7 +19,7 @@ class CouldNotPersistDomainObjectException extends DomainException
     public static function createFromDomainObjectClass(string $objectClass): self
     {
         return new self(
-          sprintf('Domain object %s could not be saved!', $objectClass)
+            sprintf('Domain object %s could not be saved!', $objectClass)
         );
     }
 }

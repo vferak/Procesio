@@ -19,9 +19,10 @@ class CouldNotCreateProjectException extends DomainException
     public static function createForUserWithDifferentWorkspace(User $user): self
     {
         return new self(
-          sprintf(
-              'Project could not be created because its user %s is not part of the same workspace!', $user->getUuid()
-          )
+            sprintf(
+                'Project could not be created because its user %s is not part of the same workspace!',
+                $user->getUuid()
+            )
         );
     }
 
@@ -29,7 +30,8 @@ class CouldNotCreateProjectException extends DomainException
     {
         return new self(
             sprintf(
-                'Project could not be created because its package %s is not part of the same workspace!', $package->getUuid()
+                'Project could not be created because its package %s is not part of the same workspace!',
+                $package->getUuid()
             )
         );
     }

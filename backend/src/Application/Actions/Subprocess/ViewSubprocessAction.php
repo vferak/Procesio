@@ -14,7 +14,7 @@ class ViewSubprocessAction extends SubprocessAction
     protected function action(): Response
     {
         $subprocessId = $this->resolveArg('id');
-        $subprocess= $this->subprocessFacade->getSubprocessByUuid($subprocessId);
+        $subprocess = $this->subprocessFacade->getSubprocessByUuid($subprocessId);
 
         $this->logger->info("Subprocess of id {$subprocessId} was viewed.");
 

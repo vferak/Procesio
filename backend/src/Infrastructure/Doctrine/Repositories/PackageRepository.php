@@ -50,5 +50,4 @@ class PackageRepository extends BaseRepository implements PackageRepositoryInter
     {
         return $this->findBy(['workspace' => $workspace]);
     }
-
 }

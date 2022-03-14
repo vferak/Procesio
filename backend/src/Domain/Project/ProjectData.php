@@ -18,8 +18,7 @@ class ProjectData
         private DateTime $createdAt,
         private Workspace $workspace,
         private Package $package,
-    )
-    {
+    ) {
     }
 
     public function getName(): string

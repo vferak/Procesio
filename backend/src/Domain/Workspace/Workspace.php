@@ -89,10 +89,9 @@ class Workspace implements JsonSerializable
 
     public function delete(
         WorkspaceRepository $workspaceRepository,
-        PackageRepository   $packageRepository,
-        ProjectRepository   $projectRepository
-    ): void
-    {
+        PackageRepository $packageRepository,
+        ProjectRepository $projectRepository
+    ): void {
         //TODO: TSK
         $packages = $packageRepository->findWorkspaces($this);
         if ($packages !== null) {
@@ -112,15 +111,12 @@ class Workspace implements JsonSerializable
         //TODO: TSK
         $users = $this->getUsers();
 
-        foreach ($users as $us)
-        {
-            if ($us->getUuid() === $user->getUuid())
-            {
+        foreach ($users as $us) {
+            if ($us->getUuid() === $user->getUuid()) {
                 throw CouldNotAddUserException::createForDuplicateUser($us);
             }
 
-            if (count($us->getWorkspaces()) > 4)
-            {
+            if (count($us->getWorkspaces()) > 4) {
                 throw CouldNotAddUserException::createForUserWithTooManyWorkspaces($us);
             }
         }

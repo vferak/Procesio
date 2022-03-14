@@ -13,11 +13,13 @@ class SubprocessFacade
     ) {
     }
 
-    public function getSubprocessByUuid(string $id): Subprocess {
+    public function getSubprocessByUuid(string $id): Subprocess
+    {
         return $this->subprocessRepository->getSubprocessByUuid($id);
     }
 
-    public function getSubprocessesByComesFrom(string $id): ?array {
+    public function getSubprocessesByComesFrom(string $id): ?array
+    {
         return $this->subprocessRepository->getSubprocessesByComesFrom($id);
     }
 
@@ -25,7 +27,8 @@ class SubprocessFacade
         return $this->packageRepository->getPackageByName($email);
     }*/
 
-    public function createProcess(SubprocessData $subprocessData): Subprocess {
+    public function createProcess(SubprocessData $subprocessData): Subprocess
+    {
         $subprocess = new Subprocess($subprocessData);
 
         return $this->subprocessRepository->persistSubprocess($subprocess);

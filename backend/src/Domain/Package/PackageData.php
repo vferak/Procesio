@@ -13,8 +13,7 @@ class PackageData
         private string $description,
         private Workspace $workspace,
         private Package $comesFrom
-    )
-    {
+    ) {
     }
 
     public function getName(): string

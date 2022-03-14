@@ -13,8 +13,7 @@ class WorkspaceData
         private string $name,
         private string $description,
         //private mixed $users
-    )
-    {
+    ) {
     }
 
     public function getName(): string

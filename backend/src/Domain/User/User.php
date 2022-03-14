@@ -110,7 +110,8 @@ class User implements JsonSerializable
     /**
      * @return Workspace[]
      */
-    public function getWorkspaces(): array {
+    public function getWorkspaces(): array
+    {
         return $this->workspaces->toArray();
     }
 

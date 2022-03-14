@@ -14,9 +14,9 @@ class PasswordManagerTest extends TestCase
     public function testValidatePassword(string $password): void
     {
         $passwordManager = new PasswordManager();
-        
+
         $passwordManager->validatePassword($password);
-        
+
         $this->assertTrue(true);
     }
 

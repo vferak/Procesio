@@ -14,7 +14,7 @@ class ViewProjectAction extends ProjectAction
     protected function action(): Response
     {
         $projectId = $this->resolveArg('id');
-        $project= $this->projectFacade->getProjectByUuid($projectId);
+        $project = $this->projectFacade->getProjectByUuid($projectId);
 
         $this->logger->info("Project of id {$projectId} was viewed.");
 

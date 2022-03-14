@@ -20,7 +20,8 @@ class AuthMiddleware implements Middleware
 {
     public function __construct(
         private Authenticator $authentication
-    ) {}
+    ) {
+    }
 
     /**
      * {@inheritdoc}
@@ -34,7 +35,7 @@ class AuthMiddleware implements Middleware
         if ($jwt) {
             try {
                 $this->authentication->verifyToken($jwt);
-            } catch (InvalidArgumentException|UnexpectedValueException|SignatureInvalidException|BeforeValidException) {
+            } catch (InvalidArgumentException | UnexpectedValueException | SignatureInvalidException | BeforeValidException) {
                 throw new HttpUnauthorizedException($request);
             } catch (ExpiredException) {
                 // TODO Expired redirect

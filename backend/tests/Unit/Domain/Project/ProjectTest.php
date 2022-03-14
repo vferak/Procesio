@@ -13,7 +13,6 @@ use Procesio\Domain\Project\ProjectData;
 use Procesio\Domain\User\User;
 use Procesio\Domain\Workspace\Workspace;
 
-
 class ProjectTest extends TestCase
 {
     public function testCreate(): void

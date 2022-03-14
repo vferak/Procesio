@@ -18,9 +18,10 @@ class CouldNotAddUserException extends DomainException
     public static function createForDuplicateUser(User $user): self
     {
         return new self(
-          sprintf(
-              'User %s could not be added to workspace!',$user->getUuid()
-          )
+            sprintf(
+                'User %s could not be added to workspace!',
+                $user->getUuid()
+            )
         );
     }
 
@@ -28,7 +29,8 @@ class CouldNotAddUserException extends DomainException
     {
         return new self(
             sprintf(
-                'User %s has more than 5 workspaces!',$user->getUuid()
+                'User %s has more than 5 workspaces!',
+                $user->getUuid()
             )
         );
     }

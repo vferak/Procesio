@@ -26,10 +26,10 @@ class CouldNotDeleteWorkspaceException extends DomainException
         }
 
         return new self(
-          sprintf(
-              'Workspace could not be deleted because these packages exist: %s!',
-              implode(', ', $packageUuids)
-          )
+            sprintf(
+                'Workspace could not be deleted because these packages exist: %s!',
+                implode(', ', $packageUuids)
+            )
         );
     }
 

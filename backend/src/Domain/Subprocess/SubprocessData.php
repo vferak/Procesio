@@ -13,8 +13,7 @@ class SubprocessData
         private string $description,
         private ?Process $process,
         private ?Subprocess $comesFrom
-    )
-    {
+    ) {
     }
 
     public function getName(): string

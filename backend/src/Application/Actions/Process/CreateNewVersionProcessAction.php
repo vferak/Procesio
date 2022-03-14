@@ -2,12 +2,8 @@
 
 namespace Procesio\Application\Actions\Process;
 
-
-
-
 use Procesio\Domain\Exceptions\DomainObjectNotFoundException;
 use Procesio\Domain\Process\ProcessData;
-
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Exception\HttpBadRequestException;
 

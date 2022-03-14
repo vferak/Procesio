@@ -16,7 +16,7 @@ class CouldNotDisplayParentProcessException extends DomainException
     public static function displayProcessDomainObjectClass(): self
     {
         return new self(
-          sprintf('This process does not have parent!')
+            sprintf('This process does not have parent!')
         );
     }
 }

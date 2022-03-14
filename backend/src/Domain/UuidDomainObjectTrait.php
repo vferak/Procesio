@@ -13,11 +13,13 @@ trait UuidDomainObjectTrait
      */
     private string $uuid;
 
-    public function getUuid(): string {
+    public function getUuid(): string
+    {
         return $this->uuid;
     }
 
-    protected function generateAndSetUuid(): void {
+    protected function generateAndSetUuid(): void
+    {
         $this->uuid = Uuid::uuid4()->toString();
     }
 }

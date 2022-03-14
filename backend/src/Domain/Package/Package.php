@@ -98,13 +98,10 @@ class Package implements JsonSerializable
     {
         $processes = $this->getProcesses();
 
-        foreach ($processes as $proce)
-        {
-            if ($proce->getUuid() === $process->getUuid())
-            {
+        foreach ($processes as $proce) {
+            if ($proce->getUuid() === $process->getUuid()) {
                 throw CouldNotAddProcessException::createForDuplicateProcess($proce);
             }
-
         }
 
         $this->addProcess($process);

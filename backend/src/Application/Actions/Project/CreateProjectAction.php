@@ -2,7 +2,6 @@
 
 namespace Procesio\Application\Actions\Project;
 
-
 use DateTime;
 use Exception;
 use Procesio\Domain\Exceptions\DomainObjectNotFoundException;
@@ -29,7 +28,7 @@ class CreateProjectAction extends ProjectAction
 
         try {
             $createdAt = new DateTime($createdAt);
-        } catch (Exception $exception){
+        } catch (Exception $exception) {
             return $this->respondWithData($exception->getMessage(), 400);
         }
 
@@ -47,6 +46,5 @@ class CreateProjectAction extends ProjectAction
         }
 
         return $this->respondWithData(statusCode: 201);
-
     }
 }

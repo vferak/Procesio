@@ -100,7 +100,8 @@ class Process implements JsonSerializable
     /**
      * @return Package[]
      */
-    public function getPackages(): array {
+    public function getPackages(): array
+    {
         return $this->packages->toArray();
     }
 
