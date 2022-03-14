@@ -6,6 +6,8 @@ namespace Procesio\Domain\Workspace;
 
 
 use Doctrine\ORM\EntityManager;
+use Procesio\Domain\Package\Package;
+use Procesio\Domain\Package\PackageData;
 use Procesio\Domain\Package\PackageRepositoryInterface;
 use Procesio\Domain\Project\ProjectRepositoryInterface;
 use Procesio\Domain\User\User;
@@ -51,6 +53,14 @@ class WorkspaceFacade
         $workspace = $workspace->addUserToWorkspace($user);
         return $this->workspaceRepository->persistWorkspace($workspace);
 //        $this->entityManager->flush();
+    }
+
+    public function editWorkspace(Workspace $workspace, WorkspaceData $workspaceData): Workspace
+    {
+        $workspace->edit($workspaceData);
+        $this->workspaceRepository->persistWorkspace($workspace);
+
+        return $workspace;
     }
 
 }

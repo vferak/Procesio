@@ -2,6 +2,7 @@
 
 namespace Procesio\Domain;
 
+use Procesio\Domain\Exceptions\DomainObjectNotFoundException;
 use Ramsey\Uuid\Uuid;
 
 trait UuidDomainObjectTrait

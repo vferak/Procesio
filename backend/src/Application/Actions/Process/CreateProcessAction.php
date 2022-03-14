@@ -23,6 +23,7 @@ class CreateProcessAction extends ProcessAction
 
         $name = $request['name'];
         //$password = $request['password'];
+        //TODO dodelat prametry
         $processData = new ProcessData($name);
 
         $this->processFacade->createProcess($processData);

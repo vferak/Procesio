@@ -73,6 +73,17 @@ class Project implements JsonSerializable
         $this->createdBy = $projectData->getCreatedBy();
         $this->workspace = $projectData->getWorkspace();
         $this->package = $projectData->getPackage();
+
+        $this->edit($projectData);
+    }
+
+    public function edit(ProjectData $projectData): void
+    {
+        $this->name = $projectData->getName();
+        $this->description = $projectData->getDescription();
+        $this->createdBy = $projectData->getCreatedBy();
+        $this->workspace = $projectData->getWorkspace();
+        $this->package = $projectData->getPackage();
     }
 
     public function jsonSerialize(): array

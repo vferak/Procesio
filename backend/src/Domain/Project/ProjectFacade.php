@@ -27,4 +27,11 @@ class ProjectFacade
 
         return $this->projectRepository->persistProject($project);
     }
+
+    public function editProject(Project $project, ProjectData $projectData): Project
+    {
+        $project->edit($projectData);
+        $this->projectRepository->persistProject($project);
+        return $project;
+    }
 }

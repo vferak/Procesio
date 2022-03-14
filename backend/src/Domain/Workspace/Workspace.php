@@ -35,14 +35,25 @@ class Workspace implements JsonSerializable
     private mixed $users;
 
 
-    public function __construct(WorkspaceData $workspace)
+    public function __construct(WorkspaceData $workspaceData)
     {
         $this->generateAndSetUuid();
 
-        $this->name = $workspace->getName();
-        $this->description = $workspace->getDescription();
+        $this->name = $workspaceData->getName();
+        $this->description = $workspaceData->getDescription();
         $this->users = new ArrayCollection();
+
+        $this->edit($workspaceData);
     }
+
+    public function edit(WorkspaceData $workspaceData): void
+    {
+        //TODO: zamyslet se jestli update useru v tomto danem workspacu?
+        $this->name = $workspaceData->getName();
+        $this->description = $workspaceData->getDescription();
+        //$this->users = $workspaceData->getUsers();
+    }
+
 
     public function jsonSerialize(): array
     {

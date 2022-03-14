@@ -40,4 +40,12 @@ class SubprocessRepository extends BaseRepository implements SubprocessRepositor
         $this->persist($subprocess);
         return $subprocess;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getSubprocessesByComesFrom(string $uuid): ?array
+    {
+        return $this->findBy(['comesFrom' => $uuid]);
+    }
 }

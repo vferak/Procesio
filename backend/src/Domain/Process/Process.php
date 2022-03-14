@@ -6,6 +6,7 @@ namespace Procesio\Domain\Process;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use JsonSerializable;
+use Procesio\Domain\Package\Package;
 use Procesio\Domain\UuidDomainObjectTrait;
 
 /**
@@ -23,7 +24,7 @@ class Process implements JsonSerializable
     private string $description;
 
     /**
-     * Many Users have Many Groups.
+     * Many Processes have Many Packages.
      * @var ArrayCollection|Package[]
      * @ManyToMany(targetEntity="Procesio\Domain\Package\Package")
      * @JoinTable(name="process_package",
@@ -31,21 +32,37 @@ class Process implements JsonSerializable
      *      inverseJoinColumns={@JoinColumn(name="package_uuid", referencedColumnName="uuid")}
      *      )
      */
-    private $packages;
+    private mixed $packages;
 
     /**
      * @ManyToOne(targetEntity="Procesio\Domain\Process\Process")
      * @JoinColumn(name="comes_from", referencedColumnName="uuid", nullable = true, unique=false)
      */
-    private string $comesFrom;
+    private ?Process $comesFrom;
 
 
     public function __construct(ProcessData $processData)
     {
         $this->generateAndSetUuid();
+        $this->comesFrom = $processData->getComesFrom();
+        $this->packages = new ArrayCollection();
+
+        $this->edit($processData);
+    }
+
+    public function edit(ProcessData $processData): void
+    {
         $this->name = $processData->getName();
         $this->description = $processData->getDescription();
     }
+
+    /*public function createNewVersionProcess(ProcessData $processData): void
+    {
+        $this->generateAndSetUuid();
+        $this->name = $processData->getName();
+        $this->description = $processData->getDescription();
+        $this->comesFrom = $processData->getComesFrom();
+    }*/
 
     public function jsonSerialize(): array
     {
@@ -53,6 +70,8 @@ class Process implements JsonSerializable
             'uuid' => $this->getUuid(),
             'name' => $this->getName(),
             'description' => $this->getDescription(),
+            'packages' => $this->getPackages(),
+            'comesFrom' => $this->getComesFrom(),
         ];
     }
 
@@ -67,5 +86,27 @@ class Process implements JsonSerializable
     public function getDescription(): string
     {
         return $this->description;
+    }
+
+    /**
+     * @return ?Process
+     */
+
+    public function getComesFrom(): ?Process
+    {
+        return $this->comesFrom;
+    }
+
+    /**
+     * @return Package[]
+     */
+    public function getPackages(): array {
+        return $this->packages->toArray();
+    }
+
+    public function addPackage(Package $package): self
+    {
+        $this->packages->add($package);
+        return $this;
     }
 }

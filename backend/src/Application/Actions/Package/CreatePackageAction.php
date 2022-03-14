@@ -18,13 +18,18 @@ class CreatePackageAction extends PackageAction
 
         $name = $request['name'];
         $description = $request['description'];
-        $packageData = new PackageData($name,$description);
+        $workspace = $this->workspaceFacade->getWorkspaceByUuid($request['workspace']);
+        $comesFrom = $request['comesFrom'] ?? null;
+
+        if($comesFrom !== null)
+        {
+            $comesFrom = $this->packageFacade->getPackageByUuid($comesFrom);
+        }
+
+        $packageData = new PackageData($name,$description,$workspace,$comesFrom);
 
         $this->packageFacade->createWorkspace($packageData);
 
         return $this->respondWithData(statusCode: 201);
-
-
-        //zavolat facade
     }
 }
