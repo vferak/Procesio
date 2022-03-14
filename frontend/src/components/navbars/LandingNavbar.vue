@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import LogInModal from "@/components/dialogs/LogInDialog.vue";
 import { useDialogStore } from "@/stores/dialog";
+import { useAuthStore } from "@/stores/auth";
+import router from "@/router";
 
-const store = useDialogStore();
+const dialogStore = useDialogStore();
+const authStore = useAuthStore();
 </script>
 
 <template>
@@ -80,13 +83,24 @@ const store = useDialogStore();
           </li>
         </ul>
         <v-btn
+          v-if="!authStore.isAuthenticated()"
           rounded="pill"
           color="primary"
           size="large"
-          @click="store.openDialog"
-          class="font-semibold"
+          @click="dialogStore.openDialog"
+          class="font-bold normal-case"
         >
           Log In
+        </v-btn>
+        <v-btn
+          v-else
+          rounded="pill"
+          color="primary"
+          size="large"
+          @click="router.push({ name: 'dashboard' })"
+          class="font-semibold"
+        >
+          Admin
         </v-btn>
       </div>
     </div>

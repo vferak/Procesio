@@ -1,5 +1,9 @@
+<script setup lang="ts">
+import AdminNavbar from "@/components/navbars/AdminNavbar.vue";
+</script>
 <template>
-  <div class="bg-gray-800 font-sans leading-normal tracking-normal mt-12">
-    <router-view/>
-  </div>
+  <AdminNavbar></AdminNavbar>
+  <v-main class="h-max">
+    <router-view />
+  </v-main>
 </template>

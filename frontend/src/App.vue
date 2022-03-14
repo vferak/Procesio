@@ -4,10 +4,7 @@
 
 <template>
   <v-app>
-    <v-main>
-      <router-view />
-      <!--  <ServerErrorModal />-->
-
-    </v-main>
+    <router-view />
+    <!--  <ServerErrorModal />-->
   </v-app>
 </template>
