@@ -102,4 +102,19 @@ abstract class Action
             ->withHeader('Content-Type', 'application/json')
             ->withStatus($payload->getStatusCode());
     }
+
+    /**
+     * @return array|object
+     * @throws HttpBadRequestException
+     */
+    protected function getFormData():array|object
+    {
+        $input = json_decode(file_get_contents('php://input'));
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new HttpBadRequestException($this->request, 'Malformed JSON input.');
+        }
+
+        return $input;
+    }
 }

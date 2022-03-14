@@ -16,12 +16,12 @@ class ViewParentProcessAction extends ProcessAction
     {
         $processId = $this->resolveArg('id');
         $process = $this->processFacade->getProcessByUuid($processId);
-        if($process->getComesFrom() === null)
-        {
-            throw CouldNotDisplayParentProcessException::displayProcessDomainObjectClass();
-        }
 
-        $process = $this->processFacade->getProcessByUuid($process->getComesFrom()->getUuid());
+        $process = $process->getComesFrom();
+
+        if ($process === null) {
+            return $this->respondWithData("Can not display parent of this!", 404);
+        }
 
         return $this->respondWithData($process);
     }

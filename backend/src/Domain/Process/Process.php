@@ -43,10 +43,7 @@ class Process implements JsonSerializable
     public function __construct(ProcessData $processData)
     {
         $this->generateAndSetUuid();
-        $this->name = $processData->getName();
-        $this->description = $processData->getDescription();
         $this->comesFrom = $processData->getComesFrom();
-
         $this->packages = new ArrayCollection();
 
         $this->edit($processData);
@@ -56,7 +53,6 @@ class Process implements JsonSerializable
     {
         $this->name = $processData->getName();
         $this->description = $processData->getDescription();
-        $this->comesFrom = $processData->getComesFrom();
     }
 
     /*public function createNewVersionProcess(ProcessData $processData): void
@@ -94,6 +90,7 @@ class Process implements JsonSerializable
     /**
      * @return ?Process
      */
+
     public function getComesFrom(): ?Process
     {
         return $this->comesFrom;
