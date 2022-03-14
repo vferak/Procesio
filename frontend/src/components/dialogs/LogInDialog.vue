@@ -3,10 +3,12 @@ import { useDialogStore } from "@/stores/dialog";
 import { useAuthStore } from "@/stores/auth";
 import { ref } from "vue";
 import AuthRepository from "@/api/auth";
-import router from "@/router";
+import { useRouter } from "vue-router";
 
 const authStore = useAuthStore();
 const dialogStore = useDialogStore();
+
+const router = useRouter();
 
 const invalidCredentials = ref<boolean>(false);
 

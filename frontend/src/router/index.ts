@@ -1,8 +1,9 @@
-import {createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import LandingView from "@/views/LandingView.vue";
 import LandingLayout from "@/layouts/LandingLayout.vue";
-import {useAuthStore} from "@/stores/auth";
-import {useDialogStore} from "@/stores/dialog";
+import { useAuthStore } from "@/stores/auth";
+import { useDialogStore } from "@/stores/dialog";
+import {useMetaStore} from "@/stores/meta";
 
 const routes = [
   {
@@ -24,7 +25,18 @@ const routes = [
       {
         path: "/admin/dashboard",
         name: "dashboard",
-        component: () => import("@/views/DashboardView.vue"),
+        component: () => import("@/views/Admin/DashboardView.vue"),
+        meta: {
+          title: "Dashboard",
+        },
+      },
+      {
+        path: "/admin/projects",
+        name: "projects",
+        component: () => import("@/views/Admin/ProjectsView.vue"),
+        meta: {
+          title: "Projects",
+        },
       },
     ],
   },
@@ -36,6 +48,15 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  const metaStore = useMetaStore();
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const title: string = to.meta.title ? to.meta.title : "";
+  metaStore.setTitle(title);
+
+  document.title = metaStore.getSiteTitle();
+
   const authStore = useAuthStore();
   const dialogStore = useDialogStore();
 

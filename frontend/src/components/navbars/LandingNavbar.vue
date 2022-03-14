@@ -2,7 +2,9 @@
 import LogInModal from "@/components/dialogs/LogInDialog.vue";
 import { useDialogStore } from "@/stores/dialog";
 import { useAuthStore } from "@/stores/auth";
-import router from "@/router";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const dialogStore = useDialogStore();
 const authStore = useAuthStore();

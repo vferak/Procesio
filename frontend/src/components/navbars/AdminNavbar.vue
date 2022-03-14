@@ -2,7 +2,9 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
+import { useMetaStore } from "@/stores/meta";
 
+const metaStore = useMetaStore();
 const authStore = useAuthStore();
 const router = useRouter();
 
@@ -36,19 +38,16 @@ const logout = () => {
 
     <v-list density="compact" nav>
       <v-list-item
-        prepend-icon="mdi-home-city"
+        prepend-icon="mdi-view-dashboard"
         title="Dashboard"
         value="dashboard"
+        @click="router.push({ name: 'dashboard' })"
       ></v-list-item>
       <v-list-item
-        prepend-icon="mdi-account"
-        title="My Account"
-        value="account"
-      ></v-list-item>
-      <v-list-item
-        prepend-icon="mdi-account-group-outline"
-        title="Users"
-        value="users"
+        prepend-icon="mdi-book-multiple"
+        title="Projects"
+        value="projects"
+        @click="router.push({ name: 'projects' })"
       ></v-list-item>
     </v-list>
     <template v-slot:append>
@@ -65,6 +64,6 @@ const logout = () => {
   </v-navigation-drawer>
 
   <v-app-bar>
-    <v-toolbar-title>Dashboard</v-toolbar-title>
+    <v-toolbar-title>{{ metaStore.getTitle() }}</v-toolbar-title>
   </v-app-bar>
 </template>
