@@ -59,6 +59,8 @@ class User implements JsonSerializable
 
         $this->email = $userData->getEmail();
         $this->password = $passwordManager->hashPassword($userData->getPassword());
+        $this->firstName = $userData->getFirstName();
+        $this->lastName = $userData->getLastName();
         $this->workspaces = new ArrayCollection();
     }
 

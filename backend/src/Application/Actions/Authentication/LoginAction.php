@@ -22,8 +22,8 @@ class LoginAction extends AuthenticationAction
         try {
             $token = $this->authenticator->authenticateUser($email, $password);
             $response = $this->respondWithData(['token' => $token]);
-        } catch (AuthenticationException) {
-            $response = $this->respondWithData('Failure', 403);
+        } catch (AuthenticationException $exception) {
+            $response = $this->respondWithData($exception->getMessage(), 403);
         }
 
         return $response;
