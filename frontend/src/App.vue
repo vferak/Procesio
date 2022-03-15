@@ -3,8 +3,6 @@
 </script>
 
 <template>
-  <v-app>
-    <router-view />
-    <!--  <ServerErrorModal />-->
-  </v-app>
+  <router-view />
+  <!--  <ServerErrorModal />-->
 </template>

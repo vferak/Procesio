@@ -17,14 +17,6 @@
         <p class="leading-normal text-2xl mb-8">
           Easily create, edit and upgrade your current processes with Procesio!
         </p>
-        <v-btn
-          rounded="pill"
-          color="white"
-          size="x-large"
-          class="font-bold normal-case"
-        >
-          Register
-        </v-btn>
       </div>
       <!--Right Col-->
       <div class="w-full md:w-3/5 py-6 text-center">
@@ -702,14 +694,6 @@
     <h3 class="my-4 text-3xl leading-tight">
       Register and manage your processes today!
     </h3>
-    <v-btn
-      rounded="pill"
-      color="white"
-      size="x-large"
-      class="font-bold normal-case"
-    >
-      Register
-    </v-btn>
   </section>
   <!--Footer-->
   <footer class="bg-white">
