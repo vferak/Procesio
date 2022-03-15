@@ -84,9 +84,10 @@ const authStore = useAuthStore();
             >
           </li>
         </ul>
+        <label for="my-modal" class="btn modal-button">Log in</label>
       </div>
     </div>
     <hr class="border-b border-gray-100 opacity-25 my-0 py-0" />
   </nav>
-  <LogInModal />
+  <LogInModal></LogInModal>
 </template>

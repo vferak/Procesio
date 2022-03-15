@@ -4,7 +4,7 @@ import LandingNavbar from "@/components/navbars/LandingNavbar.vue";
 
 <template>
   <div
-    class="leading-normal tracking-normal text-white gradient landing-font-family"
+    class="leading-normal tracking-normal gradient landing-font-family"
   >
     <LandingNavbar />
     <div class="pt-24">
