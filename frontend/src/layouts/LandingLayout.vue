@@ -3,16 +3,14 @@ import LandingNavbar from "@/components/navbars/LandingNavbar.vue";
 </script>
 
 <template>
-  <v-main>
-    <div
-      class="leading-normal tracking-normal text-white gradient landing-font-family"
-    >
-      <LandingNavbar />
-      <div class="pt-24">
-        <router-view />
-      </div>
+  <div
+    class="leading-normal tracking-normal gradient landing-font-family"
+  >
+    <LandingNavbar />
+    <div class="pt-24">
+      <router-view />
     </div>
-  </v-main>
+  </div>
 </template>
 
 <style>

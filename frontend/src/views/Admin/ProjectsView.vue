@@ -1,127 +1,33 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col cols="4">
-        <v-card color="#385F73" theme="dark">
-          <v-card-title class="text-h5"> Unlimited music now </v-card-title>
-
-          <v-card-subtitle
-            >Listen to your favorite artists and albums whenever and wherever,
-            online and offline.</v-card-subtitle
-          >
-
-          <v-card-actions>
-            <v-btn variant="text"> Listen Now </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-
-      <v-col cols="4">
-        <v-card color="#1F7087" theme="dark">
-          <div class="d-flex flex-no-wrap justify-space-between">
-            <div>
-              <v-card-title class="text-h5"> Supermodel </v-card-title>
-
-              <v-card-subtitle>Foster the People</v-card-subtitle>
-
-              <v-card-actions>
-                <v-btn class="ml-2" variant="outlined" size="small">
-                  START RADIO
-                </v-btn>
-              </v-card-actions>
-            </div>
-
-            <v-avatar class="ma-3" size="125" rounded="0">
-              <v-img
-                src="https://cdn.vuetifyjs.com/images/cards/foster.jpg"
-              ></v-img>
-            </v-avatar>
+  <div class="container mx-auto h-full px-8">
+    <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
+      <div class="card w-full bg-primary text-primary-content">
+        <div class="card-body">
+          <h2 class="card-title">Card title!</h2>
+          <p>If a dog chews shoes whose shoes does he choose?</p>
+          <div class="card-actions justify-end">
+            <button class="btn">Buy Now</button>
           </div>
-        </v-card>
-      </v-col>
-
-      <v-col cols="4">
-        <v-card color="#952175" theme="dark">
-          <div class="d-flex flex-no-wrap justify-space-between">
-            <div>
-              <v-card-title class="text-h5"> Halcyon Days </v-card-title>
-
-              <v-card-subtitle>Ellie Goulding</v-card-subtitle>
-
-              <v-card-actions>
-                <v-btn class="ml-2" icon="mdi-play" variant="text"></v-btn>
-              </v-card-actions>
-            </div>
-
-            <v-avatar class="ma-3" size="125" rounded="0">
-              <v-img
-                src="https://cdn.vuetifyjs.com/images/cards/halcyon.png"
-              ></v-img>
-            </v-avatar>
+        </div>
+      </div>
+      <div class="card w-full bg-primary text-primary-content">
+        <div class="card-body">
+          <h2 class="card-title">Card title!</h2>
+          <p>If a dog chews shoes whose shoes does he choose?</p>
+          <div class="card-actions justify-end">
+            <button class="btn">Buy Now</button>
           </div>
-        </v-card>
-      </v-col> </v-row
-    ><v-row>
-      <v-col cols="4">
-        <v-card color="#385F73" theme="dark">
-          <v-card-title class="text-h5"> Unlimited music now </v-card-title>
-
-          <v-card-subtitle
-            >Listen to your favorite artists and albums whenever and wherever,
-            online and offline.</v-card-subtitle
-          >
-
-          <v-card-actions>
-            <v-btn variant="text"> Listen Now </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-
-      <v-col cols="4">
-        <v-card color="#1F7087" theme="dark">
-          <div class="d-flex flex-no-wrap justify-space-between">
-            <div>
-              <v-card-title class="text-h5"> Supermodel </v-card-title>
-
-              <v-card-subtitle>Foster the People</v-card-subtitle>
-
-              <v-card-actions>
-                <v-btn class="ml-2" variant="outlined" size="small">
-                  START RADIO
-                </v-btn>
-              </v-card-actions>
-            </div>
-
-            <v-avatar class="ma-3" size="125" rounded="0">
-              <v-img
-                src="https://cdn.vuetifyjs.com/images/cards/foster.jpg"
-              ></v-img>
-            </v-avatar>
+        </div>
+      </div>
+      <div class="card w-full bg-primary text-primary-content">
+        <div class="card-body">
+          <h2 class="card-title">Card title!</h2>
+          <p>If a dog chews shoes whose shoes does he choose?</p>
+          <div class="card-actions justify-end">
+            <button class="btn">Buy Now</button>
           </div>
-        </v-card>
-      </v-col>
-
-      <v-col cols="4">
-        <v-card color="#952175" theme="dark">
-          <div class="d-flex flex-no-wrap justify-space-between">
-            <div>
-              <v-card-title class="text-h5"> Halcyon Days </v-card-title>
-
-              <v-card-subtitle>Ellie Goulding</v-card-subtitle>
-
-              <v-card-actions>
-                <v-btn class="ml-2" icon="mdi-play" variant="text"></v-btn>
-              </v-card-actions>
-            </div>
-
-            <v-avatar class="ma-3" size="125" rounded="0">
-              <v-img
-                src="https://cdn.vuetifyjs.com/images/cards/halcyon.png"
-              ></v-img>
-            </v-avatar>
-          </div>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
