@@ -28,6 +28,7 @@ const routes = [
         component: () => import("@/views/Admin/DashboardView.vue"),
         meta: {
           title: "Dashboard",
+          iconClass: "fas fa-th-large",
         },
       },
       {
@@ -36,6 +37,7 @@ const routes = [
         component: () => import("@/views/Admin/ProjectsView.vue"),
         meta: {
           title: "Projects",
+          iconClass: "fas fa-bookmark",
         },
       },
     ],

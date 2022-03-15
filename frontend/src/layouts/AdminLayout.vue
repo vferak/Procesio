@@ -2,6 +2,9 @@
 import AdminNavbar from "@/components/navbars/AdminNavbar.vue";
 </script>
 <template>
-  <AdminNavbar></AdminNavbar>
-  <router-view />
+  <div class="h-screen drawer drawer-mobile w-full">
+    <AdminNavbar>
+      <router-view />
+    </AdminNavbar>
+  </div>
 </template>
