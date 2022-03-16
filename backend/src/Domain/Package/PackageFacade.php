@@ -19,17 +19,13 @@ class PackageFacade
         return $this->packageRepository->getPackageByUuid($id);
     }
 
-    /*public function getPackageByEmail(string $email): Package {
-        return $this->packageRepository->getPackageByName($email);
-    }*/
-
     public function addProcessToPackage(Package $package, Process $process): Package
     {
         $package = $package->addProcessToPackage($process);
         return $this->packageRepository->persistPackage($package);
     }
 
-    public function createWorkspace(PackageData $packageData): Package
+    public function createPackage(PackageData $packageData): Package
     {
         $package = new Package($packageData);
 

@@ -20,7 +20,6 @@ final class Version20220314204001 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE project_processes (process_uuid CHAR(36) NOT NULL, project_uuid CHAR(36) NOT NULL, state CHAR(36) DEFAULT NULL, INDEX IDX_B514DB9B3E968293 (process_uuid), INDEX IDX_B514DB9BE8EE98BE (project_uuid), INDEX IDX_B514DB9BA393D2FB (state), PRIMARY KEY(process_uuid, project_uuid)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE project_processes ADD CONSTRAINT FK_B514DB9B3E968293 FOREIGN KEY (process_uuid) REFERENCES process (uuid)');
         $this->addSql('ALTER TABLE project_processes ADD CONSTRAINT FK_B514DB9BE8EE98BE FOREIGN KEY (project_uuid) REFERENCES project (uuid)');
         $this->addSql('ALTER TABLE project_processes ADD CONSTRAINT FK_B514DB9BA393D2FB FOREIGN KEY (state) REFERENCES state (uuid)');

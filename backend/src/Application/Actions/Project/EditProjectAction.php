@@ -16,10 +16,11 @@ class EditProjectAction extends ProjectAction
     protected function action(): Response
     {
         $project = null;
-        $request = $this->request->getParsedBody();
+        $request = $this->getFormData();
         try {
-            $project = $this->projectFacade->getProjectByUuid($request['uuid']);
+            $project = $this->projectFacade->getProjectByUuid($request->uuid);
 
+            // Project se muze menit package ale nesmi byt null!!!
             if (empty($request['workspace'])) {
                 $workspace = $request['workspace'] ?? $project->getWorkspace();
             } else {

@@ -22,7 +22,7 @@ class CreateWorkspaceAction extends WorkspaceAction
         $description = $request['description'];
         $workspaceData = new WorkspaceData($name, $description);
 
-        $this->workspaceFacade->registerWorkspace($workspaceData);
+        $this->workspaceFacade->createWorkspace($workspaceData);
 
         return $this->respondWithData(statusCode: 201);
 

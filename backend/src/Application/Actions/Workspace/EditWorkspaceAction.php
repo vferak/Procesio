@@ -17,13 +17,14 @@ class EditWorkspaceAction extends WorkspaceAction
     protected function action(): Response
     {
         $workspace = null;
-        $request = $this->request->getParsedBody();
+        $request = $this->getFormData();
+
         try {
-            $workspace = $this->workspaceFacade->getWorkspaceByUuid($request['uuid']);
+            $workspace = $this->workspaceFacade->getWorkspaceByUuid($request->uuid);
 
             $workspaceData = new WorkspaceData(
-                $request['name'] ?? $workspace->getName(),
-                $request['description'] ?? $workspace->getDescription()
+                $request->name ?? $workspace->getName(),
+                $request->description ?? $workspace->getDescription()
             );
 
             $this->workspaceFacade->editWorkspace($workspace, $workspaceData);

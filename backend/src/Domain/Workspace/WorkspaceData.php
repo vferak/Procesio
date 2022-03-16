@@ -12,7 +12,6 @@ class WorkspaceData
     public function __construct(
         private string $name,
         private string $description,
-        //private mixed $users
     ) {
     }
 
@@ -37,11 +36,4 @@ class WorkspaceData
         return $this->description;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUsers(): mixed
-    {
-        return $this->users;
-    }
 }

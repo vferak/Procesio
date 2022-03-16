@@ -45,7 +45,7 @@ class WorkspaceFacade
         $this->entityManager->flush();
     }
 
-    public function registerWorkspace(WorkspaceData $workspace): Workspace
+    public function createWorkspace(WorkspaceData $workspace): Workspace
     {
         $workspace = new Workspace($workspace);
 

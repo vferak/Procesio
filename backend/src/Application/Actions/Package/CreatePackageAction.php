@@ -25,8 +25,7 @@ class CreatePackageAction extends PackageAction
         }
 
         $packageData = new PackageData($name, $description, $workspace, $comesFrom);
-
-        $this->packageFacade->createWorkspace($packageData);
+        $this->packageFacade->createPackage($packageData);
 
         return $this->respondWithData(statusCode: 201);
     }

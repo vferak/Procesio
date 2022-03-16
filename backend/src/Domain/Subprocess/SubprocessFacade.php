@@ -27,7 +27,7 @@ class SubprocessFacade
         return $this->packageRepository->getPackageByName($email);
     }*/
 
-    public function createProcess(SubprocessData $subprocessData): Subprocess
+    public function createSubprocess(SubprocessData $subprocessData): Subprocess
     {
         $subprocess = new Subprocess($subprocessData);
 

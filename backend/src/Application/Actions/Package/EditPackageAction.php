@@ -16,13 +16,22 @@ class EditPackageAction extends PackageAction
     protected function action(): Response
     {
         $package = null;
-        $request = $this->request->getParsedBody();
+        $request = $this->getFormData();
         try {
-            $package = $this->packageFacade->getPackageByUuid($request['uuid']);
+            $package = $this->packageFacade->getPackageByUuid($request->uuid);
+
+            $workspace = $this->workspaceFacade->getWorkspaceByUuid($request->workspace);
+            $comesFrom = $request->comesFrom ?? null;
+
+            if ($comesFrom !== null) {
+                $comesFrom = $this->packageFacade->getPackageByUuid($comesFrom);
+            }
 
             $packageData = new PackageData(
-                $request['name'] ?? $package->getName(),
-                $request['description'] ?? $package->getDescription()
+                $request->name ?? $package->getName(),
+                $request->description ?? $package->getDescription(),
+                $workspace,
+                $comesFrom
             );
 
             $this->packageFacade->editPackage($package, $packageData);

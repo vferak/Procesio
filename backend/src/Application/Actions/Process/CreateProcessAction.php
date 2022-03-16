@@ -14,19 +14,15 @@ class CreateProcessAction extends ProcessAction
 
     protected function action(): Response
     {
-        //prijmou data z requestu a poslat do facade nic se zde s nima nedela
         $request = $this->request->getParsedBody();
 
         $name = $request['name'];
-        //$password = $request['password'];
-        //TODO dodelat prametry
-        $processData = new ProcessData($name);
+        $description = $request['description'];
+        $comesFrom = $request['comesFrom'] ?? null;
 
+        $processData = new ProcessData($name,$description,$comesFrom);
         $this->processFacade->createProcess($processData);
 
         return $this->respondWithData(statusCode: 201);
-
-
-        //zavolat facade
     }
 }

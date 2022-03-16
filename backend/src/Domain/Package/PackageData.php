@@ -12,7 +12,7 @@ class PackageData
         private string $name,
         private string $description,
         private Workspace $workspace,
-        private Package $comesFrom
+        private ?Package $comesFrom
     ) {
     }
 
@@ -26,7 +26,7 @@ class PackageData
         return $this->description;
     }
 
-    public function getComesFrom(): Package
+    public function getComesFrom(): ?Package
     {
         return $this->comesFrom;
     }

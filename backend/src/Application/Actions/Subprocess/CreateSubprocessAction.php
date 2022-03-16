@@ -14,18 +14,16 @@ class CreateSubprocessAction extends SubprocessAction
 
     protected function action(): Response
     {
-        //prijmou data z requestu a poslat do facade nic se zde s nima nedela
         $request = $this->request->getParsedBody();
 
         $name = $request['name'];
-        //$password = $request['password'];
-        $subprocessData = new SubprocessData($name);
+        $description = $request['description'];
+        $process = $this->processFacade->getProcessByUuid($request['process']);
+        $comesFrom = $request['comesFrom'] ?? null;
+        $subprocessData = new SubprocessData($name,$description,$process,$comesFrom);
 
-        $this->subprocessFacade->createProcess($subprocessData);
+        $this->subprocessFacade->createSubprocess($subprocessData);
 
         return $this->respondWithData(statusCode: 201);
-
-
-        //zavolat facade
     }
 }
