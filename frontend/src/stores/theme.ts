@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 
 interface ThemeStore {
   setTheme(): void;
+  setDefaultTheme(): void;
   getCurrentTheme(): string;
   toggleTheme(): void;
   getCheckboxValue(): boolean;
@@ -34,12 +35,20 @@ export const useThemeStore = defineStore<"theme", ThemeStore>("theme", () => {
     }
   };
 
+  const setDefaultTheme = (): void => {
+    const htmlElement = document.querySelector("html");
+    if (htmlElement !== null) {
+      htmlElement.dataset.theme = lightTheme;
+    }
+  };
+
   const getCheckboxValue = (): boolean => {
     return getCurrentTheme() != lightTheme;
   };
 
   return {
     setTheme,
+    setDefaultTheme,
     getCurrentTheme,
     toggleTheme,
     getCheckboxValue,
