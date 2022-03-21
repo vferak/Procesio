@@ -4,6 +4,7 @@ import { useAuthStore } from "@/stores/auth";
 import { ref } from "vue";
 import AuthRepository from "@/api/auth";
 import { useRouter } from "vue-router";
+import AlertError from "@/components/alerts/AlertError.vue";
 
 const authStore = useAuthStore();
 const dialogStore = useDialogStore();
@@ -45,6 +46,7 @@ const logIn = function (): void {
   <label for="my-modal" class="modal cursor-pointer">
     <label class="modal-box relative" for="">
       <form @submit.prevent="logIn">
+        <AlertError v-if="invalidCredentials" :text="'Invalid credentials!'" />
         <div class="form-control w-full">
           <label class="label">
             <span class="label-text">E-mail</span>
