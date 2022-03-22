@@ -1,4 +1,4 @@
-import { defineStore } from "pinia";
+import { acceptHMRUpdate, defineStore } from "pinia";
 import { ref } from "vue";
 
 export const useMetaStore = defineStore("meta", () => {
@@ -21,3 +21,7 @@ export const useMetaStore = defineStore("meta", () => {
     setTitle: SetTitle,
   };
 });
+
+if (import.meta.hot) {
+  import.meta.hot.accept(acceptHMRUpdate(useMetaStore, import.meta.hot));
+}

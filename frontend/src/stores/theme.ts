@@ -1,4 +1,4 @@
-import { defineStore } from "pinia";
+import { acceptHMRUpdate, defineStore } from "pinia";
 
 interface ThemeStore {
   setTheme(): void;
@@ -54,3 +54,7 @@ export const useThemeStore = defineStore<"theme", ThemeStore>("theme", () => {
     getCheckboxValue,
   };
 });
+
+if (import.meta.hot) {
+  import.meta.hot.accept(acceptHMRUpdate(useThemeStore, import.meta.hot));
+}
