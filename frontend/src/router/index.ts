@@ -2,7 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import LandingView from "@/views/LandingView.vue";
 import LandingLayout from "@/layouts/LandingLayout.vue";
 import { useAuthStore } from "@/stores/auth";
-import { useDialogStore } from "@/stores/dialog";
+import { useModalStore } from "@/stores/modal";
+import type { ModalStore } from "@/stores/modal";
 import { useMetaStore } from "@/stores/meta";
 
 const routes = [
@@ -68,14 +69,14 @@ router.beforeEach((to, from, next) => {
   document.title = metaStore.getSiteTitle();
 
   const authStore = useAuthStore();
-  const dialogStore = useDialogStore();
+  const modalStore: ModalStore = useModalStore();
 
   const publicPages = ["/"];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = authStore.isAuthenticated();
 
   if (authRequired && !loggedIn) {
-    dialogStore.openDialog();
+    modalStore.openModal();
     next("/");
   } else {
     next();

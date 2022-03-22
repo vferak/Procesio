@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import LogInModal from "@/components/dialogs/LogInDialog.vue";
-import { useDialogStore } from "@/stores/dialog";
+import LogInModal from "@/components/modals/LogInModal.vue";
+import { useModalStore } from "@/stores/modal";
 import { useAuthStore } from "@/stores/auth";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-const dialogStore = useDialogStore();
+const modalStore = useModalStore();
 const authStore = useAuthStore();
 </script>
 
@@ -84,10 +84,9 @@ const authStore = useAuthStore();
             >
           </li>
         </ul>
-        <label for="my-modal" class="btn modal-button">Log in</label>
+        <LogInModal />
       </div>
     </div>
     <hr class="border-b border-gray-100 opacity-25 my-0 py-0" />
   </nav>
-  <LogInModal></LogInModal>
 </template>
