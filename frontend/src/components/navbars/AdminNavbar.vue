@@ -12,7 +12,7 @@ const currentRoute = useRoute();
 const routes = router
   .getRoutes()
   .filter((route) => route.path === "/admin")
-  .pop()?.children;
+  .pop()?.children.filter((route) => route.meta?.navIconClass !== undefined);
 
 const logout = () => {
   authStore.logOut();
@@ -79,10 +79,10 @@ const logout = () => {
         <li v-for="route in routes" :key="route.name">
           <a
             class="flex"
-            :class="{ active: route.name === currentRoute.name }"
+            :class="{ active: currentRoute.path.includes(route.path) }"
             @click="router.push({ name: route.name })"
           >
-            <i class="flex-none" :class="route.meta.iconClass"></i>
+            <i class="flex-none" :class="route.meta.navIconClass"></i>
             <span class="flex-1">{{ route.meta.title }}</span>
           </a>
         </li>

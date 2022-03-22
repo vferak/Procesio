@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto h-full px-8">
+  <div class="container mx-auto h-full">
     <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
 
       <div class="card w-full bg-primary text-primary-content">

@@ -3,7 +3,7 @@ import LandingView from "@/views/LandingView.vue";
 import LandingLayout from "@/layouts/LandingLayout.vue";
 import { useAuthStore } from "@/stores/auth";
 import { useDialogStore } from "@/stores/dialog";
-import {useMetaStore} from "@/stores/meta";
+import { useMetaStore } from "@/stores/meta";
 
 const routes = [
   {
@@ -28,16 +28,24 @@ const routes = [
         component: () => import("@/views/Admin/DashboardView.vue"),
         meta: {
           title: "Dashboard",
-          iconClass: "fas fa-th-large",
+          navIconClass: "fas fa-th-large",
         },
       },
       {
         path: "/admin/projects",
         name: "projects",
-        component: () => import("@/views/Admin/ProjectsView.vue"),
+        component: () => import("@/views/Admin/Projects/ProjectsView.vue"),
         meta: {
           title: "Projects",
-          iconClass: "fas fa-bookmark",
+          navIconClass: "fas fa-bookmark",
+        },
+      },
+      {
+        path: "/admin/projects/create",
+        name: "createProject",
+        component: () => import("@/views/Admin/Projects/CreateProjectView.vue"),
+        meta: {
+          title: "Create project",
         },
       },
     ],
