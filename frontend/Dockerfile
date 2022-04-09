@@ -1,8 +1,8 @@
-FROM node:16-buster
+FROM cypress/base:16.14.2
 
 WORKDIR /var/www
 
-USER www-data
+USER node
 
 EXPOSE 8080
 
