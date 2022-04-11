@@ -67,6 +67,7 @@ const submitForm = function (): void {
             type="text"
             placeholder="Type here"
             class="input input-bordered w-full"
+            name="loginEmail"
             required
           />
         </div>
@@ -79,11 +80,12 @@ const submitForm = function (): void {
             type="password"
             placeholder="Type here"
             class="input input-bordered w-full"
+            name="loginPassword"
             required
           />
         </div>
         <div class="flex justify-center">
-          <input type="submit" class="btn mt-6" />
+          <input type="submit" name="loginSubmit" class="btn mt-6" />
         </div>
       </form>
     </label>

@@ -49,6 +49,23 @@ const routes = [
           title: "Create project",
         },
       },
+      {
+        path: "/admin/packages",
+        name: "packages",
+        component: () => import("@/views/Admin/Packages/PackagesView.vue"),
+        meta: {
+          title: "Packages",
+          navIconClass: "fas fa-cubes",
+        },
+      },
+      {
+        path: "/admin/packages/create",
+        name: "createPackage",
+        component: () => import("@/views/Admin/Packages/CreatePackageView.vue"),
+        meta: {
+          title: "Create package",
+        },
+      },
     ],
   },
 ];

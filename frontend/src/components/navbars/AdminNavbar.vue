@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from "vue-router";
+import type { RouteRecordName } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 import { useMetaStore } from "@/stores/meta";
 import ThemeSwap from "@/components/swaps/ThemeSwap.vue";
+import { ref } from "vue";
 
 const metaStore = useMetaStore();
 const authStore = useAuthStore();
@@ -12,7 +14,15 @@ const currentRoute = useRoute();
 const routes = router
   .getRoutes()
   .filter((route) => route.path === "/admin")
-  .pop()?.children.filter((route) => route.meta?.navIconClass !== undefined);
+  .pop()
+  ?.children.filter((route) => route.meta?.navIconClass !== undefined);
+
+const isNavDrawerOpen = ref<boolean>(false);
+
+const redirectAndCloseNavDrawer = (route: RouteRecordName): void => {
+  router.push({ name: route });
+  isNavDrawerOpen.value = false;
+};
 
 const logout = () => {
   authStore.logOut();
@@ -24,7 +34,12 @@ const logout = () => {
 </script>
 
 <template>
-  <input id="navigation-drawer" type="checkbox" class="drawer-toggle" />
+  <input
+    v-model="isNavDrawerOpen"
+    id="navigation-drawer"
+    type="checkbox"
+    class="drawer-toggle"
+  />
   <div class="drawer-content flex flex-col">
     <div class="navbar bg-base-100 mb-8 shadow-xl">
       <div class="flex-none lg:hidden">
@@ -80,7 +95,7 @@ const logout = () => {
           <a
             class="flex"
             :class="{ active: currentRoute.path.includes(route.path) }"
-            @click="router.push({ name: route.name })"
+            @click="redirectAndCloseNavDrawer(route.name)"
           >
             <i class="flex-none" :class="route.meta.navIconClass"></i>
             <span class="flex-1">{{ route.meta.title }}</span>

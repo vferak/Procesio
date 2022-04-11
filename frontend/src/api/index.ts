@@ -1,3 +1,5 @@
+export * from "./package/package";
+
 import Axios from "axios";
 import type { AxiosInstance } from "axios";
 
@@ -8,18 +10,18 @@ const axios: AxiosInstance = Axios.create({
   headers: headers,
 });
 
-axios.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response.statusCode >= 500) {
-      console.log(error.response.data);
-      console.log(error.response.headers);
-
-      // store.commit("throwError");
-    }
-    return Promise.reject(error);
-  }
-);
+// axios.interceptors.response.use(
+//   (response) => response,
+//   (error) => {
+//     if (error.response.statusCode >= 500) {
+//       console.log(error.response.data);
+//       console.log(error.response.headers);
+//
+//       // store.commit("throwError");
+//     }
+//     return Promise.reject(error);
+//   }
+// );
 
 export type ResponseType = {
   statusCode: number;

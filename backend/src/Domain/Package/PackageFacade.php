@@ -14,6 +14,14 @@ class PackageFacade
     ) {
     }
 
+    /**
+     * @return Package[]
+     */
+    public function findPackages(): array
+    {
+        return $this->packageRepository->findAll();
+    }
+
     public function getPackageByUuid(string $id): Package
     {
         return $this->packageRepository->getPackageByUuid($id);

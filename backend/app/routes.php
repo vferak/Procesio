@@ -6,6 +6,7 @@ use Procesio\Application\Actions\Authentication\RegisterAction;
 use Procesio\Application\Actions\Package\AddProcessToPackageAction;
 use Procesio\Application\Actions\Package\CreatePackageAction;
 use Procesio\Application\Actions\Package\EditPackageAction;
+use Procesio\Application\Actions\Package\ListPackagesAction;
 use Procesio\Application\Actions\Package\ViewPackageAction;
 use Procesio\Application\Actions\Process\CreateNewVersionProcessAction;
 use Procesio\Application\Actions\Process\CreateProcessAction;
@@ -63,6 +64,7 @@ return function (App $app) {
         });
 
         $group->group('/package',function (Group $group) {
+            $group->get('', ListPackagesAction::class);
             $group->get('/{id}', ViewPackageAction::class);
             $group->post('', CreatePackageAction::class);
             $group->put('/{id}', EditPackageAction::class);
