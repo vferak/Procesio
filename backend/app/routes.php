@@ -56,7 +56,7 @@ return function (App $app) {
 
         $group->group('/workspace',function (Group $group) {
             $group->get('/{id}', ViewWorkspaceAction::class);
-            $group->post('/', CreateWorkspaceAction::class);
+            $group->post('', CreateWorkspaceAction::class);
             $group->post('/addUserToWorkspace', AddUserToWorkspaceAction::class);
             $group->put('/{id}', EditWorkspaceAction::class);
             $group->delete('/{id}', DeleteWorkspaceAction::class);
@@ -64,7 +64,7 @@ return function (App $app) {
 
         $group->group('/package',function (Group $group) {
             $group->get('/{id}', ViewPackageAction::class);
-            $group->post('/', CreatePackageAction::class);
+            $group->post('', CreatePackageAction::class);
             $group->put('/{id}', EditPackageAction::class);
             $group->post('/addProcessToPackage', AddProcessToPackageAction::class);
             //$group->delete('/{id}', RegisterAction::class);
@@ -72,14 +72,14 @@ return function (App $app) {
 
         $group->group('/project',function (Group $group) {
             $group->get('/{id}', ViewProjectAction::class);
-            $group->post('/', CreateProjectAction::class);
+            $group->post('', CreateProjectAction::class);
             $group->put('/{id}', EditProjectAction::class);
             //$group->delete('/{id}', RegisterAction::class);
         });
 
         $group->group('/process',function (Group $group) {
             $group->get('/{id}', ViewProcessAction::class);
-            $group->post('/', CreateProcessAction::class);
+            $group->post('', CreateProcessAction::class);
             $group->put('/{id}', EditProcessAction::class);
             $group->post('/newversion', CreateNewVersionProcessAction::class);
             $group->get('/displayhistory/{id}', ViewHistoryProcessAction::class);
@@ -89,7 +89,7 @@ return function (App $app) {
 
         $group->group('/subprocess',function (Group $group) {
             $group->get('/{id}', ViewSubprocessAction::class);
-            $group->post('/', CreateSubprocessAction::class);
+            $group->post('', CreateSubprocessAction::class);
             $group->put('/{id}', EditSubprocessAction::class);
             $group->get('/displayhistory/{id}', ViewHistorySubprocessAction::class);
             $group->get('/displayparent/{id}', ViewParentSubprocessAction::class);
