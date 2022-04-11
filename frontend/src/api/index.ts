@@ -1,8 +1,9 @@
 import Axios from "axios";
+import type { AxiosInstance } from "axios";
 
 const headers = {};
 
-const axios = Axios.create({
+const axios: AxiosInstance = Axios.create({
   baseURL: "http://localhost:8081/v1",
   headers: headers,
 });
@@ -10,7 +11,7 @@ const axios = Axios.create({
 axios.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response.status >= 500) {
+    if (error.response.statusCode >= 500) {
       console.log(error.response.data);
       console.log(error.response.headers);
 
@@ -20,13 +21,27 @@ axios.interceptors.response.use(
   }
 );
 
-const Api = {
-  get(url: string) {
-    return axios.get(url);
-  },
-  post(url: string, formData: FormData) {
-    return axios.post(url, formData);
-  },
+export type ResponseType = {
+  statusCode: number;
+  data: any;
 };
 
-export default Api;
+export interface ApiInterface {
+  get(url: string): Promise<ResponseType>;
+  post(url: string, formData: FormData): Promise<ResponseType>;
+}
+
+export const useApi = (): ApiInterface => {
+  const get = (url: string): Promise<ResponseType> => {
+    return axios.get(url);
+  };
+
+  const post = (url: string, formData: FormData): Promise<ResponseType> => {
+    return axios.post(url, formData);
+  };
+
+  return {
+    get,
+    post,
+  };
+};

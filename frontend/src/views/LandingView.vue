@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import RegisterModal from "@/components/modals/RegisterModal.vue";
+</script>
+
 <template>
   <div class="text-white">
     <!--Hero-->
@@ -18,7 +22,7 @@
           <p class="leading-normal text-2xl mb-8">
             Easily create, edit and upgrade your current processes with Procesio!
           </p>
-          <label class="btn btn-primary modal-button">Register</label>
+          <RegisterModal />
         </div>
         <!--Right Col-->
         <div class="w-full md:w-3/5 py-6 text-center">
