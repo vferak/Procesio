@@ -13,6 +13,16 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace Cypress {
+    interface Chainable<Subject> {
+      login(): Chainable<Subject>;
+      openNavDrawer(): Chainable<Subject>;
+    }
+  }
+}
+
 // Import commands.js using ES2015 syntax:
 import "./commands";
 

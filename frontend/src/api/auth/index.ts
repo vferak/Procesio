@@ -1,6 +1,5 @@
 import { useApi } from "@/api";
-import type { ApiInterface } from "@/api";
-import type { ResponseType } from "@/api";
+import type { ApiInterface, ResponseType } from "@/api";
 
 export interface AuthRepositoryInterface {
   authenticate(email: string, password: string): Promise<ResponseType>;
