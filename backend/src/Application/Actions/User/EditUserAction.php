@@ -20,7 +20,6 @@ class EditUserAction extends UserAction
 
         try {
             $user = $this->userFacade->getUserByUuid($request['uuid']);
-            print_r($user);
 
             $userData = new UserData(
                 $request['email'] ?? $user->getEmail(),

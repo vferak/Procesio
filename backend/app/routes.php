@@ -52,14 +52,14 @@ return function (App $app) {
 
         $group->group('/users', function (Group $group) {
             $group->get('/{id}', ViewUserAction::class);
-            $group->put('/{id}', EditUserAction::class);
+            $group->post('/{id}', EditUserAction::class);
         });
 
         $group->group('/workspace',function (Group $group) {
             $group->get('/{id}', ViewWorkspaceAction::class);
             $group->post('', CreateWorkspaceAction::class);
             $group->post('/addUserToWorkspace', AddUserToWorkspaceAction::class);
-            $group->put('/{id}', EditWorkspaceAction::class);
+            $group->post('/{id}', EditWorkspaceAction::class);
             $group->delete('/{id}', DeleteWorkspaceAction::class);
         });
 
@@ -67,23 +67,23 @@ return function (App $app) {
             $group->get('', ListPackagesAction::class);
             $group->get('/{id}', ViewPackageAction::class);
             $group->post('', CreatePackageAction::class);
-            $group->put('/{id}', EditPackageAction::class);
             $group->post('/addProcessToPackage', AddProcessToPackageAction::class);
+            $group->post('/{id}', EditPackageAction::class);
             //$group->delete('/{id}', RegisterAction::class);
         });
 
         $group->group('/project',function (Group $group) {
             $group->get('/{id}', ViewProjectAction::class);
             $group->post('', CreateProjectAction::class);
-            $group->put('/{id}', EditProjectAction::class);
+            $group->post('/{id}', EditProjectAction::class);
             //$group->delete('/{id}', RegisterAction::class);
         });
 
         $group->group('/process',function (Group $group) {
             $group->get('/{id}', ViewProcessAction::class);
             $group->post('', CreateProcessAction::class);
-            $group->put('/{id}', EditProcessAction::class);
             $group->post('/newversion', CreateNewVersionProcessAction::class);
+            $group->post('/{id}', EditProcessAction::class);
             $group->get('/displayhistory/{id}', ViewHistoryProcessAction::class);
             $group->get('/displayparent/{id}', ViewParentProcessAction::class);
             //$group->delete('/{id}', RegisterAction::class);
@@ -92,7 +92,7 @@ return function (App $app) {
         $group->group('/subprocess',function (Group $group) {
             $group->get('/{id}', ViewSubprocessAction::class);
             $group->post('', CreateSubprocessAction::class);
-            $group->put('/{id}', EditSubprocessAction::class);
+            $group->post('/{id}', EditSubprocessAction::class);
             $group->get('/displayhistory/{id}', ViewHistorySubprocessAction::class);
             $group->get('/displayparent/{id}', ViewParentSubprocessAction::class);
             //$group->delete('/{id}', RegisterAction::class);

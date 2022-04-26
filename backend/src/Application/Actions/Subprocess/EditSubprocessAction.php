@@ -17,9 +17,10 @@ class EditSubprocessAction extends SubprocessAction
     {
         $subprocess = null;
         $request = $this->request->getParsedBody();
+        $subprocessUuid = $this->resolveArg('id');
 
         try {
-            $subprocess = $this->subprocessFacade->getSubprocessByUuid($request['uuid']);
+            $subprocess = $this->subprocessFacade->getSubprocessByUuid($subprocessUuid);
             $exists_comesFrom = array_key_exists('comesFrom', $request);
             if ($exists_comesFrom) {
                 if ($request['comesFrom'] == null) {

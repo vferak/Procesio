@@ -16,18 +16,19 @@ class EditProcessAction extends ProcessAction
      */
     protected function action(): Response
     {
-        $request = $this->getFormData();
+        $request = $this->request->getParsedBody();
+        $processUuid = $this->resolveArg('id');
 
         try {
-            $process = $this->processFacade->getProcessByUuid($request->uuid);
+            $process = $this->processFacade->getProcessByUuid($processUuid);
         } catch (DomainObjectNotFoundException $exception) {
             return $this->respondWithData($exception->getMessage(), 404);
         }
         $comesFrom = $process->getComesFrom();
 
         $processData = new ProcessData(
-            $request->name ?? $process->getName(),
-            $request->description ?? $process->getDescription(),
+            $request["name"] ?? $process->getName(),
+            $request["description"] ?? $process->getDescription(),
             $comesFrom
         );
 
