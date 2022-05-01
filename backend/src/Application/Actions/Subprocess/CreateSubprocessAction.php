@@ -4,7 +4,6 @@ namespace Procesio\Application\Actions\Subprocess;
 
 use Procesio\Domain\Subprocess\SubprocessData;
 use Psr\Http\Message\ResponseInterface as Response;
-use Slim\Exception\HttpBadRequestException;
 
 class CreateSubprocessAction extends SubprocessAction
 {
@@ -19,7 +18,16 @@ class CreateSubprocessAction extends SubprocessAction
         $name = $request['name'];
         $description = $request['description'];
         $process = $this->processFacade->getProcessByUuid($request['process']);
-        $comesFrom = $request['comesFrom'] ?? null;
+
+        $comesFrom = $request['comesFrom'];
+
+        if (empty($comesFrom)) {
+            $comesFrom = null;
+        } else {
+            $comesFrom = $this->subprocessFacade->getSubprocessByUuid($comesFrom);
+        }
+
+
         $subprocessData = new SubprocessData($name,$description,$process,$comesFrom);
 
         $this->subprocessFacade->createSubprocess($subprocessData);

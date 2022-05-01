@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Procesio\Application\Actions\Workspace;
 
 use Procesio\Domain\Exceptions\DomainObjectNotFoundException;
-use Procesio\Domain\Package\PackageData;
 use Procesio\Domain\Workspace\WorkspaceData;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -23,9 +22,17 @@ class EditWorkspaceAction extends WorkspaceAction
         try {
             $workspace = $this->workspaceFacade->getWorkspaceByUuid($workspaceUuid);
 
+            if($workspace->getUser() !== null)
+            {
+                $user = $workspace->getUser();
+            } else{
+                $user = null;
+            }
+
             $workspaceData = new WorkspaceData(
                 $request["name"] ?? $workspace->getName(),
-                $request["description"] ?? $workspace->getDescription()
+                $request["description"] ?? $workspace->getDescription(),
+                $user
             );
 
             $this->workspaceFacade->editWorkspace($workspace, $workspaceData);

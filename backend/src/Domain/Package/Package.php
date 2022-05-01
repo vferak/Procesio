@@ -61,6 +61,7 @@ class Package implements JsonSerializable
         //TODO: popřemýšlet jestli se tady bude updatovat i comes_from nebo az v jiné metodě
         $this->name = $packageData->getName();
         $this->description = $packageData->getDescription();
+        $this->workspace = $packageData->getWorkspace();
     }
 
     public function jsonSerialize(): array

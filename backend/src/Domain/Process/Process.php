@@ -7,6 +7,9 @@ namespace Procesio\Domain\Process;
 use Doctrine\Common\Collections\ArrayCollection;
 use JsonSerializable;
 use Procesio\Domain\Package\Package;
+use Procesio\Domain\Project\Project;
+use Procesio\Domain\ProjectProcess\ProjectProcessData;
+use Procesio\Domain\State\State;
 use Procesio\Domain\Subprocess\Subprocess;
 use Procesio\Domain\UuidDomainObjectTrait;
 
@@ -114,12 +117,6 @@ class Process implements JsonSerializable
     {
         return $this->packages->toArray();
     }
-/*
-
-    public function getSubprocesses(): array
-    {
-        return $this->packages->toArray();
-    }*/
 
     public function addPackage(Package $package): self
     {
@@ -134,4 +131,5 @@ class Process implements JsonSerializable
     {
         return $this->subprocesses->toArray();
     }
+
 }

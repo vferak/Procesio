@@ -8,6 +8,7 @@ use Procesio\Application\Actions\Package\CreatePackageAction;
 use Procesio\Application\Actions\Package\EditPackageAction;
 use Procesio\Application\Actions\Package\ListPackagesAction;
 use Procesio\Application\Actions\Package\ViewPackageAction;
+use Procesio\Application\Actions\Process\ChangeStatusProcessAction;
 use Procesio\Application\Actions\Process\CreateNewVersionProcessAction;
 use Procesio\Application\Actions\Process\CreateProcessAction;
 use Procesio\Application\Actions\Process\EditProcessAction;
@@ -19,6 +20,7 @@ use Procesio\Application\Actions\Project\CreateProjectAction;
 use Procesio\Application\Actions\Project\EditProjectAction;
 use Procesio\Application\Actions\Project\ListProjectsAction;
 use Procesio\Application\Actions\Project\ViewProjectAction;
+use Procesio\Application\Actions\Subprocess\ChangeStatusSubprocessAction;
 use Procesio\Application\Actions\Subprocess\CreateSubprocessAction;
 use Procesio\Application\Actions\Subprocess\EditSubprocessAction;
 use Procesio\Application\Actions\Subprocess\ViewHistorySubprocessAction;
@@ -99,6 +101,24 @@ return function (App $app) {
             $group->post('/{id}', EditSubprocessAction::class);
             $group->get('/displayhistory/{id}', ViewHistorySubprocessAction::class);
             $group->get('/displayparent/{id}', ViewParentSubprocessAction::class);
+            //$group->delete('/{id}', RegisterAction::class);
+        });
+
+        $group->group('/projectProcess',function (Group $group) {
+            //$group->get('/{id}', ViewSubprocessAction::class);
+           // $group->post('', CreateSubprocessAction::class);
+            $group->post('/changeStatus', ChangeStatusProcessAction::class);
+            //$group->get('/displayhistory/{id}', ViewHistorySubprocessAction::class);
+            //$group->get('/displayparent/{id}', ViewParentSubprocessAction::class);
+            //$group->delete('/{id}', RegisterAction::class);
+        });
+
+        $group->group('/projectSubprocess',function (Group $group) {
+            //$group->get('/{id}', ViewSubprocessAction::class);
+            // $group->post('', CreateSubprocessAction::class);
+            $group->post('/changeStatus', ChangeStatusSubprocessAction::class);
+            //$group->get('/displayhistory/{id}', ViewHistorySubprocessAction::class);
+            //$group->get('/displayparent/{id}', ViewParentSubprocessAction::class);
             //$group->delete('/{id}', RegisterAction::class);
         });
 

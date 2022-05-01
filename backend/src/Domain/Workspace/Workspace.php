@@ -57,10 +57,10 @@ class Workspace implements JsonSerializable
 
     public function edit(WorkspaceData $workspaceData): void
     {
-        //TODO: zamyslet se jestli update useru v tomto danem workspacu?
         $this->name = $workspaceData->getName();
         $this->description = $workspaceData->getDescription();
-        //$this->users = $workspaceData->getUsers();
+        //TODO: zamyslet se jestli update useru v tomto danem workspacu?
+        //$this->users = $workspaceData->getUser();
     }
 
 

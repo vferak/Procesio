@@ -7,6 +7,7 @@ namespace Procesio\Domain\State;
 class StateData
 {
     public function __construct(
+        private string $uuid,
         private string $name
     ) {
     }
@@ -19,5 +20,12 @@ class StateData
         return $this->name;
     }
 
+    /**
+     * @return string
+     */
+    public function getUuid(): string
+    {
+        return $this->uuid;
+    }
 
 }

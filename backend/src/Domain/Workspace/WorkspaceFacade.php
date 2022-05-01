@@ -45,9 +45,9 @@ class WorkspaceFacade
         $this->entityManager->flush();
     }
 
-    public function createWorkspace(WorkspaceData $workspace): Workspace
+    public function createWorkspace(WorkspaceData $workspaceData): Workspace
     {
-        $workspace = new Workspace($workspace);
+        $workspace = new Workspace($workspaceData);
         return $this->workspaceRepository->persistWorkspace($workspace);
     }
 

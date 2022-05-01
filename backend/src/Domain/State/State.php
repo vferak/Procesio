@@ -13,7 +13,11 @@ use Procesio\Domain\UuidDomainObjectTrait;
  */
 class State implements JsonSerializable
 {
-    use UuidDomainObjectTrait;
+    /**
+     * @Column(type="string", name="uuid", length=36, options={"fixed": true})
+     * @Id
+     */
+    private string $uuid;
 
     /** @Column(type="string", name="name") */
     private string $name;
@@ -21,7 +25,7 @@ class State implements JsonSerializable
 
     public function __construct(StateData $stateData)
     {
-        $this->generateAndSetUuid();
+        $this->uuid = $stateData->
         $this->name = $stateData->getName();
     }
 
@@ -33,6 +37,11 @@ class State implements JsonSerializable
         ];
     }
 
+    public function getUuid(): string
+    {
+        return $this->uuid;
+    }
+
     /**
      * @return string
      */
@@ -40,5 +49,4 @@ class State implements JsonSerializable
     {
         return $this->name;
     }
-
 }

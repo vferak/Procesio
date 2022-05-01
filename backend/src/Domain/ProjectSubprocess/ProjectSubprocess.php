@@ -6,6 +6,7 @@ namespace Procesio\Domain\ProjectSubprocess;
 
 use JsonSerializable;
 use Procesio\Domain\Project\Project;
+use Procesio\Domain\ProjectProcess\ProjectProcessData;
 use Procesio\Domain\State\State;
 use Procesio\Domain\Subprocess\Subprocess;
 
@@ -42,6 +43,8 @@ class ProjectSubprocess implements JsonSerializable
         $this->project = $projectSubprocessData->getProject();
         $this->state = $projectSubprocessData->getState();
 
+        $this->changeState($projectSubprocessData);
+
     }
 
     public function jsonSerialize(): array
@@ -75,6 +78,11 @@ class ProjectSubprocess implements JsonSerializable
     public function getState(): State
     {
         return $this->state;
+    }
+
+    public function changeState(ProjectSubprocessData $projectSubprocessData): void
+    {
+        $this->state = $projectSubprocessData->getState();
     }
 
 }

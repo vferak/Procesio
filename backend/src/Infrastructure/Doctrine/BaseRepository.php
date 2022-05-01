@@ -12,6 +12,9 @@ use Procesio\Domain\Exceptions\DomainObjectNotFoundException;
 use Procesio\Domain\Package\Package;
 use Procesio\Domain\Process\Process;
 use Procesio\Domain\Project\Project;
+use Procesio\Domain\ProjectProcess\ProjectProcess;
+use Procesio\Domain\ProjectSubprocess\ProjectSubprocess;
+use Procesio\Domain\State\State;
 use Procesio\Domain\Subprocess\Subprocess;
 use Procesio\Domain\User\User;
 use Procesio\Domain\Workspace\Workspace;
@@ -40,7 +43,7 @@ abstract class BaseRepository
     }
 
     /**
-     * @return User|Workspace|Package|Project|Process|Subprocess
+     * @return User|Workspace|Package|Project|Process|Subprocess|ProjectProcess|State
      * @throws \Procesio\Domain\Exceptions\DomainObjectNotFoundException
      */
     protected function getByUuid(string $uuid): object
@@ -55,6 +58,21 @@ abstract class BaseRepository
     }
 
     /**
+     * @return User|Workspace|Package|Project|Process|Subprocess|ProjectProcess|State|ProjectSubprocess
+     */
+    protected function getByMultipleUuid(array $uuids): object
+    {
+        $object = $this->entityRepository->findOneBy($uuids);
+
+        if ($object === null) {
+            throw DomainObjectNotFoundException::createFromDomainObjectClass($this->getDomainClass());
+        }
+
+        return $object;
+    }
+
+
+    /**
      * @param string[] $criteria
      * @return ?User[]|?Process[]|?Subprocess[]
      */
@@ -67,7 +85,7 @@ abstract class BaseRepository
 
     /**
      * @param string[] $criteria
-     * @return User[]
+     * @return User[]|ProjectProcess[]
      * @throws \Procesio\Domain\Exceptions\DomainObjectNotFoundException
      */
     protected function getBy(array $criteria): array
@@ -97,7 +115,7 @@ abstract class BaseRepository
     }
 
     /**
-     * @return User|Package|Workspace|Project|Process|Subprocess
+     * @return User|Package|Workspace|Project|Process|Subprocess|ProjectProcess
      * @throws \Procesio\Domain\Exceptions\CouldNotPersistDomainObjectException
      */
     protected function persist(object $object): object
@@ -124,20 +142,4 @@ abstract class BaseRepository
             throw CouldNotPersistDomainObjectException::createFromDomainObjectClass($this->getDomainClass());
         }
     }
-
-    /**
-     * @return User|Workspace|Project|Package|Process|Subprocess
-     * @throws \Procesio\Domain\Exceptions\CouldNotPersistDomainObjectException
-     */
-    /*protected function merge(object $object): object
-    {
-        try {
-
-            $this->entityManager->persist($object);
-            $this->entityManager->flush();
-            return $object;
-        } catch (ORMException) {
-            throw CouldNotPersistDomainObjectException::createFromDomainObjectClass($this->getDomainClass());
-        }
-    }*/
 }

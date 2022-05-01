@@ -22,6 +22,7 @@ class EditSubprocessAction extends SubprocessAction
         try {
             $subprocess = $this->subprocessFacade->getSubprocessByUuid($subprocessUuid);
             $exists_comesFrom = array_key_exists('comesFrom', $request);
+
             if ($exists_comesFrom) {
                 if ($request['comesFrom'] == null) {
                     $comesFrom = null;
@@ -33,6 +34,7 @@ class EditSubprocessAction extends SubprocessAction
             }
 
             $exists_process = array_key_exists('process', $request);
+
             if ($exists_process) {
                 if ($request['process'] == null) {
                     $process = null;

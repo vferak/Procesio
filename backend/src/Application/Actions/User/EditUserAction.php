@@ -17,9 +17,10 @@ class EditUserAction extends UserAction
     {
         $user = null;
         $request = $this->request->getParsedBody();
+        $userUuid = $this->resolveArg('id');
 
         try {
-            $user = $this->userFacade->getUserByUuid($request['uuid']);
+            $user = $this->userFacade->getUserByUuid($userUuid);
 
             $userData = new UserData(
                 $request['email'] ?? $user->getEmail(),

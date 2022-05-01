@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Procesio\Domain\Workspace;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Procesio\Domain\User\User;
 
 class WorkspaceData

@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Procesio\Domain\Process;
 
-use Procesio\Domain\Project\Project;
 use Procesio\Domain\Subprocess\Subprocess;
-use Procesio\Domain\Workspace\Workspace;
 use Procesio\Infrastructure\Doctrine\Repositories\ProcessRepository;
 use Procesio\Infrastructure\Doctrine\Repositories\SubprocessRepository;
 
