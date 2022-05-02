@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Procesio\Domain\Project;
 
+use Procesio\Domain\Package\Package;
 use Procesio\Domain\ProjectProcess\ProjectProcess;
 use Procesio\Domain\ProjectProcess\ProjectProcessData;
 use Procesio\Domain\ProjectSubprocess\ProjectSubprocess;
@@ -13,6 +14,7 @@ use Procesio\Infrastructure\Doctrine\Repositories\ProjectProcessRepository;
 use Procesio\Infrastructure\Doctrine\Repositories\ProjectRepository;
 use Procesio\Infrastructure\Doctrine\Repositories\ProjectSubprocessRepository;
 use Procesio\Infrastructure\Doctrine\Repositories\StateRepository;
+use function DI\add;
 
 class ProjectFacade
 {
@@ -68,5 +70,52 @@ class ProjectFacade
     public function findProjects(Workspace $workspace): array
     {
         return $this->projectRepository->findAllProjectsByWorkspaces($workspace);
+    }
+
+    public function applyNewPackageToProject(Project $project, Package $newpackage): Project
+    {
+        $processesInOldPackage = $project->getPackage()->getProcesses();
+        $processesInNewPackage = $newpackage->getProcesses();
+
+        $arrayOfProcesses = [];
+        $arrayOfProcessesUuid = [];
+        $arrayOfSubprocesses = [];
+
+        foreach ($processesInOldPackage as $oldProcess)
+        {
+            $arrayOfProcessesUuid[] = $oldProcess->getUuid();
+        }
+
+        //foreach ($processesInOldPackage as $oldProcess)
+        {
+            foreach ($processesInNewPackage as $newProcess)
+            {
+                if(in_array($newProcess->getUuid(),$arrayOfProcessesUuid))
+                {
+                    $arrayOfProcesses[] = $oldProcess;
+                    $oldSubprocesses = $oldProcess->getSubprocesses();
+                    $newSubprocesses = $newProcess->getSubprocesses();
+                    foreach ($oldSubprocesses as $oldSubprocess)
+                    {
+                        foreach ($newSubprocesses as $newSubprocess)
+                        {
+                            if($newSubprocess->getUuid() === $oldSubprocess->getUuid())
+                            {
+                                $arrayOfSubprocesses[] = $oldSubprocess;
+                            }
+                        }
+                    }
+                } else {
+                    //TODO
+                    $arrayOfProcesses[] = $newProcess;
+                }
+
+            }
+            //DELETE ALL project processes and subprocesses
+            // ADD ALL processes and subprocess to project
+
+        }
+
+        return $project;
     }
 }

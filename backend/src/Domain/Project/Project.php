@@ -127,4 +127,10 @@ class Project implements JsonSerializable
     {
         return $this->package;
     }
+
+    /*public function applyNewPackageToProject(Project $project, Package $newpackage): Project
+    {
+
+        return $project;
+    }*/
 }

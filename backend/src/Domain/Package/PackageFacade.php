@@ -8,11 +8,13 @@ use Procesio\Domain\Process\Process;
 use Procesio\Domain\Project\Project;
 use Procesio\Domain\Workspace\Workspace;
 use Procesio\Infrastructure\Doctrine\Repositories\PackageRepository;
+use Procesio\Infrastructure\Doctrine\Repositories\ProcessRepository;
 
 class PackageFacade
 {
     public function __construct(
-        private PackageRepository $packageRepository
+        private PackageRepository $packageRepository,
+        private ProcessRepository $processRepository
     ) {
     }
 
@@ -50,4 +52,19 @@ class PackageFacade
 
         return $package;
     }
+
+    public function createNewVersionPackage(PackageData $packageData, array $processes): Package
+    {
+        $package = new Package($packageData);
+        $package = $this->packageRepository->persistPackage($package);
+
+        foreach ($processes as $process)
+        {
+            $process = $this->processRepository->getProcessByUuid($process);
+            $this->addProcessToPackage($package, $process);
+        }
+
+        return $package;
+    }
+
 }

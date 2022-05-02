@@ -19,14 +19,7 @@ class CreateWorkspaceAction extends WorkspaceAction
 
         $name = $request['name'];
         $description = $request['description'];
-        $user = $request['user'];
-
-
-        if (empty($user)) {
-            $user = null;
-        } else {
-            $user = $this->userFacade->getUserByUuid($user);
-        }
+        $user = $this->userFacade->getUserByUuid($this->request->getAttribute('userUuid'));
 
         $workspaceData = new WorkspaceData($name, $description, $user);
         $this->workspaceFacade->createWorkspace($workspaceData);
