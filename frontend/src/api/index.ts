@@ -1,27 +1,47 @@
+import { useAuthStore } from "@/stores";
+import type { AuthStoreInterface } from "@/stores";
+
+export * from "./auth/index";
 export * from "./package/package";
 
 import Axios from "axios";
 import type { AxiosInstance } from "axios";
 
-const headers = {};
-
 const axios: AxiosInstance = Axios.create({
   baseURL: "http://localhost:8081/v1",
-  headers: headers,
 });
 
-// axios.interceptors.response.use(
-//   (response) => response,
-//   (error) => {
-//     if (error.response.statusCode >= 500) {
-//       console.log(error.response.data);
-//       console.log(error.response.headers);
-//
-//       // store.commit("throwError");
-//     }
-//     return Promise.reject(error);
-//   }
-// );
+axios.interceptors.request.use(
+  (config) => {
+    const authStore: AuthStoreInterface = useAuthStore();
+    const jwt = authStore.getJwt();
+    if (jwt !== "") {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      config.headers.Authorization = "Bearer " + jwt;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+axios.interceptors.response.use(
+  (response) => {
+    console.log(response);
+    return response;
+  },
+  (error) => {
+    // if (error.response.statusCode >= 500) {
+    //   console.log(error.response.data);
+    //   console.log(error.response.headers);
+    //
+    //   // store.commit("throwError");
+    // }
+    return Promise.reject(error);
+  }
+);
 
 export type ResponseType = {
   statusCode: number;

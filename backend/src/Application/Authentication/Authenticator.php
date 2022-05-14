@@ -60,7 +60,7 @@ class Authenticator
         return [
             'uid' => $user->getUuid(),
             'username' => $user->getEmail(),
-            'exp' => (new DateTime())->modify('+ 1 hour')->getTimestamp()
+            'exp' => (new DateTime())->modify('+ 8 hour')->getTimestamp()
         ];
     }
 }

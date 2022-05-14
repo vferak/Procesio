@@ -1,28 +1,53 @@
 import { acceptHMRUpdate, defineStore } from "pinia";
 import { ref } from "vue";
 
-export const useAuthStore = defineStore("auth", () => {
-  const jwt = ref<string>("");
+export interface AuthStoreInterface {
+  getJwt(): string;
+  isAuthenticated(): boolean;
+  logIn(token: string): void;
+  logOut(): void;
+  loadJwtFromStorage(): void;
+}
 
-  const IsAuthenticated = (): boolean => {
-    return localStorage.getItem("jwt") !== null;
-  };
+export const useAuthStore = defineStore<"auth", AuthStoreInterface>(
+  "auth",
+  () => {
+    const jwt = ref<string>("");
 
-  function LogIn(token: string): void {
-    localStorage.setItem("jwt", token);
+    const getJwt = (): string => {
+      return jwt.value;
+    };
+
+    const isAuthenticated = (): boolean => {
+      return localStorage.getItem("jwt") !== null;
+    };
+
+    function logIn(token: string): void {
+      localStorage.setItem("jwt", token);
+      jwt.value = token;
+    }
+
+    function logOut(): void {
+      localStorage.removeItem("jwt");
+      jwt.value = "";
+    }
+
+    const loadJwtFromStorage = (): void => {
+      const _jwt = localStorage.getItem("jwt");
+      if (_jwt !== null) {
+        jwt.value = _jwt;
+      }
+    };
+
+    return {
+      getJwt,
+      isAuthenticated,
+      logIn,
+      logOut,
+      loadJwtFromStorage,
+    };
   }
-
-  function LogOut(): void {
-    localStorage.removeItem("jwt");
-  }
-
-  return {
-    jwt,
-    isAuthenticated: IsAuthenticated,
-    logIn: LogIn,
-    logOut: LogOut,
-  };
-});
+);
 
 if (import.meta.hot) {
   import.meta.hot.accept(acceptHMRUpdate(useAuthStore, import.meta.hot));

@@ -29,13 +29,32 @@ class AuthMiddleware implements Middleware
      */
     public function process(Request $request, RequestHandler $handler): Response
     {
-        $authHeader = $request->getHeader('auth');
-        $jwt = $authHeader['token'] ?? null;
+        $publicPaths = [
+            '/v1/login',
+            '/v1/register'
+        ];
 
+        if ($request->getMethod() === "OPTIONS" || in_array($request->getUri()->getPath(), $publicPaths)) {
+            return $handler->handle($request);
+        }
+
+        $bearerString = 'Bearer';
+
+        $authHeader = $request->getHeader("Authorization");
+        if (!isset($authHeader[0]) || !str_contains($authHeader[0], $bearerString)) {
+            throw new HttpUnauthorizedException($request);
+        }
+
+        $jwt = ltrim(trim($authHeader[0], $bearerString));
         if ($jwt) {
             try {
-                $this->authentication->verifyToken($jwt);
-            } catch (InvalidArgumentException | UnexpectedValueException | SignatureInvalidException | BeforeValidException) {
+                $jwtData = $this->authentication->verifyToken($jwt);
+                $request = $request->withAttribute("userUuid", $jwtData['uid']);
+            } catch (InvalidArgumentException |
+                UnexpectedValueException |
+                SignatureInvalidException |
+                BeforeValidException
+            ) {
                 throw new HttpUnauthorizedException($request);
             } catch (ExpiredException) {
                 // TODO Expired redirect
