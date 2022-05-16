@@ -66,6 +66,14 @@ const routes = [
           title: "Create package",
         },
       },
+      {
+        path: "/admin/packages/edit/:uuid",
+        name: "editPackage",
+        component: () => import("@/views/Admin/Packages/EditPackageView.vue"),
+        meta: {
+          title: "Edit package",
+        },
+      },
     ],
   },
 ];
