@@ -74,6 +74,49 @@ const routes = [
           title: "Edit package",
         },
       },
+      {
+        path: "/admin/workspaces",
+        name: "workspaces",
+        component: () => import("@/views/Admin/Workspaces/WorkspacesView.vue"),
+        meta: {
+          title: "Workspaces",
+          navIconClass: "fas fa-users",
+        },
+      },
+      {
+        path: "/admin/workspaces/create",
+        name: "createWorkspace",
+        component: () =>
+          import("@/views/Admin/Workspaces/CreateWorkspaceView.vue"),
+        meta: {
+          title: "Create workspace",
+        },
+      },
+      {
+        path: "/admin/workspaces/edit/:uuid",
+        name: "editWorkspaces",
+        component: () =>
+          import("@/views/Admin/Workspaces/EditWorkspaceView.vue"),
+        meta: {
+          title: "Edit workspace",
+        },
+      },
+      {
+        path: "/admin/workspaces/:uuid",
+        name: "workspace",
+        component: () => import("@/views/Admin/Workspaces/WorkspaceView.vue"),
+        meta: {
+          title: "Workspace",
+        },
+      },
+      {
+        path: "/admin/user",
+        name: "user",
+        component: () => import("@/views/Admin/Users/UserView.vue"),
+        meta: {
+          title: "User profile",
+        },
+      },
     ],
   },
 ];

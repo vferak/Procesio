@@ -3,6 +3,7 @@ import type { AuthStoreInterface } from "@/stores";
 
 export * from "./auth/index";
 export * from "./package/package";
+export * from "./workspace/workspace";
 
 import Axios from "axios";
 import type { AxiosResponse, AxiosInstance } from "axios";
@@ -53,6 +54,7 @@ export interface ApiInterface {
   post(url: string, formData: FormData): Promise<ResponseType>;
   getAsync(url: string): Promise<AxiosResponse>;
   postAsync(url: string, formData: FormData): Promise<AxiosResponse>;
+  deleteAsync(url: string): Promise<AxiosResponse>;
 }
 
 export const useApi = (): ApiInterface => {
@@ -75,10 +77,15 @@ export const useApi = (): ApiInterface => {
     return await axios.post(url, formData);
   };
 
+  const deleteAsync = async (url: string): Promise<AxiosResponse> => {
+    return await axios.delete(url);
+  };
+
   return {
     get,
     post,
     getAsync,
     postAsync,
+    deleteAsync,
   };
 };
