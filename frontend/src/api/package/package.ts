@@ -1,7 +1,7 @@
 import { useApi } from "@/api";
 import type { ApiInterface, ProcessType, WorkspaceType } from "@/api";
 import { useWorkspaceStore } from "@/stores";
-import type { WorkspaceStore } from "@/stores";
+import type { WorkspaceStoreInterface } from "@/stores";
 import type { AxiosResponse } from "axios";
 
 export interface PackageType {
@@ -22,15 +22,15 @@ export interface PackageRepositoryInterface {
 
 export const usePackageRepository = (): PackageRepositoryInterface => {
   const api: ApiInterface = useApi();
-  const workspaceStore: WorkspaceStore = useWorkspaceStore();
+  const workspaceStore: WorkspaceStoreInterface = useWorkspaceStore();
 
   const entityPath = "/package";
 
-  const createFormData = (name: string, description: string) => {
+  const createFormData = (name: string, description: string): FormData => {
     const formData = new FormData();
     formData.set("name", name);
     formData.set("description", description);
-    formData.set("workspace", workspaceStore.getWorkspace() ?? "");
+    formData.set("workspace", workspaceStore.getWorkspaceUuid());
     return formData;
   };
 
