@@ -75,6 +75,50 @@ const routes = [
         },
       },
       {
+        path: "/admin/processes",
+        name: "processes",
+        component: () => import("@/views/Admin/Processes/ProcessesView.vue"),
+        meta: {
+          title: "Processes",
+          navIconClass: "fas fa-cube",
+        },
+      },
+      {
+        path: "/admin/processes/create",
+        name: "createProcess",
+        component: () =>
+          import("@/views/Admin/Processes/CreateProcessView.vue"),
+        meta: {
+          title: "Create process",
+        },
+      },
+      {
+        path: "/admin/processes/:uuid",
+        name: "process",
+        component: () => import("@/views/Admin/Processes/ProcessView.vue"),
+        meta: {
+          title: "Process",
+        },
+      },
+      {
+        path: "/admin/processes/subprocess/create/:uuid",
+        name: "createSubprocess",
+        component: () =>
+          import("@/views/Admin/Subprocesses/CreateSubprocessView.vue"),
+        meta: {
+          title: "Create subprocess",
+        },
+      },
+      {
+        path: "/admin/processes/subprocess/edit/:uuid",
+        name: "editSubprocess",
+        component: () =>
+          import("@/views/Admin/Subprocesses/EditSubprocessView.vue"),
+        meta: {
+          title: "Edit subprocess",
+        },
+      },
+      {
         path: "/admin/workspaces",
         name: "workspaces",
         component: () => import("@/views/Admin/Workspaces/WorkspacesView.vue"),

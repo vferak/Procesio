@@ -4,6 +4,10 @@ import type { AuthStoreInterface } from "@/stores";
 export * from "./auth/index";
 export * from "./package/package";
 export * from "./workspace/workspace";
+export * from "./process/process";
+export * from "./user/user";
+export * from "./project/project";
+export * from "./subprocess/subprocess";
 
 import Axios from "axios";
 import type { AxiosResponse, AxiosInstance } from "axios";
