@@ -1,16 +1,20 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { onBeforeMount, ref } from "vue";
 import { useRouter } from "vue-router";
 import { usePackageRepository } from "@/api";
+import type { PackageType } from "@/api";
+import AlertInfo from "@/components/alerts/AlertInfo.vue";
 
 const router = useRouter();
 const packageRepository = usePackageRepository();
 
-const packages = ref<object[]>();
+const packages = ref<PackageType[]>();
 
-packageRepository.get().then((response) => {
-  packages.value = response.data.data;
-  console.log(packages.value);
+onBeforeMount(async () => {
+  packages.value = await packageRepository.getAll();
+  if (packages.value === undefined) {
+    packages.value = [];
+  }
 });
 </script>
 
@@ -19,29 +23,43 @@ packageRepository.get().then((response) => {
     <div class="flex justify-end w-full">
       <a
         @click="router.push({ name: 'createPackage' })"
-        class="btn btn-primary"
+        class="btn btn-secondary"
       >
         New package
       </a>
     </div>
-    <table class="table table-zebra w-full mt-6">
-      <!-- head -->
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th class="text-right">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
+
+    <div v-if="packages !== undefined">
+      <AlertInfo
+        v-if="packages.length === 0"
+        :text="'No packages have been created yet. Go ahead and make one!'"
+        class="mt-6"
+      />
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 mt-6">
+        <div
           v-for="processPackage in packages"
           :key="processPackage.uuid"
-          class="hover"
+          class="card w-full bg-primary text-primary-content"
         >
-          <td>{{ processPackage.name }}</td>
-          <td><div class="btn btn-success">Action</div></td>
-        </tr>
-      </tbody>
-    </table>
+          <div class="card-body">
+            <h2 class="card-title">{{ processPackage.name }}</h2>
+            <p>{{ processPackage.description }}</p>
+            <div class="card-actions justify-end">
+              <a
+                class="btn"
+                @click="
+                  router.push({
+                    name: 'package',
+                    params: { uuid: processPackage.uuid },
+                  })
+                "
+                >View</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
