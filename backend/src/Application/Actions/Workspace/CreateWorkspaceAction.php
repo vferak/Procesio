@@ -19,10 +19,12 @@ class CreateWorkspaceAction extends WorkspaceAction
 
         $name = $request['name'];
         $description = $request['description'];
-        $user = $this->userFacade->getUserByUuid($this->request->getAttribute('userUuid'));
 
-        $workspaceData = new WorkspaceData($name, $description, $user);
-        $this->workspaceFacade->createWorkspace($workspaceData);
+        $user = $this->userFacade->getUserByUuid($this->request->getAttribute("userUuid"));
+
+        $workspaceData = new WorkspaceData($name, $description, null);
+
+        $this->workspaceFacade->createWorkspace($workspaceData, $user);
 
         return $this->respondWithData(statusCode: 201);
     }

@@ -77,7 +77,6 @@ class User implements JsonSerializable
         return [
             'uuid' => $this->getUuid(),
             'username' => $this->getEmail(),
-            'password' => $this->getPassword(),
             'firstName' => $this->getFirstName(),
             'lastName' => $this->getLastName()
         ];

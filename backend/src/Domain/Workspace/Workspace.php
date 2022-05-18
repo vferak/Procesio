@@ -4,6 +4,7 @@ namespace Procesio\Domain\Workspace;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use JsonSerializable;
+use Procesio\Domain\Process\Process;
 use Procesio\Domain\User\User;
 use Procesio\Domain\UuidDomainObjectTrait;
 use Procesio\Domain\Workspace\Exceptions\CouldNotAddUserException;
@@ -37,7 +38,17 @@ class Workspace implements JsonSerializable
      * @JoinColumn(name="user_uuid", referencedColumnName="uuid", nullable = true)
      */
     private ?User $user;
-
+/*
+    /**
+     * Many Users have Many Groups.
+     * @var ArrayCollection|Process[]
+     * @ManyToMany(targetEntity="Procesio\Domain\Process\Process", inversedBy="workspaces")
+     * @JoinTable(name="workspace_process",
+     *      joinColumns={@JoinColumn(name="workspace_uuid", referencedColumnName="uuid")},
+     *      inverseJoinColumns={@JoinColumn(name="process_uuid", referencedColumnName="uuid")}
+     *      )
+     */
+   // private mixed $processes;
 
     public function __construct(WorkspaceData $workspaceData)
     {

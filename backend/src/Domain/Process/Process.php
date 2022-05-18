@@ -11,7 +11,9 @@ use Procesio\Domain\Project\Project;
 use Procesio\Domain\ProjectProcess\ProjectProcessData;
 use Procesio\Domain\State\State;
 use Procesio\Domain\Subprocess\Subprocess;
+use Procesio\Domain\User\User;
 use Procesio\Domain\UuidDomainObjectTrait;
+use Procesio\Domain\Workspace\Workspace;
 
 /**
  * @Entity
@@ -50,6 +52,13 @@ class Process implements JsonSerializable
      * @OneToMany(targetEntity="Procesio\Domain\Subprocess\Subprocess", mappedBy="process")
      */
     private mixed $subprocesses;
+
+    /*
+    /**
+     * @var ArrayCollection|Workspace[]
+     * @ManyToMany(targetEntity="Procesio\Domain\Workspace\Workspace", mappedBy="processes")
+     */
+    //private mixed $workspaces;
 
 
     public function __construct(ProcessData $processData)

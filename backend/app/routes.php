@@ -33,6 +33,8 @@ use Procesio\Application\Actions\Workspace\AddUserToWorkspaceAction;
 use Procesio\Application\Actions\Workspace\CreateWorkspaceAction;
 use Procesio\Application\Actions\Workspace\DeleteWorkspaceAction;
 use Procesio\Application\Actions\Workspace\EditWorkspaceAction;
+use Procesio\Application\Actions\Workspace\ListWorkspaceAction;
+use Procesio\Application\Actions\Workspace\ViewDefaultUserWorkspaceAction;
 use Procesio\Application\Actions\Workspace\ViewWorkspaceAction;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -55,17 +57,19 @@ return function (App $app) {
         $group->post('/login', LoginAction::class);
         $group->post('/register', RegisterAction::class);
 
-        $group->group('/users', function (Group $group) {
-            $group->get('/{id}', ViewUserAction::class);
-            $group->post('/{id}', EditUserAction::class);
+        $group->group('/user', function (Group $group) {
+            $group->get('/', ViewUserAction::class);
+            $group->post('', EditUserAction::class);
         });
 
         $group->group('/workspace',function (Group $group) {
             $group->get('/{id}', ViewWorkspaceAction::class);
+            $group->get('/defaulUsertWorkspace/{id}', ViewDefaultUserWorkspaceAction::class);
             $group->post('', CreateWorkspaceAction::class);
             $group->post('/addUserToWorkspace', AddUserToWorkspaceAction::class);
             $group->post('/{id}', EditWorkspaceAction::class);
             $group->delete('/{id}', DeleteWorkspaceAction::class);
+            $group->get('/all/{id}', ListWorkspaceAction::class);
         });
 
         $group->group('/package',function (Group $group) {

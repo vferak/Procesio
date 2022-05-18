@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManager;
 use Procesio\Domain\Package\Package;
 use Procesio\Domain\Package\PackageData;
 use Procesio\Domain\Package\PackageRepositoryInterface;
+use Procesio\Domain\Project\Project;
 use Procesio\Domain\Project\ProjectRepositoryInterface;
 use Procesio\Domain\User\User;
 
@@ -26,12 +27,9 @@ class WorkspaceFacade
         return $this->workspaceRepository->getWorkspaceByUuid($id);
     }
 
-    /**
-     * @return Workspace[]
-     */
-    public function findAllWorkspaces(): array
+    public function getDefaultUserWorkspaceByUuid(string $userUuid): array
     {
-        return $this->workspaceRepository->findAll();
+        return $this->workspaceRepository->getDefaultUserWorkspaceByUuid($userUuid);
     }
 
     public function findAllUsers(Workspace $workspace): array
@@ -40,14 +38,14 @@ class WorkspaceFacade
     }
     public function deleteWorkspace(Workspace $workspace): void
     {
-
         $workspace->delete($this->workspaceRepository, $this->packageRepository, $this->projectRepository);
         $this->entityManager->flush();
     }
 
-    public function createWorkspace(WorkspaceData $workspaceData): Workspace
+    public function createWorkspace(WorkspaceData $workspaceData, User $user): Workspace
     {
         $workspace = new Workspace($workspaceData);
+        $workspace->addUserToWorkspace($user);
         return $this->workspaceRepository->persistWorkspace($workspace);
     }
 

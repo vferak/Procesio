@@ -17,7 +17,7 @@ class EditUserAction extends UserAction
     {
         $user = null;
         $request = $this->request->getParsedBody();
-        $userUuid = $this->resolveArg('id');
+        $userUuid = $this->request->getAttribute("userUuid");
 
         try {
             $user = $this->userFacade->getUserByUuid($userUuid);
