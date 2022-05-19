@@ -9,6 +9,7 @@ use Procesio\Domain\ProjectProcess\ProjectProcess;
 use Procesio\Domain\ProjectProcess\ProjectProcessData;
 use Procesio\Domain\ProjectSubprocess\ProjectSubprocess;
 use Procesio\Domain\ProjectSubprocess\ProjectSubprocessData;
+use Procesio\Domain\User\User;
 use Procesio\Domain\Workspace\Workspace;
 use Procesio\Infrastructure\Doctrine\Repositories\ProjectProcessRepository;
 use Procesio\Infrastructure\Doctrine\Repositories\ProjectRepository;
@@ -77,45 +78,16 @@ class ProjectFacade
         $processesInOldPackage = $project->getPackage()->getProcesses();
         $processesInNewPackage = $newpackage->getProcesses();
 
-        $arrayOfProcesses = [];
-        $arrayOfProcessesUuid = [];
-        $arrayOfSubprocesses = [];
-
-        foreach ($processesInOldPackage as $oldProcess)
-        {
-            $arrayOfProcessesUuid[] = $oldProcess->getUuid();
-        }
-
-        //foreach ($processesInOldPackage as $oldProcess)
-        {
-            foreach ($processesInNewPackage as $newProcess)
-            {
-                if(in_array($newProcess->getUuid(),$arrayOfProcessesUuid))
-                {
-                    $arrayOfProcesses[] = $oldProcess;
-                    $oldSubprocesses = $oldProcess->getSubprocesses();
-                    $newSubprocesses = $newProcess->getSubprocesses();
-                    foreach ($oldSubprocesses as $oldSubprocess)
-                    {
-                        foreach ($newSubprocesses as $newSubprocess)
-                        {
-                            if($newSubprocess->getUuid() === $oldSubprocess->getUuid())
-                            {
-                                $arrayOfSubprocesses[] = $oldSubprocess;
-                            }
-                        }
-                    }
-                } else {
-                    //TODO
-                    $arrayOfProcesses[] = $newProcess;
-                }
-
-            }
-            //DELETE ALL project processes and subprocesses
-            // ADD ALL processes and subprocess to project
-
-        }
+        $project = $project->applyNewPackageToProject($processesInOldPackage,$processesInNewPackage);
 
         return $project;
+    }
+
+    /**
+     * @return ?Project[]
+     */
+    public function findProjectsByUser(User $user): ?array
+    {
+        return $this->projectRepository->findAllProjectsByUser($user);
     }
 }

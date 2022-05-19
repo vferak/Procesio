@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Procesio\Domain\User;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use JsonSerializable;
 use mysql_xdevapi\Exception;
@@ -32,6 +33,9 @@ class User implements JsonSerializable
 
     /** @Column(type="string", name="lastName") */
     private string $lastName;
+
+    /** @Column(type="datetime", name="registered_at", options={"default": "CURRENT_TIMESTAMP"}) */
+    private DateTime $registeredAt;
 
     /**
      * Many Users have Many Groups.
@@ -67,9 +71,12 @@ class User implements JsonSerializable
         $this->email = $userData->getEmail();
         $this->firstName = $userData->getFirstName();
         $this->lastName = $userData->getLastName();
-        $this->password = $passwordManager->hashPassword($userData->getPassword());
-        $this->firstName = $userData->getFirstName();
-        $this->lastName = $userData->getLastName();
+
+        if($userData->getPassword() !== null)
+        {
+            $this->password = $passwordManager->hashPassword($userData->getPassword());
+        }
+
     }
 
     public function jsonSerialize(): array
@@ -133,5 +140,13 @@ class User implements JsonSerializable
         }
 
         throw DomainObjectNotFoundException::createFromDomainObjectClass(Workspace::class);
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getRegisteredAt(): DateTime
+    {
+        return $this->registeredAt;
     }
 }

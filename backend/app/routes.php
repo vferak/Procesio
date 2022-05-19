@@ -28,6 +28,7 @@ use Procesio\Application\Actions\Subprocess\ViewHistorySubprocessAction;
 use Procesio\Application\Actions\Subprocess\ViewParentSubprocessAction;
 use Procesio\Application\Actions\Subprocess\ViewSubprocessAction;
 use Procesio\Application\Actions\User\EditUserAction;
+use Procesio\Application\Actions\User\GetUserStatistics;
 use Procesio\Application\Actions\User\ViewUserAction;
 use Procesio\Application\Actions\Workspace\AddUserToWorkspaceAction;
 use Procesio\Application\Actions\Workspace\CreateWorkspaceAction;
@@ -58,7 +59,8 @@ return function (App $app) {
         $group->post('/register', RegisterAction::class);
 
         $group->group('/user', function (Group $group) {
-            $group->get('/', ViewUserAction::class);
+            $group->get('', ViewUserAction::class);
+            $group->get('/statistics', GetUserStatistics::class);
             $group->post('', EditUserAction::class);
         });
 

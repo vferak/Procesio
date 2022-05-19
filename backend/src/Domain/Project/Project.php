@@ -7,6 +7,7 @@ namespace Procesio\Domain\Project;
 use DateTime;
 use JsonSerializable;
 use Procesio\Domain\Package\Package;
+use Procesio\Domain\Process\Process;
 use Procesio\Domain\Project\Exceptions\CouldNotCreateProjectException;
 use Procesio\Domain\User\User;
 use Procesio\Domain\UuidDomainObjectTrait;
@@ -128,9 +129,79 @@ class Project implements JsonSerializable
         return $this->package;
     }
 
-    /*public function applyNewPackageToProject(Project $project, Package $newpackage): Project
+    /**
+     * @param Process[] $processesInOldPackage
+     * @param Process[] $processesInNewPackage
+     */
+    public function applyNewPackageToProject(array $processesInOldPackage, array $processesInNewPackage): void
     {
 
-        return $project;
-    }*/
+        foreach ($processesInOldPackage as $oldProcess)
+        {
+            $arrayOfOdlSubprocesses[] = $oldProcess->getSubprocesses();
+        }
+
+        foreach ($processesInNewPackage as $newProcess)
+        {
+            $arrayOfNewProcessesUuid[] = $newProcess->getSubprocesses();
+        }
+
+        $numberOfNewSubprocesses = count($arrayOfNewProcessesUuid);
+        $numberOfOldSubprocesses = count($arrayOfOdlSubprocesses);
+
+        if($numberOfNewSubprocesses >= $numberOfOldSubprocesses)
+        {
+            foreach ($numberOfNewSubprocesses as $newSubprocess)
+            {
+                foreach ($arrayOfOdlSubprocesses as $odlSubprocess)
+                {
+
+                }
+            }
+
+        } else {
+
+            foreach ($arrayOfOdlSubprocesses as $odlSubprocess)
+            {
+                foreach ($numberOfNewSubprocesses as $newSubprocess)
+                {
+
+                }
+            }
+        }
+
+
+
+
+        //foreach ($processesInOldPackage as $oldProcess)
+        /*{
+            foreach ($processesInNewPackage as $newProcess)
+            {
+                if(in_array($newProcess->getUuid(),$arrayOfProcessesUuid))
+                {
+                    $arrayOfProcesses[] = $oldProcess;
+                    $oldSubprocesses = $oldProcess->getSubprocesses();
+                    $newSubprocesses = $newProcess->getSubprocesses();
+                    foreach ($oldSubprocesses as $oldSubprocess)
+                    {
+                        foreach ($newSubprocesses as $newSubprocess)
+                        {
+                            if($newSubprocess->getUuid() === $oldSubprocess->getUuid())
+                            {
+                                $arrayOfSubprocesses[] = $oldSubprocess;
+                            }
+                        }
+                    }
+                } else {
+                    //TODO
+                    $arrayOfProcesses[] = $newProcess;
+                }
+
+            }*/
+            //DELETE ALL project processes and subprocesses
+            // ADD ALL processes and subprocess to project
+
+       // }
+        //return ;
+    }
 }

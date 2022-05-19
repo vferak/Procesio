@@ -26,7 +26,6 @@ class RegisterAction extends AuthenticationAction
             $body['firstName'],
             $body['lastName']
         );
-
         try {
             $this->userFacade->registerUser($userData);
         } catch (DomainObjectNotFoundException | CouldNotAddUserException | InvalidPasswordException $exception) {
