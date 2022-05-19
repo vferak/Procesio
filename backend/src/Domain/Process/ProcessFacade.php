@@ -4,15 +4,20 @@ declare(strict_types=1);
 
 namespace Procesio\Domain\Process;
 
+use Doctrine\ORM\EntityManager;
 use Procesio\Domain\Subprocess\Subprocess;
+use Procesio\Domain\Workspace\Workspace;
 use Procesio\Infrastructure\Doctrine\Repositories\ProcessRepository;
+use Procesio\Infrastructure\Doctrine\Repositories\ProjectProcessRepository;
 use Procesio\Infrastructure\Doctrine\Repositories\SubprocessRepository;
 
 class ProcessFacade
 {
     public function __construct(
         private ProcessRepository $processRepository,
-        private SubprocessRepository $subprocessRepository
+        private ProjectProcessRepository $projectProcessRepository,
+        private SubprocessRepository $subprocessRepository,
+        private EntityManager $entityManager
     ) {
     }
 
@@ -59,6 +64,12 @@ class ProcessFacade
     public function findSubprocesses(Process $process): array
     {
         return $this->subprocessRepository->getSubprocessesByProcess($process);
+    }
+
+    public function deleteProcess(Process $process): void
+    {
+        $process->delete($this->processRepository,$this->projectProcessRepository);
+        $this->entityManager->flush();
     }
 
     /*public function createNewVersionProcess(ProcessData $processData): Process

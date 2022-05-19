@@ -28,7 +28,7 @@ class WorkspaceFacade
         return $this->workspaceRepository->getWorkspaceByUuid($id);
     }
 
-    public function getDefaultUserWorkspaceByUuid(string $userUuid): array
+    public function getDefaultUserWorkspaceByUuid(string $userUuid): Workspace
     {
         return $this->workspaceRepository->getDefaultUserWorkspaceByUuid($userUuid);
     }

@@ -27,9 +27,10 @@ class WorkspaceRepository extends BaseRepository implements WorkspaceRepositoryI
     /**
      * @inheritDoc
      */
-    public function getDefaultUserWorkspaceByUuid(string $uuid): array
+    public function getDefaultUserWorkspaceByUuid(string $uuid): ?Workspace
     {
-        return $this->findBy(['user' => $uuid]);
+        $workspaces = $this->findBy(['user' => $uuid]);
+        return is_array($workspaces) ? reset($workspaces) : null;
     }
 
     /**

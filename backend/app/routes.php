@@ -12,6 +12,8 @@ use Procesio\Application\Actions\Package\ViewPackageAction;
 use Procesio\Application\Actions\Process\ChangeStatusProcessAction;
 use Procesio\Application\Actions\Process\CreateNewVersionProcessAction;
 use Procesio\Application\Actions\Process\CreateProcessAction;
+use Procesio\Application\Actions\Process\DeleteProcessAction;
+use Procesio\Application\Actions\Process\DeleteProjectsProcessAction;
 use Procesio\Application\Actions\Process\EditProcessAction;
 use Procesio\Application\Actions\Process\ListProcessesAction;
 use Procesio\Application\Actions\Process\ViewHistoryProcessAction;
@@ -23,6 +25,7 @@ use Procesio\Application\Actions\Project\ListProjectsAction;
 use Procesio\Application\Actions\Project\ViewProjectAction;
 use Procesio\Application\Actions\Subprocess\ChangeStatusSubprocessAction;
 use Procesio\Application\Actions\Subprocess\CreateSubprocessAction;
+use Procesio\Application\Actions\Subprocess\DeleteProjectsSubprocessAction;
 use Procesio\Application\Actions\Subprocess\EditSubprocessAction;
 use Procesio\Application\Actions\Subprocess\ViewHistorySubprocessAction;
 use Procesio\Application\Actions\Subprocess\ViewParentSubprocessAction;
@@ -66,8 +69,8 @@ return function (App $app) {
         });
 
         $group->group('/workspace',function (Group $group) {
+            $group->get('/defaultUserWorkspace', ViewDefaultUserWorkspaceAction::class);
             $group->get('/{id}', ViewWorkspaceAction::class);
-            $group->get('/defaulUsertWorkspace/{id}', ViewDefaultUserWorkspaceAction::class);
             $group->post('', CreateWorkspaceAction::class);
             $group->post('/addUserToWorkspace', AddUserToWorkspaceAction::class);
             $group->post('/{id}', EditWorkspaceAction::class);
@@ -102,7 +105,7 @@ return function (App $app) {
             $group->post('/{id}', EditProcessAction::class);
             $group->get('/displayhistory/{id}', ViewHistoryProcessAction::class);
             $group->get('/displayparent/{id}', ViewParentProcessAction::class);
-            //$group->delete('/{id}', RegisterAction::class);
+            //$group->delete('/{id}', DeleteProcessAction::class);
         });
 
         $group->group('/subprocess',function (Group $group) {
@@ -115,21 +118,13 @@ return function (App $app) {
         });
 
         $group->group('/projectProcess',function (Group $group) {
-            //$group->get('/{id}', ViewSubprocessAction::class);
-           // $group->post('', CreateSubprocessAction::class);
             $group->post('/changeStatus', ChangeStatusProcessAction::class);
-            //$group->get('/displayhistory/{id}', ViewHistorySubprocessAction::class);
-            //$group->get('/displayparent/{id}', ViewParentSubprocessAction::class);
-            //$group->delete('/{id}', RegisterAction::class);
+            $group->post('/delete', DeleteProjectsProcessAction::class);
         });
 
         $group->group('/projectSubprocess',function (Group $group) {
-            //$group->get('/{id}', ViewSubprocessAction::class);
-            // $group->post('', CreateSubprocessAction::class);
             $group->post('/changeStatus', ChangeStatusSubprocessAction::class);
-            //$group->get('/displayhistory/{id}', ViewHistorySubprocessAction::class);
-            //$group->get('/displayparent/{id}', ViewParentSubprocessAction::class);
-            //$group->delete('/{id}', RegisterAction::class);
+            $group->post('/delete', DeleteProjectsSubprocessAction::class);
         });
 
     });

@@ -13,9 +13,8 @@ class ViewDefaultUserWorkspaceAction extends WorkspaceAction
      */
     protected function action(): Response
     {
-        $userUuid = $this->resolveArg('id');
+        $userUuid = $this->getCurrentUserUuid();
         $workspace = $this->workspaceFacade->getDefaultUserWorkspaceByUuid($userUuid);
-
 
         return $this->respondWithData($workspace);
     }

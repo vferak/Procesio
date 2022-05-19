@@ -8,6 +8,7 @@ use JsonSerializable;
 use Procesio\Application\States\State;
 use Procesio\Domain\Process\Process;
 use Procesio\Domain\Project\Project;
+use Procesio\Infrastructure\Doctrine\Repositories\ProjectProcessRepository;
 
 /**
  * @Entity
@@ -83,6 +84,13 @@ class ProjectProcess implements JsonSerializable
     public function changeState(ProjectProcessData $projectProcessData): void
     {
         $this->state = $projectProcessData->getState();
+    }
+
+    public function delete(
+        ProjectProcessRepository $projectProcessRepository
+    ): void {
+
+        $projectProcessRepository->deleteProjectProcess($this);
     }
 
     /**

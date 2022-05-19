@@ -125,6 +125,11 @@ class Workspace implements JsonSerializable
             throw CouldNotDeleteWorkspaceException::createForProjects($projects);
         }
 
+        if($this->getUser() !== null)
+        {
+            throw CouldNotDeleteWorkspaceException::createForDefaultUser();
+        }
+
         $workspaceRepository->deleteWorkspace($this);
     }
 

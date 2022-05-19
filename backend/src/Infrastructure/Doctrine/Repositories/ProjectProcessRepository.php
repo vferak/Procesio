@@ -4,6 +4,7 @@ namespace Procesio\Infrastructure\Doctrine\Repositories;
 
 use Procesio\Domain\ProjectProcess\ProjectProcess;
 use Procesio\Domain\ProjectProcess\ProjectProcessRepositoryInterface;
+use Procesio\Domain\Workspace\Workspace;
 use Procesio\Infrastructure\Doctrine\BaseRepository;
 
 class ProjectProcessRepository extends BaseRepository implements ProjectProcessRepositoryInterface
@@ -31,5 +32,13 @@ class ProjectProcessRepository extends BaseRepository implements ProjectProcessR
     {
         $this->persist($projectProcess);
         return $projectProcess;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function deleteProjectProcess(ProjectProcess $projectProcess): void
+    {
+        $this->delete($projectProcess);
     }
 }

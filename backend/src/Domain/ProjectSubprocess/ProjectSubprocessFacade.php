@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Procesio\Domain\ProjectSubprocess;
 
 use Doctrine\ORM\EntityManager;
+use Procesio\Domain\ProjectProcess\ProjectProcess;
 use Procesio\Infrastructure\Doctrine\Repositories\ProjectSubprocessRepository;
 
 class ProjectSubprocessFacade
@@ -15,7 +16,7 @@ class ProjectSubprocessFacade
     ) {
     }
 
-    public function getProjectProcessByUuid(string $project_uuid, string $process_uuid): ProjectSubprocess
+    public function getProjectSubpprocessByUuid(string $project_uuid, string $process_uuid): ProjectSubprocess
     {
         return $this->projectSubprocessRepository->getProjectSubprocessesByUuid($project_uuid, $process_uuid);
     }
@@ -27,5 +28,11 @@ class ProjectSubprocessFacade
         $this->projectSubprocessRepository->persistProjectSubprocesses($projectSubprocess);
         return $projectSubprocess;
 
+    }
+
+    public function deleteProjectSubprocess(ProjectSubprocess $projectSubprocess): void
+    {
+        $projectSubprocess->delete($this->projectSubprocessRepository);
+        $this->entityManager->flush();
     }
 }

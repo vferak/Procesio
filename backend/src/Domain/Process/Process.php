@@ -135,5 +135,4 @@ class Process implements JsonSerializable
     {
         return $this->subprocesses->toArray();
     }
-
 }

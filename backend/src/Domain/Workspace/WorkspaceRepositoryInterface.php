@@ -17,7 +17,7 @@ interface WorkspaceRepositoryInterface extends BaseRepositoryInterface
     /**
      * @throws \Procesio\Domain\Exceptions\DomainObjectNotFoundException
      */
-    public function getDefaultUserWorkspaceByUuid(string $uuid): array;
+    public function getDefaultUserWorkspaceByUuid(string $uuid): ?Workspace;
 
     /**
      * @throws \Procesio\Domain\Exceptions\DomainObjectNotFoundException

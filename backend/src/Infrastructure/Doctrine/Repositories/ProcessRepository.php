@@ -58,4 +58,12 @@ class ProcessRepository extends BaseRepository implements ProcessRepositoryInter
     {
         return $this->findAll();
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function deleteProcess(Process $process): void
+    {
+        $this->delete($process);
+    }
 }
