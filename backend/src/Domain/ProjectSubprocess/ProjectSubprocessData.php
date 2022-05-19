@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Procesio\Domain\ProjectSubprocess;
 
 use Procesio\Domain\Project\Project;
-use Procesio\Domain\State\State;
 use Procesio\Domain\Subprocess\Subprocess;
 
 class ProjectSubprocessData
@@ -13,7 +12,8 @@ class ProjectSubprocessData
     public function __construct(
         private Subprocess $subprocess,
         private Project $project,
-        private State $state
+        private string $state,
+        private int $priority
     ) {
     }
 
@@ -34,11 +34,19 @@ class ProjectSubprocessData
     }
 
     /**
-     * @return State
+     * @return string
      */
-    public function getState(): State
+    public function getState(): string
     {
         return $this->state;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPriority(): int
+    {
+        return $this->priority;
     }
 
 

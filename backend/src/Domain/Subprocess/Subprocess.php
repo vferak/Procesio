@@ -34,6 +34,10 @@ class Subprocess implements JsonSerializable
      */
     private ?Subprocess $comesFrom;
 
+    /** @Column(type="integer") */
+    private int $priority;
+
+
     public function __construct(SubprocessData $subprocessData)
     {
         $this->generateAndSetUuid();
@@ -42,6 +46,7 @@ class Subprocess implements JsonSerializable
         $this->description = $subprocessData->getDescription();
         $this->process = $subprocessData->getProcess();
         $this->comesFrom = $subprocessData->getComesFrom();
+        $this->priority = $subprocessData->getPriority();
 
         $this->edit($subprocessData);
     }
@@ -86,5 +91,13 @@ class Subprocess implements JsonSerializable
     public function getProcess(): ?Process
     {
         return $this->process;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPriority(): int
+    {
+        return $this->priority;
     }
 }

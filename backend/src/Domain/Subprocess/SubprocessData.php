@@ -12,7 +12,8 @@ class SubprocessData
         private string $name,
         private string $description,
         private ?Process $process,
-        private ?Subprocess $comesFrom
+        private ?Subprocess $comesFrom,
+        private int $priority
     ) {
     }
 
@@ -40,5 +41,13 @@ class SubprocessData
     public function getProcess(): ?Process
     {
         return $this->process;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPriority(): int
+    {
+        return $this->priority;
     }
 }

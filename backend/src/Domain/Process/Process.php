@@ -7,13 +7,8 @@ namespace Procesio\Domain\Process;
 use Doctrine\Common\Collections\ArrayCollection;
 use JsonSerializable;
 use Procesio\Domain\Package\Package;
-use Procesio\Domain\Project\Project;
-use Procesio\Domain\ProjectProcess\ProjectProcessData;
-use Procesio\Domain\State\State;
 use Procesio\Domain\Subprocess\Subprocess;
-use Procesio\Domain\User\User;
 use Procesio\Domain\UuidDomainObjectTrait;
-use Procesio\Domain\Workspace\Workspace;
 
 /**
  * @Entity

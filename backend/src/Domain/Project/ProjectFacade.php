@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Procesio\Domain\Project;
 
+use Procesio\Application\States\State;
 use Procesio\Domain\Package\Package;
 use Procesio\Domain\ProjectProcess\ProjectProcess;
 use Procesio\Domain\ProjectProcess\ProjectProcessData;
@@ -14,14 +15,11 @@ use Procesio\Domain\Workspace\Workspace;
 use Procesio\Infrastructure\Doctrine\Repositories\ProjectProcessRepository;
 use Procesio\Infrastructure\Doctrine\Repositories\ProjectRepository;
 use Procesio\Infrastructure\Doctrine\Repositories\ProjectSubprocessRepository;
-use Procesio\Infrastructure\Doctrine\Repositories\StateRepository;
-use function DI\add;
 
 class ProjectFacade
 {
     public function __construct(
         private ProjectRepository $projectRepository,
-        private StateRepository $stateRepository,
         private ProjectProcessRepository $projectProcessRepository,
         private ProjectSubprocessRepository $projectSubprocessRepository
     ) {
@@ -38,18 +36,17 @@ class ProjectFacade
         $this->projectRepository->persistProject($project);
 
         $processes = $project->getPackage()->getProcesses();
-        $state = $this->stateRepository->getStateByUuid("571753bf-5909-44ef-9a20-a4d5e55096de");
 
         foreach ($processes as $process)
         {
-            $projectProcessData = new ProjectProcessData($process, $project, $state);
+            $projectProcessData = new ProjectProcessData($process, $project, State::STATUS_NEW,1);
             $projectProcess = new ProjectProcess($projectProcessData);
             $this->projectProcessRepository->persistProjectProcess($projectProcess);
 
             $subprocesses = $process->getSubprocesses();
             foreach ($subprocesses as $subprocess)
             {
-                $projectSubprocessData = new ProjectSubprocessData($subprocess, $project, $state);
+                $projectSubprocessData = new ProjectSubprocessData($subprocess, $project, State::STATUS_NEW,1);
                 $projectSubprocess = new ProjectSubprocess($projectSubprocessData);
                 $this->projectSubprocessRepository->persistProjectSubprocesses($projectSubprocess);
             }

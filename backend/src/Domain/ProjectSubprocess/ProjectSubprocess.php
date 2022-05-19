@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Procesio\Domain\ProjectSubprocess;
 
 use JsonSerializable;
+use Procesio\Application\States\State;
 use Procesio\Domain\Project\Project;
-use Procesio\Domain\ProjectProcess\ProjectProcessData;
-use Procesio\Domain\State\State;
 use Procesio\Domain\Subprocess\Subprocess;
 
 /**
@@ -30,11 +29,12 @@ class ProjectSubprocess implements JsonSerializable
      */
     private Project $project;
 
-    /**
-     * @ManyToOne(targetEntity="Procesio\Domain\State\State")
-     * @JoinColumn(name="state", referencedColumnName="uuid")
-     */
-    private State $state;
+
+    /** @Column(type="string") */
+    private string $state;
+
+    /** @Column(type="integer") */
+    private int $priority;
 
 
     public function __construct(ProjectSubprocessData $projectSubprocessData)
@@ -42,9 +42,9 @@ class ProjectSubprocess implements JsonSerializable
         $this->subprocess = $projectSubprocessData->getProcess();
         $this->project = $projectSubprocessData->getProject();
         $this->state = $projectSubprocessData->getState();
+        $this->priority = $projectSubprocessData->getPriority();
 
         $this->changeState($projectSubprocessData);
-
     }
 
     public function jsonSerialize(): array
@@ -52,7 +52,8 @@ class ProjectSubprocess implements JsonSerializable
         return [
             'subprocess' => $this->getSubprocess(),
             'project' => $this->getProject(),
-            'state' => $this->getState()
+            'state' => $this->getState(),
+            'priority' => $this->getPriority()
         ];
     }
 
@@ -73,9 +74,9 @@ class ProjectSubprocess implements JsonSerializable
     }
 
     /**
-     * @return State
+     * @return string
      */
-    public function getState(): State
+    public function getState(): string
     {
         return $this->state;
     }
@@ -83,6 +84,25 @@ class ProjectSubprocess implements JsonSerializable
     public function changeState(ProjectSubprocessData $projectSubprocessData): void
     {
         $this->state = $projectSubprocessData->getState();
+    }
+
+    /**
+     * @param string $state
+     */
+    public function setState(string $state): void
+    {
+        if (!in_array($state, State::getAllStates())) {
+            throw new \InvalidArgumentException("Neplatná hodnota");
+        }
+        $this->state = $state;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPriority(): int
+    {
+        return $this->priority;
     }
 
 }
