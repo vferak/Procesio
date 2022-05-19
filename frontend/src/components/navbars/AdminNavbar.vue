@@ -121,7 +121,7 @@ const logout = () => {
             tabindex="0"
             class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
           >
-            <li><a>Profile</a></li>
+            <li><a @click="router.push({ name: 'user' })">Profile</a></li>
             <li><a @click="logout()">Logout</a></li>
           </ul>
         </div>
