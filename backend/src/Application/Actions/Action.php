@@ -118,4 +118,9 @@ abstract class Action
 
         return $input;
     }
+
+    protected function getCurrentUserUuid(): string
+    {
+        return $this->request->getAttribute("userUuid");
+    }
 }

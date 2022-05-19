@@ -59,6 +59,8 @@ class User implements JsonSerializable
             throw UserEmailAlreadyRegisteredException::createFromEmail($userData->getEmail());
         }
 
+        $this->registeredAt = new \DateTime();
+
         $this->generateAndSetUuid();
 
         $this->workspaces = new ArrayCollection();

@@ -13,7 +13,7 @@ class ListWorkspaceAction extends WorkspaceAction
      */
     protected function action(): Response
     {
-        $userUuid = $this->resolveArg('id');
+        $userUuid = $this->getCurrentUserUuid();
         $user = $this->userFacade->getUserByUuid($userUuid);
         $workspaces = $user->getWorkspaces();
 
