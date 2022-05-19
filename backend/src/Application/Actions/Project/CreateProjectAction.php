@@ -21,7 +21,7 @@ class CreateProjectAction extends ProjectAction
 
         $name = $request['name'];
         $description = $request['description'];
-        $createdBy = $request['createdBy'];
+        $createdBy = $this->getCurrentUserUuid();
         $workspace_uuid = $request['workspace_uuid'];
         $package_uuid = $request['package_uuid'];
         $createdAt = date("Y-m-d H:i:s");

@@ -9,7 +9,6 @@ use Procesio\Application\Actions\Package\EditPackageAction;
 use Procesio\Application\Actions\Package\ListPackagesAction;
 use Procesio\Application\Actions\Package\ViewPackageAction;
 use Procesio\Application\Actions\Process\ChangeStatusProcessAction;
-use Procesio\Application\Actions\Process\CreateNewVersionProcessAction;
 use Procesio\Application\Actions\Process\CreateProcessAction;
 use Procesio\Application\Actions\Process\DeleteProjectsProcessAction;
 use Procesio\Application\Actions\Process\EditProcessAction;
@@ -98,7 +97,6 @@ return function (App $app) {
             $group->get('/all', ListProcessesAction::class);
             $group->get('/{id}', ViewProcessAction::class);
             $group->post('', CreateProcessAction::class);
-            $group->post('/newversion', CreateNewVersionProcessAction::class);
             $group->post('/{id}', EditProcessAction::class);
             $group->get('/displayhistory/{id}', ViewHistoryProcessAction::class);
             $group->get('/displayparent/{id}', ViewParentProcessAction::class);

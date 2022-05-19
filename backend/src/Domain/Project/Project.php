@@ -92,7 +92,7 @@ class Project implements JsonSerializable
             'uuid' => $this->getUuid(),
             'name' => $this->getName(),
             'description' => $this->getDescription(),
-            'createdAt' => $this->getCreatedAt(),
+            'createdAt' => $this->getCreatedAt()->format('d. m. Y'),
             'createdBy' => $this->getCreatedBy(),
             'workspace' => $this->getWorkspace(),
             'package' => $this->getPackage(),
