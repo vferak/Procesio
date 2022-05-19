@@ -34,6 +34,7 @@ use Procesio\Application\Actions\Workspace\AddUserToWorkspaceAction;
 use Procesio\Application\Actions\Workspace\CreateWorkspaceAction;
 use Procesio\Application\Actions\Workspace\DeleteWorkspaceAction;
 use Procesio\Application\Actions\Workspace\EditWorkspaceAction;
+use Procesio\Application\Actions\Workspace\ListOfUsersNotInWorkspaceAction;
 use Procesio\Application\Actions\Workspace\ListWorkspaceAction;
 use Procesio\Application\Actions\Workspace\ViewDefaultUserWorkspaceAction;
 use Procesio\Application\Actions\Workspace\ViewWorkspaceAction;
@@ -72,6 +73,7 @@ return function (App $app) {
             $group->post('/{id}', EditWorkspaceAction::class);
             $group->delete('/{id}', DeleteWorkspaceAction::class);
             $group->get('/all/{id}', ListWorkspaceAction::class);
+            $group->get('/notInWorkspace/{id}', ListOfUsersNotInWorkspaceAction::class);
         });
 
         $group->group('/package',function (Group $group) {

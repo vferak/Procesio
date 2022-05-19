@@ -16,8 +16,6 @@ class GetUserStatistics extends UserAction
         $userId = $this->request->getAttribute("userUuid");
         $user = $this->userFacade->getUserByUuid($userId);
 
-
-
         $projectsCreated = $this->projectFacade->findProjectsByUser($user) === null ? 0 : count($this->projectFacade->findProjectsByUser($user));
         $workspaces = $user->getWorkspaces() === null ? 0 : count($user->getWorkspaces());
         $registered = $user->getRegisteredAt()->format("d. m. Y");

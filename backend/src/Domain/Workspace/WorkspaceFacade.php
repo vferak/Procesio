@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManager;
 use Procesio\Domain\Package\Package;
 use Procesio\Domain\Package\PackageData;
 use Procesio\Domain\Package\PackageRepositoryInterface;
+use Procesio\Domain\Process\Process;
 use Procesio\Domain\Project\Project;
 use Procesio\Domain\Project\ProjectRepositoryInterface;
 use Procesio\Domain\User\User;
@@ -61,5 +62,30 @@ class WorkspaceFacade
         $this->workspaceRepository->persistWorkspace($workspace);
 
         return $workspace;
+    }
+
+    /**
+     * @param ?User[] $usersInWorkspace
+     * @param ?User[] $allUsersInSystem
+     */
+    public function getUsersNotInWorkspace(?array $usersInWorkspace, ?array $allUsersInSystem): ?array
+    {
+        $usersNotInWorkspace = [];
+        $usersNotInWorkspaceUuid = [];
+
+        foreach ($usersInWorkspace as $userInWorkspace)
+        {
+            $usersNotInWorkspaceUuid[] = $userInWorkspace->getUuid();
+        }
+
+        foreach ($allUsersInSystem as $user)
+        {
+            if(!(in_array($user->getUuid(),$usersNotInWorkspaceUuid)))
+            {
+                $usersNotInWorkspace[] = $user;
+            }
+        }
+
+        return $usersNotInWorkspace;
     }
 }

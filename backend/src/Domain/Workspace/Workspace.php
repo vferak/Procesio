@@ -74,14 +74,14 @@ class Workspace implements JsonSerializable
         //$this->users = $workspaceData->getUser();
     }
 
-
     public function jsonSerialize(): array
     {
         return [
             'uuid' => $this->getUuid(),
             'name' => $this->getName(),
             'description' => $this->getDescription(),
-            'user' => $this->getUser()
+            'user' => $this->getUser(),
+            'users' => $this->getUsers()
         ];
     }
 
