@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use JsonSerializable;
 use Procesio\Domain\Package\Exceptions\CouldNotAddProcessException;
 use Procesio\Domain\Process\Process;
+use Procesio\Domain\ProcessPackage\ProcessPackage;
 use Procesio\Domain\UuidDomainObjectTrait;
 use Procesio\Domain\Workspace\Workspace;
 
@@ -38,10 +39,12 @@ class Package implements JsonSerializable
     private ?Package $comesFrom;
 
     /**
-     * @var ?ArrayCollection|?Process[]
-     * @ManyToMany(targetEntity="Procesio\Domain\Process\Process", mappedBy="packages")
+     * @var ArrayCollection|ProcessPackage[]
+     * One product has many features. This is the inverse side.
+     * @OneToMany(targetEntity="Procesio\Domain\ProcessPackage\ProcessPackage", mappedBy="package")
      */
-    private mixed $processes;
+    private mixed $processPackages;
+
 
     public function __construct(PackageData $packageData)
     {
@@ -51,8 +54,8 @@ class Package implements JsonSerializable
         $this->workspace = $packageData->getWorkspace();
         $this->comesFrom = $packageData->getComesFrom();
 
-        $this->processes = new ArrayCollection();
-        //TODO: vlozeni do tabulny M:N pri vytvoreni nebo zvlast akce?
+        $this->processPackages = new ArrayCollection();
+
         $this->edit($packageData);
     }
 
@@ -71,7 +74,8 @@ class Package implements JsonSerializable
             'name' => $this->getName(),
             'description' => $this->getDescription(),
             'workspace' => $this->getWorkspace(),
-            'comesFrom' => $this->getComesFrom()
+            'comesFrom' => $this->getComesFrom(),
+            'processes' => $this->getProcesses()
         ];
     }
 
@@ -95,25 +99,9 @@ class Package implements JsonSerializable
         return $this->comesFrom;
     }
 
-    public function addProcessToPackage(Process $process): self
+    public function addProcessPackage(ProcessPackage $processPackage): self
     {
-        $processes = $this->getProcesses();
-
-        foreach ($processes as $proce) {
-            if ($proce->getUuid() === $process->getUuid()) {
-                throw CouldNotAddProcessException::createForDuplicateProcess($proce);
-            }
-        }
-
-        $this->addProcess($process);
-        $process->addPackage($this);
-
-        return $this;
-    }
-
-    public function addProcess(Process $process): self
-    {
-        $this->processes->add($process);
+        $this->processPackages->add($processPackage);
         return $this;
     }
 
@@ -122,6 +110,20 @@ class Package implements JsonSerializable
      */
     public function getProcesses(): array
     {
-        return $this->processes->toArray();
+        $processes = [];
+        foreach ($this->processPackages as $processPackage)
+        {
+            $processes[] = $processPackage->getProcess();
+        }
+
+        return $processes;
+    }
+
+    /**
+     * @return ProcessPackage[]
+     */
+    public function getProcessPackages(): array
+    {
+        return $this->processPackages->toArray();
     }
 }

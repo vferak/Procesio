@@ -11,10 +11,10 @@ use Procesio\Domain\Exceptions\CouldNotPersistDomainObjectException;
 use Procesio\Domain\Exceptions\DomainObjectNotFoundException;
 use Procesio\Domain\Package\Package;
 use Procesio\Domain\Process\Process;
+use Procesio\Domain\ProcessPackage\ProcessPackage;
 use Procesio\Domain\Project\Project;
 use Procesio\Domain\ProjectProcess\ProjectProcess;
 use Procesio\Domain\ProjectSubprocess\ProjectSubprocess;
-use Procesio\Domain\State\State;
 use Procesio\Domain\Subprocess\Subprocess;
 use Procesio\Domain\User\User;
 use Procesio\Domain\Workspace\Workspace;
@@ -43,7 +43,7 @@ abstract class BaseRepository
     }
 
     /**
-     * @return User|Workspace|Package|Project|Process|Subprocess|ProjectProcess|State
+     * @return User|Workspace|Package|Project|Process|Subprocess|ProjectProcess|ProcessPackage
      * @throws \Procesio\Domain\Exceptions\DomainObjectNotFoundException
      */
     protected function getByUuid(string $uuid): object
@@ -58,7 +58,7 @@ abstract class BaseRepository
     }
 
     /**
-     * @return User|Workspace|Package|Project|Process|Subprocess|ProjectProcess|State|ProjectSubprocess
+     * @return User|Workspace|Package|Project|Process|Subprocess|ProjectProcess|ProjectSubprocess
      */
     protected function getByMultipleUuid(array $uuids): object
     {

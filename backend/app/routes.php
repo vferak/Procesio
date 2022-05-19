@@ -3,8 +3,7 @@ declare(strict_types=1);
 
 use Procesio\Application\Actions\Authentication\LoginAction;
 use Procesio\Application\Actions\Authentication\RegisterAction;
-use Procesio\Application\Actions\Package\AddProcessToPackageAction;
-use Procesio\Application\Actions\Package\CreateNewVersionPackageAction;
+use Procesio\Application\Actions\ProcessPackage\AddProcessToPackageAction;
 use Procesio\Application\Actions\Package\CreatePackageAction;
 use Procesio\Application\Actions\Package\EditPackageAction;
 use Procesio\Application\Actions\Package\ListPackagesAction;
@@ -12,7 +11,6 @@ use Procesio\Application\Actions\Package\ViewPackageAction;
 use Procesio\Application\Actions\Process\ChangeStatusProcessAction;
 use Procesio\Application\Actions\Process\CreateNewVersionProcessAction;
 use Procesio\Application\Actions\Process\CreateProcessAction;
-use Procesio\Application\Actions\Process\DeleteProcessAction;
 use Procesio\Application\Actions\Process\DeleteProjectsProcessAction;
 use Procesio\Application\Actions\Process\EditProcessAction;
 use Procesio\Application\Actions\Process\ListProcessesAction;
@@ -83,7 +81,6 @@ return function (App $app) {
             $group->get('/all/{id}', ListPackagesAction::class);
             $group->get('/{id}', ViewPackageAction::class);
             $group->post('', CreatePackageAction::class);
-            $group->post('/newversion', CreateNewVersionPackageAction::class);
             $group->post('/addProcessToPackage', AddProcessToPackageAction::class);
             $group->post('/{id}', EditPackageAction::class);
             //$group->delete('/{id}', RegisterAction::class);
