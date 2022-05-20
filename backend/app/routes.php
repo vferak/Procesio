@@ -24,6 +24,7 @@ use Procesio\Application\Actions\Subprocess\ChangeStatusSubprocessAction;
 use Procesio\Application\Actions\Subprocess\CreateSubprocessAction;
 use Procesio\Application\Actions\Subprocess\DeleteProjectsSubprocessAction;
 use Procesio\Application\Actions\Subprocess\EditSubprocessAction;
+use Procesio\Application\Actions\Subprocess\RemoveSubprocessFromProcessAction;
 use Procesio\Application\Actions\Subprocess\ViewHistorySubprocessAction;
 use Procesio\Application\Actions\Subprocess\ViewParentSubprocessAction;
 use Procesio\Application\Actions\Subprocess\ViewSubprocessAction;
@@ -109,6 +110,7 @@ return function (App $app) {
             $group->post('/{id}', EditSubprocessAction::class);
             $group->get('/displayhistory/{id}', ViewHistorySubprocessAction::class);
             $group->get('/displayparent/{id}', ViewParentSubprocessAction::class);
+            $group->get('/removeSubprocess/{id}', RemoveSubprocessFromProcessAction::class);
             //$group->delete('/{id}', RegisterAction::class);
         });
 
