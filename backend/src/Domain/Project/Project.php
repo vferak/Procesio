@@ -74,6 +74,8 @@ class Project implements JsonSerializable
         $this->workspace = $projectData->getWorkspace();
         $this->package = $projectData->getPackage();
 
+        $this->projectProcesses = new ArrayCollection();
+
         $this->edit($projectData);
     }
 
@@ -203,5 +205,18 @@ class Project implements JsonSerializable
 
        // }
         //return ;
+    }
+
+    /**
+     * @return ArrayCollection|ProjectProcess[]
+     */
+    public function getProjectProcesses(): mixed
+    {
+        return $this->projectProcesses;
+    }
+
+    public function isSame(Project $project): bool
+    {
+        return $this->getUuid() === $project->getUuid();
     }
 }
