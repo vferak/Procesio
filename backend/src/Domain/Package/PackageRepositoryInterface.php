@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Procesio\Domain\Package;
 
+use Procesio\Domain\Workspace\Workspace;
+
 interface PackageRepositoryInterface
 {
     /**

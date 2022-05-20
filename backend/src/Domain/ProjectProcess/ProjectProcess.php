@@ -18,14 +18,14 @@ class ProjectProcess implements JsonSerializable
 {
     /**
      * @Id
-     * @ManyToOne(targetEntity="Procesio\Domain\Process\Process")
+     * @ManyToOne(targetEntity="Procesio\Domain\Process\Process", inversedBy="projectProcesses")
      * @JoinColumn(name="process_uuid", referencedColumnName="uuid")
      */
     private Process $process;
 
     /**
      * @Id
-     * @ManyToOne(targetEntity="Procesio\Domain\Project\Project")
+     * @ManyToOne(targetEntity="Procesio\Domain\Project\Project", inversedBy="projectProcesses")
      * @JoinColumn(name="project_uuid", referencedColumnName="uuid")
      */
     private Project $project;

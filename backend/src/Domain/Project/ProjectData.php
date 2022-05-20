@@ -18,6 +18,7 @@ class ProjectData
         private DateTime $createdAt,
         private Workspace $workspace,
         private Package $package,
+        private string $state
     ) {
     }
 
@@ -49,5 +50,10 @@ class ProjectData
     public function getWorkspace(): Workspace
     {
         return $this->workspace;
+    }
+
+    public function getState(): string
+    {
+        return $this->state;
     }
 }

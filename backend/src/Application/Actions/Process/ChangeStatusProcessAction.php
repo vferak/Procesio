@@ -26,7 +26,7 @@ class ChangeStatusProcessAction extends ProcessAction
             $process = $this->processFacade->getProcessByUuid($process_uuid);
             $project = $this->projectFacade->getProjectByUuid($project_uuid);
 
-            if (!in_array($state, array('new', 'in progress', 'TODO'))) {
+            if (!in_array($state, array('DONE', 'in progress', 'TODO'))) {
                 throw new \InvalidArgumentException("Neplatná hodnota");
             }
 
