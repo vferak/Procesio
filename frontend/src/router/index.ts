@@ -50,6 +50,14 @@ const routes = [
         },
       },
       {
+        path: "/admin/projects/edit/:uuid",
+        name: "editProject",
+        component: () => import("@/views/Admin/Projects/EditProjectView.vue"),
+        meta: {
+          title: "Edit project",
+        },
+      },
+      {
         path: "/admin/packages",
         name: "packages",
         component: () => import("@/views/Admin/Packages/PackagesView.vue"),
