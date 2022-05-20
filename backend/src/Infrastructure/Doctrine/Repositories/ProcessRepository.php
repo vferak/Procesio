@@ -4,6 +4,8 @@ namespace Procesio\Infrastructure\Doctrine\Repositories;
 
 use Procesio\Domain\Process\Process;
 use Procesio\Domain\Process\ProcessRepositoryInterface;
+use Procesio\Domain\Project\Project;
+use Procesio\Domain\Workspace\Workspace;
 use Procesio\Infrastructure\Doctrine\BaseRepository;
 
 class ProcessRepository extends BaseRepository implements ProcessRepositoryInterface
@@ -47,5 +49,13 @@ class ProcessRepository extends BaseRepository implements ProcessRepositoryInter
     public function getProcessesByComesFrom(string $uuid): ?array
     {
         return $this->findBy(['comesFrom' => $uuid]);
+    }
+
+    /**
+     * @return ?Process[]
+     */
+    public function findAllProcesses(): ?array
+    {
+        return $this->findAll();
     }
 }

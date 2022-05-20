@@ -7,9 +7,7 @@ use JsonSerializable;
 use Procesio\Domain\User\User;
 use Procesio\Domain\UuidDomainObjectTrait;
 use Procesio\Domain\Workspace\Exceptions\CouldNotAddUserException;
-use Procesio\Domain\Workspace\Exceptions\CouldNotDeleteProjectException;
 use Procesio\Domain\Workspace\Exceptions\CouldNotDeleteWorkspaceException;
-use Procesio\Domain\Workspace\Exceptions\CouldNotDeleteWorkspaceExceptionException;
 use Procesio\Infrastructure\Doctrine\Repositories\PackageRepository;
 use Procesio\Infrastructure\Doctrine\Repositories\ProjectRepository;
 use Procesio\Infrastructure\Doctrine\Repositories\WorkspaceRepository;
@@ -34,6 +32,12 @@ class Workspace implements JsonSerializable
      */
     private mixed $users;
 
+    /**
+     * @ManyToOne(targetEntity="Procesio\Domain\User\User")
+     * @JoinColumn(name="user_uuid", referencedColumnName="uuid", nullable = true)
+     */
+    private ?User $user;
+
 
     public function __construct(WorkspaceData $workspaceData)
     {
@@ -42,6 +46,11 @@ class Workspace implements JsonSerializable
         $this->name = $workspaceData->getName();
         $this->description = $workspaceData->getDescription();
         $this->users = new ArrayCollection();
+
+        if($workspaceData->getUser() !== null)
+        {
+            $this->user = $workspaceData->getUser();
+        }
 
         $this->edit($workspaceData);
     }
@@ -60,7 +69,8 @@ class Workspace implements JsonSerializable
         return [
             'uuid' => $this->getUuid(),
             'name' => $this->getName(),
-            'description' => $this->getDescription()
+            'description' => $this->getDescription(),
+            'user' => $this->getUser()
         ];
     }
 
@@ -87,18 +97,19 @@ class Workspace implements JsonSerializable
         return $this->users->toArray();
     }
 
+
     public function delete(
         WorkspaceRepository $workspaceRepository,
         PackageRepository $packageRepository,
         ProjectRepository $projectRepository
     ): void {
         //TODO: TSK
-        $packages = $packageRepository->findWorkspaces($this);
+        $packages = $packageRepository->findAllPackagesByWorkspaces($this);
         if ($packages !== null) {
             throw CouldNotDeleteWorkspaceException::createForPackages($packages);
         }
 
-        $projects = $projectRepository->findWorkspaces($this);
+        $projects = $projectRepository->findAllProjectsByWorkspaces($this);
         if ($projects !== null) {
             throw CouldNotDeleteWorkspaceException::createForProjects($projects);
         }
@@ -131,5 +142,13 @@ class Workspace implements JsonSerializable
     {
         $this->users->add($user);
         return $this;
+    }
+
+    /**
+     * @return User|null
+     */
+    public function getUser(): ?User
+    {
+        return $this->user;
     }
 }

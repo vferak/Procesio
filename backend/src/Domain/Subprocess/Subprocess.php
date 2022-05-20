@@ -23,7 +23,7 @@ class Subprocess implements JsonSerializable
     private string $description;
 
     /**
-     * @ManyToOne(targetEntity="Procesio\Domain\Process\Process")
+     * @ManyToOne(targetEntity="Procesio\Domain\Process\Process", inversedBy="subprocesses")
      * @JoinColumn(name="process_uuid", referencedColumnName="uuid")
      */
     private ?Process $process;
@@ -60,7 +60,7 @@ class Subprocess implements JsonSerializable
             'uuid' => $this->getUuid(),
             'name' => $this->getName(),
             'description' => $this->getDescription(),
-            'process' => $this->getProcess(),
+            'process_uuid' => $this->getProcess()?->getUuid(),
             'comesFrom' => $this->getComesFrom(),
         ];
     }

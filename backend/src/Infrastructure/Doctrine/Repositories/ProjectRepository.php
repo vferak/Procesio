@@ -37,7 +37,7 @@ class ProjectRepository extends BaseRepository implements ProjectRepositoryInter
     /**
      * @return ?Project[]
      */
-    public function findWorkspaces(Workspace $workspace): ?array
+    public function findAllProjectsByWorkspaces(Workspace $workspace): ?array
     {
         return $this->findBy(['workspace' => $workspace]);
     }

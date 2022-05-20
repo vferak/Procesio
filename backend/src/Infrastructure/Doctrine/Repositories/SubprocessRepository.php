@@ -2,6 +2,7 @@
 
 namespace Procesio\Infrastructure\Doctrine\Repositories;
 
+use Procesio\Domain\Process\Process;
 use Procesio\Domain\Subprocess\Subprocess;
 use Procesio\Domain\Subprocess\SubprocessRepositoryInterface;
 use Procesio\Infrastructure\Doctrine\BaseRepository;
@@ -47,5 +48,13 @@ class SubprocessRepository extends BaseRepository implements SubprocessRepositor
     public function getSubprocessesByComesFrom(string $uuid): ?array
     {
         return $this->findBy(['comesFrom' => $uuid]);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getSubprocessesByProcess(Process $process): ?array
+    {
+        return $this->findBy(['process_uuid' => $process]);
     }
 }

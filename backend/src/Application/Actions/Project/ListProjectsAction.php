@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Procesio\Application\Actions\Package;
+namespace Procesio\Application\Actions\Project;
 
+use Procesio\Domain\Exceptions\DomainObjectNotFoundException;
+use Procesio\Domain\Project\ProjectData;
 use Psr\Http\Message\ResponseInterface as Response;
 
-class ListPackagesAction extends PackageAction
+class ListProjectsAction extends ProjectAction
 {
     /**
      * {@inheritdoc}
@@ -15,8 +17,8 @@ class ListPackagesAction extends PackageAction
     {
         $workspace_uuid = $this->resolveArg('id');
         $workspace = $this->workspaceFacade->getWorkspaceByUuid($workspace_uuid);
-        $packages = $this->packageFacade->findPackages($workspace);
+        $projects = $this->projectFacade->findProjects($workspace);
 
-        return $this->respondWithData($packages);
+        return $this->respondWithData($projects);
     }
 }

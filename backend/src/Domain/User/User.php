@@ -6,7 +6,9 @@ namespace Procesio\Domain\User;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use JsonSerializable;
+use mysql_xdevapi\Exception;
 use Procesio\Application\Authentication\PasswordManager;
+use Procesio\Domain\Exceptions\DomainObjectNotFoundException;
 use Procesio\Domain\User\Exceptions\UserEmailAlreadyRegisteredException;
 use Procesio\Domain\UuidDomainObjectTrait;
 use Procesio\Domain\Workspace\Workspace;
@@ -119,5 +121,18 @@ class User implements JsonSerializable
     {
         $this->workspaces->add($workspace);
         return $this;
+    }
+
+    public function getDefaultWorkspace(): Workspace
+    {
+        foreach ($this->workspaces as $workspace)
+        {
+            if($workspace->getUser() === $this)
+            {
+                return $workspace;
+            }
+        }
+
+        throw DomainObjectNotFoundException::createFromDomainObjectClass(Workspace::class);
     }
 }

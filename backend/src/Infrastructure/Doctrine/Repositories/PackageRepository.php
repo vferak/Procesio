@@ -46,7 +46,7 @@ class PackageRepository extends BaseRepository implements PackageRepositoryInter
     /**
      * @return ?Package[]
      */
-    public function findWorkspaces(Workspace $workspace): ?array
+    public function findAllPackagesByWorkspaces(Workspace $workspace): ?array
     {
         return $this->findBy(['workspace' => $workspace]);
     }

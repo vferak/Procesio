@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Procesio\Domain\Project;
 
+use Procesio\Domain\Workspace\Workspace;
 use Procesio\Infrastructure\Doctrine\Repositories\ProjectRepository;
 
 class ProjectFacade
@@ -35,5 +36,13 @@ class ProjectFacade
         $project->edit($projectData);
         $this->projectRepository->persistProject($project);
         return $project;
+    }
+
+    /**
+     * @return ?Project[]
+     */
+    public function findProjects(Workspace $workspace): array
+    {
+        return $this->projectRepository->findAllProjectsByWorkspaces($workspace);
     }
 }

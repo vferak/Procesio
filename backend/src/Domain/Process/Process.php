@@ -7,6 +7,7 @@ namespace Procesio\Domain\Process;
 use Doctrine\Common\Collections\ArrayCollection;
 use JsonSerializable;
 use Procesio\Domain\Package\Package;
+use Procesio\Domain\Subprocess\Subprocess;
 use Procesio\Domain\UuidDomainObjectTrait;
 
 /**
@@ -40,12 +41,20 @@ class Process implements JsonSerializable
      */
     private ?Process $comesFrom;
 
+    /**
+     * @var ArrayCollection|Subprocess[]
+     * One product has many features. This is the inverse side.
+     * @OneToMany(targetEntity="Procesio\Domain\Subprocess\Subprocess", mappedBy="process")
+     */
+    private mixed $subprocesses;
+
 
     public function __construct(ProcessData $processData)
     {
         $this->generateAndSetUuid();
         $this->comesFrom = $processData->getComesFrom();
         $this->packages = new ArrayCollection();
+        $this->subprocesses = new ArrayCollection();
 
         $this->edit($processData);
     }
@@ -72,6 +81,7 @@ class Process implements JsonSerializable
             'description' => $this->getDescription(),
             'packages' => $this->getPackages(),
             'comesFrom' => $this->getComesFrom(),
+            'subprocesses' => $this->getSubprocesses()
         ];
     }
 
@@ -104,10 +114,24 @@ class Process implements JsonSerializable
     {
         return $this->packages->toArray();
     }
+/*
+
+    public function getSubprocesses(): array
+    {
+        return $this->packages->toArray();
+    }*/
 
     public function addPackage(Package $package): self
     {
         $this->packages->add($package);
         return $this;
+    }
+
+    /**
+     * @return Subprocess[]
+     */
+    public function getSubprocesses(): array
+    {
+        return $this->subprocesses->toArray();
     }
 }

@@ -4,12 +4,19 @@ declare(strict_types=1);
 
 namespace Procesio\Domain\User;
 
+use Procesio\Application\Authentication\Exception\InvalidPasswordException;
 use Procesio\Application\Authentication\PasswordManager;
+use Procesio\Domain\Exceptions\DomainObjectNotFoundException;
+use Procesio\Domain\Workspace\Exceptions\CouldNotAddUserException;
+use Procesio\Domain\Workspace\Workspace;
+use Procesio\Domain\Workspace\WorkspaceData;
+use Procesio\Domain\Workspace\WorkspaceRepositoryInterface;
 
 class UserFacade
 {
     public function __construct(
         private UserRepositoryInterface $userRepository,
+        private WorkspaceRepositoryInterface $workspaceRepository,
         private PasswordManager $passwordManager
     ) {
     }
@@ -40,8 +47,17 @@ class UserFacade
     public function registerUser(UserData $userData): User
     {
         $user = new User($userData, $this->userRepository, $this->passwordManager);
+        $user = $this->userRepository->persistUser($user);
 
-        return $this->userRepository->persistUser($user);
+        $name = "{$user->getFirstName()} {$user->getLastName()}'s workspace";
+        $description = "Default workspace with registration.";
+        $workspaceData = new WorkspaceData($name, $description, $user);
+
+        $workspace = new Workspace($workspaceData);
+        $workspace->addUserToWorkspace($user);
+        $this->workspaceRepository->persistWorkspace($workspace);
+
+        return $user;
     }
 
     public function editUser(User $user, UserData $userData): User

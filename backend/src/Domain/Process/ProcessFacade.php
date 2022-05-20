@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace Procesio\Domain\Process;
 
+use Procesio\Domain\Project\Project;
+use Procesio\Domain\Subprocess\Subprocess;
+use Procesio\Domain\Workspace\Workspace;
 use Procesio\Infrastructure\Doctrine\Repositories\ProcessRepository;
+use Procesio\Infrastructure\Doctrine\Repositories\SubprocessRepository;
 
 class ProcessFacade
 {
     public function __construct(
-        private ProcessRepository $processRepository
+        private ProcessRepository $processRepository,
+        private SubprocessRepository $subprocessRepository
     ) {
     }
 
@@ -40,6 +45,22 @@ class ProcessFacade
         $this->processRepository->persistProcess($process);
 
         return $process;
+    }
+
+    /**
+     * @return ?Process[]
+     */
+    public function findProcesses(): array
+    {
+        return $this->processRepository->findAllProcesses();
+    }
+
+    /**
+     * @return ?Subprocess[]
+     */
+    public function findSubprocesses(Process $process): array
+    {
+        return $this->subprocessRepository->getSubprocessesByProcess($process);
     }
 
     /*public function createNewVersionProcess(ProcessData $processData): Process

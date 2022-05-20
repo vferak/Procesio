@@ -11,11 +11,13 @@ use Procesio\Application\Actions\Package\ViewPackageAction;
 use Procesio\Application\Actions\Process\CreateNewVersionProcessAction;
 use Procesio\Application\Actions\Process\CreateProcessAction;
 use Procesio\Application\Actions\Process\EditProcessAction;
+use Procesio\Application\Actions\Process\ListProcessesAction;
 use Procesio\Application\Actions\Process\ViewHistoryProcessAction;
 use Procesio\Application\Actions\Process\ViewParentProcessAction;
 use Procesio\Application\Actions\Process\ViewProcessAction;
 use Procesio\Application\Actions\Project\CreateProjectAction;
 use Procesio\Application\Actions\Project\EditProjectAction;
+use Procesio\Application\Actions\Project\ListProjectsAction;
 use Procesio\Application\Actions\Project\ViewProjectAction;
 use Procesio\Application\Actions\Subprocess\CreateSubprocessAction;
 use Procesio\Application\Actions\Subprocess\EditSubprocessAction;
@@ -64,7 +66,7 @@ return function (App $app) {
         });
 
         $group->group('/package',function (Group $group) {
-            $group->get('', ListPackagesAction::class);
+            $group->get('/all/{id}', ListPackagesAction::class);
             $group->get('/{id}', ViewPackageAction::class);
             $group->post('', CreatePackageAction::class);
             $group->post('/addProcessToPackage', AddProcessToPackageAction::class);
@@ -74,6 +76,7 @@ return function (App $app) {
 
         $group->group('/project',function (Group $group) {
             $group->get('/{id}', ViewProjectAction::class);
+            $group->get('/all/{id}', ListProjectsAction::class);
             $group->post('', CreateProjectAction::class);
             $group->post('/{id}', EditProjectAction::class);
             //$group->delete('/{id}', RegisterAction::class);
@@ -81,6 +84,7 @@ return function (App $app) {
 
         $group->group('/process',function (Group $group) {
             $group->get('/{id}', ViewProcessAction::class);
+            $group->get('/all/', ListProcessesAction::class);
             $group->post('', CreateProcessAction::class);
             $group->post('/newversion', CreateNewVersionProcessAction::class);
             $group->post('/{id}', EditProcessAction::class);

@@ -12,6 +12,7 @@ class WorkspaceData
     public function __construct(
         private string $name,
         private string $description,
+        private ?User $user
     ) {
     }
 
@@ -34,6 +35,14 @@ class WorkspaceData
     public function getDescription(): string
     {
         return $this->description;
+    }
+
+    /**
+     * @return User|null
+     */
+    public function getUser(): ?User
+    {
+        return $this->user;
     }
 
 }

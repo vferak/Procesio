@@ -24,7 +24,7 @@ class CreateProjectAction extends ProjectAction
         $createdBy = $request['createdBy'];
         $workspace_uuid = $request['workspace_uuid'];
         $package_uuid = $request['package_uuid'];
-        $createdAt = $request['createdAt'];
+        $createdAt = date("Y-m-d H:i:s");
 
         try {
             $createdAt = new DateTime($createdAt);
