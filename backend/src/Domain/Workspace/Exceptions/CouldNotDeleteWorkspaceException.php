@@ -50,4 +50,10 @@ class CouldNotDeleteWorkspaceException extends DomainException
             )
         );
     }
+
+
+    public static function createForDefaultUser(): self
+    {
+        return new self('Workspace could not be deleted because it is default workspace!');
+    }
 }

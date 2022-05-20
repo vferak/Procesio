@@ -13,7 +13,9 @@ class ListPackagesAction extends PackageAction
      */
     protected function action(): Response
     {
-        $packages = $this->packageFacade->findPackages();
+        $workspace_uuid = $this->resolveArg('id');
+        $workspace = $this->workspaceFacade->getWorkspaceByUuid($workspace_uuid);
+        $packages = $this->packageFacade->findPackages($workspace);
 
         return $this->respondWithData($packages);
     }

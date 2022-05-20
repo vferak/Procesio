@@ -5,49 +5,34 @@ declare(strict_types=1);
 namespace Procesio\Domain\ProjectSubprocess;
 
 use Doctrine\ORM\EntityManager;
+use Procesio\Domain\ProjectProcess\ProjectProcess;
+use Procesio\Infrastructure\Doctrine\Repositories\ProjectSubprocessRepository;
 
 class ProjectSubprocessFacade
 {
     public function __construct(
-        private ProjectSubprocessRepositoryInterface $projectSubprocessRepository,
+        private ProjectSubprocessRepository $projectSubprocessRepository,
         private EntityManager $entityManager
     ) {
     }
 
-    public function getProjectSubprocessByUuid(string $id): ProjectSubprocess
+    public function getProjectSubpprocessByUuid(string $project_uuid, string $process_uuid): ProjectSubprocess
     {
-        return $this->projectSubprocessRepository->getProjectSubprocessesByUuid($id);
+        return $this->projectSubprocessRepository->getProjectSubprocessesByUuid($project_uuid, $process_uuid);
     }
 
-    /**
-     * @return ProjectSubprocess[]
-     */
-    public function findAllWorkspaces(): array
+    public function changeState(ProjectSubprocess $projectSubprocess, ProjectSubprocessData $projectSubprocessData): ProjectSubprocess
     {
-        return $this->projectSubprocessRepository->findAll();
+        $projectSubprocess->changeState($projectSubprocessData);
+
+        $this->projectSubprocessRepository->persistProjectSubprocesses($projectSubprocess);
+        return $projectSubprocess;
+
     }
 
-
-    public function deleteProjectProcesses(ProjectSubprocess $projectProcesses): void
+    public function deleteProjectSubprocess(ProjectSubprocess $projectSubprocess): void
     {
-
-        $projectProcesses->delete($this->projectSubprocessRepository);
+        $projectSubprocess->delete($this->projectSubprocessRepository);
         $this->entityManager->flush();
     }
-
-    public function registerWorkspace(ProjectSubprocessData $projectProcesses): ProjectSubprocess
-    {
-        $projectProcesses = new ProjectSubprocess($projectProcesses);
-
-        return $this->projectSubprocessRepository->persistProjectSubprocesses($projectProcesses);
-    }
-
-
-    /*public function editWorkspace(ProjectProcess $workspace, ProjectProcessesData $workspaceData): ProjectProcess
-    {
-        $workspace->edit($workspaceData);
-        $this->projectSubprocessRepository->persistWorkspace($workspace);
-
-        return $workspace;
-    }*/
 }

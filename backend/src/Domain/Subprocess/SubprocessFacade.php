@@ -23,9 +23,6 @@ class SubprocessFacade
         return $this->subprocessRepository->getSubprocessesByComesFrom($id);
     }
 
-    /*public function getPackageByEmail(string $email): Package {
-        return $this->packageRepository->getPackageByName($email);
-    }*/
 
     public function createSubprocess(SubprocessData $subprocessData): Subprocess
     {

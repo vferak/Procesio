@@ -17,6 +17,7 @@ class DeleteWorkspaceAction extends WorkspaceAction
     protected function action(): Response
     {
         $workspaceId = $this->resolveArg('id');
+
         try {
             $workspace = $this->workspaceFacade->getWorkspaceByUuid($workspaceId);
             $this->workspaceFacade->deleteWorkspace($workspace);

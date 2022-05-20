@@ -2,7 +2,6 @@
 
 namespace Procesio\Infrastructure\Doctrine\Repositories;
 
-use Procesio\Domain\User\User;
 use Procesio\Domain\Workspace\Workspace;
 use Procesio\Domain\Workspace\WorkspaceRepositoryInterface;
 use Procesio\Infrastructure\Doctrine\BaseRepository;
@@ -23,6 +22,15 @@ class WorkspaceRepository extends BaseRepository implements WorkspaceRepositoryI
     public function getWorkspaceByUuid(string $uuid): Workspace
     {
         return $this->getByUuid($uuid);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getDefaultUserWorkspaceByUuid(string $uuid): ?Workspace
+    {
+        $workspaces = $this->findBy(['user' => $uuid]);
+        return is_array($workspaces) ? reset($workspaces) : null;
     }
 
     /**

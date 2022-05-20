@@ -22,26 +22,13 @@ class EditProjectAction extends ProjectAction
         try {
             $project = $this->projectFacade->getProjectByUuid($projectUuid);
 
-            // Project se muze menit package ale nesmi byt null!!!
-            if (empty($request['workspace'])) {
-                $workspace = $request['workspace'] ?? $project->getWorkspace();
-            } else {
-                $workspace = $this->workspaceFacade->getWorkspaceByUuid($request['workspace']);
-            }
-
-            if (empty($request['package'])) {
-                $package = $request['package'] ?? $project->getWorkspace();
-            } else {
-                $package = $this->packageFacade->getPackageByUuid($request['package']);
-            }
-
             $projectData = new ProjectData(
                 $request['name'] ?? $project->getName(),
                 $request['description'] ?? $project->getDescription(),
-                $request['createdBy'] ?? $project->getCreatedBy(),
-                $request['createdAt'] ?? $project->getCreatedAt(),
-                $workspace,
-                $package
+                $project->getCreatedBy(),
+                $project->getCreatedAt(),
+                $project->getWorkspace(),
+                $project->getPackage()
             );
 
             $this->projectFacade->editProject($project, $projectData);

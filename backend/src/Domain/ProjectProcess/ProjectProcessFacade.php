@@ -5,49 +5,43 @@ declare(strict_types=1);
 namespace Procesio\Domain\ProjectProcess;
 
 use Doctrine\ORM\EntityManager;
+use Procesio\Infrastructure\Doctrine\Repositories\ProjectProcessRepository;
+
 
 class ProjectProcessFacade
 {
     public function __construct(
-        private ProjectProcessRepositoryInterface $projectProcessRepository,
+        private ProjectProcessRepository $projectProcessRepository,
         private EntityManager $entityManager
     ) {
     }
 
-    public function getProjectProcessFacadeByUuid(string $id): ProjectProcess
+    public function getProjectProcessByUuid(string $project_uuid, string $process_uuid): ProjectProcess
     {
-        return $this->projectProcessRepository->getProjectProcessesByUuid($id);
-    }
-
-    /**
-     * @return ProjectProcess[]
-     */
-    public function findAllWorkspaces(): array
-    {
-        return $this->projectProcessRepository->findAll();
+        return $this->projectProcessRepository->getProjectProcessesByUuid($project_uuid, $process_uuid);
     }
 
 
-    public function deleteProjectProcesses(ProjectProcess $projectProcesses): void
+    public function changeState(ProjectProcess $projectProcess, ProjectProcessData $projectProcessData): ProjectProcess
     {
+        $projectProcess->changeState($projectProcessData);
 
-        $projectProcesses->delete($this->projectProcessRepository);
+        $this->projectProcessRepository->persistProjectProcess($projectProcess);
+        return $projectProcess;
+
+    }
+
+    public function persistProjectProcess(ProjectProcessData $projectProcessData): ProjectProcess
+    {
+        $projectProcess = new ProjectProcess($projectProcessData);
+
+        return $this->projectProcessRepository->persistProjectProcess($projectProcess);
+    }
+
+    public function deleteProjectProcess(ProjectProcess $projectProcess): void
+    {
+        $projectProcess->delete($this->projectProcessRepository);
         $this->entityManager->flush();
     }
 
-    public function registerWorkspace(ProjectProcessData $projectProcesses): ProjectProcess
-    {
-        $projectProcesses = new ProjectProcess($projectProcesses);
-
-        return $this->projectProcessRepository->persistProjectProcesses($projectProcesses);
-    }
-
-
-    /*public function editWorkspace(ProjectProcess $workspace, ProjectProcessesData $workspaceData): ProjectProcess
-    {
-        $workspace->edit($workspaceData);
-        $this->projectRepository->persistWorkspace($workspace);
-
-        return $workspace;
-    }*/
 }

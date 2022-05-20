@@ -7,6 +7,8 @@ namespace Procesio\Domain\Process;
 use Doctrine\Common\Collections\ArrayCollection;
 use JsonSerializable;
 use Procesio\Domain\Package\Package;
+use Procesio\Domain\ProcessPackage\ProcessPackage;
+use Procesio\Domain\Subprocess\Subprocess;
 use Procesio\Domain\UuidDomainObjectTrait;
 
 /**
@@ -24,15 +26,11 @@ class Process implements JsonSerializable
     private string $description;
 
     /**
-     * Many Processes have Many Packages.
-     * @var ArrayCollection|Package[]
-     * @ManyToMany(targetEntity="Procesio\Domain\Package\Package")
-     * @JoinTable(name="process_package",
-     *      joinColumns={@JoinColumn(name="process_uuid", referencedColumnName="uuid")},
-     *      inverseJoinColumns={@JoinColumn(name="package_uuid", referencedColumnName="uuid")}
-     *      )
+     * @var ArrayCollection|ProcessPackage[]
+     * One product has many features. This is the inverse side.
+     * @OneToMany(targetEntity="Procesio\Domain\ProcessPackage\ProcessPackage", mappedBy="process")
      */
-    private mixed $packages;
+    private mixed $processPackages;
 
     /**
      * @ManyToOne(targetEntity="Procesio\Domain\Process\Process")
@@ -40,13 +38,19 @@ class Process implements JsonSerializable
      */
     private ?Process $comesFrom;
 
+    /**
+     * @var ArrayCollection|Subprocess[]
+     * One product has many features. This is the inverse side.
+     * @OneToMany(targetEntity="Procesio\Domain\Subprocess\Subprocess", mappedBy="process")
+     */
+    private mixed $subprocesses;
 
     public function __construct(ProcessData $processData)
     {
         $this->generateAndSetUuid();
         $this->comesFrom = $processData->getComesFrom();
-        $this->packages = new ArrayCollection();
-
+        $this->subprocesses = new ArrayCollection();
+        $this->processPackages = new ArrayCollection();
         $this->edit($processData);
     }
 
@@ -56,22 +60,14 @@ class Process implements JsonSerializable
         $this->description = $processData->getDescription();
     }
 
-    /*public function createNewVersionProcess(ProcessData $processData): void
-    {
-        $this->generateAndSetUuid();
-        $this->name = $processData->getName();
-        $this->description = $processData->getDescription();
-        $this->comesFrom = $processData->getComesFrom();
-    }*/
-
     public function jsonSerialize(): array
     {
         return [
             'uuid' => $this->getUuid(),
             'name' => $this->getName(),
             'description' => $this->getDescription(),
-            'packages' => $this->getPackages(),
             'comesFrom' => $this->getComesFrom(),
+            'subprocesses' => $this->getSubprocesses()
         ];
     }
 
@@ -102,12 +98,34 @@ class Process implements JsonSerializable
      */
     public function getPackages(): array
     {
-        return $this->packages->toArray();
+        $packages = [];
+        foreach ($this->processPackages as $processPackage)
+        {
+            $packages[] = $processPackage->getProcess();
+        }
+
+        return $packages;
     }
 
-    public function addPackage(Package $package): self
+    public function addProcessPackage(ProcessPackage $processPackage): self
     {
-        $this->packages->add($package);
+        $this->processPackages->add($processPackage);
         return $this;
+    }
+
+    /**
+     * @return Subprocess[]
+     */
+    public function getSubprocesses(): array
+    {
+        return $this->subprocesses->toArray();
+    }
+
+    /**
+     * @return ProcessPackage[]
+     */
+    public function getProcessPackages(): array
+    {
+        return $this->processPackages->toArray();
     }
 }

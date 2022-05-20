@@ -23,7 +23,7 @@ class Subprocess implements JsonSerializable
     private string $description;
 
     /**
-     * @ManyToOne(targetEntity="Procesio\Domain\Process\Process")
+     * @ManyToOne(targetEntity="Procesio\Domain\Process\Process", inversedBy="subprocesses")
      * @JoinColumn(name="process_uuid", referencedColumnName="uuid")
      */
     private ?Process $process;
@@ -34,6 +34,10 @@ class Subprocess implements JsonSerializable
      */
     private ?Subprocess $comesFrom;
 
+    /** @Column(type="integer") */
+    private int $priority;
+
+
     public function __construct(SubprocessData $subprocessData)
     {
         $this->generateAndSetUuid();
@@ -42,6 +46,7 @@ class Subprocess implements JsonSerializable
         $this->description = $subprocessData->getDescription();
         $this->process = $subprocessData->getProcess();
         $this->comesFrom = $subprocessData->getComesFrom();
+        $this->priority = $subprocessData->getPriority();
 
         $this->edit($subprocessData);
     }
@@ -60,7 +65,7 @@ class Subprocess implements JsonSerializable
             'uuid' => $this->getUuid(),
             'name' => $this->getName(),
             'description' => $this->getDescription(),
-            'process' => $this->getProcess(),
+            'process_uuid' => $this->getProcess()?->getUuid(),
             'comesFrom' => $this->getComesFrom(),
         ];
     }
@@ -86,5 +91,13 @@ class Subprocess implements JsonSerializable
     public function getProcess(): ?Process
     {
         return $this->process;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPriority(): int
+    {
+        return $this->priority;
     }
 }

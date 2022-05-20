@@ -15,18 +15,17 @@ class CreateWorkspaceAction extends WorkspaceAction
 
     protected function action(): Response
     {
-        //prijmou data z requestu a poslat do facade nic se zde s nima nedela
         $request = $this->request->getParsedBody();
 
         $name = $request['name'];
         $description = $request['description'];
-        $workspaceData = new WorkspaceData($name, $description);
 
-        $this->workspaceFacade->createWorkspace($workspaceData);
+        $user = $this->userFacade->getUserByUuid($this->request->getAttribute("userUuid"));
+
+        $workspaceData = new WorkspaceData($name, $description, null);
+
+        $this->workspaceFacade->createWorkspace($workspaceData, $user);
 
         return $this->respondWithData(statusCode: 201);
-
-
-        //zavolat facade
     }
 }

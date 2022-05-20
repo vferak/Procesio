@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Procesio\Domain\User;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use JsonSerializable;
+use mysql_xdevapi\Exception;
 use Procesio\Application\Authentication\PasswordManager;
+use Procesio\Domain\Exceptions\DomainObjectNotFoundException;
 use Procesio\Domain\User\Exceptions\UserEmailAlreadyRegisteredException;
 use Procesio\Domain\UuidDomainObjectTrait;
 use Procesio\Domain\Workspace\Workspace;
@@ -31,6 +34,9 @@ class User implements JsonSerializable
     /** @Column(type="string", name="lastName") */
     private string $lastName;
 
+    /** @Column(type="datetime", name="registered_at", options={"default": "CURRENT_TIMESTAMP"}) */
+    private DateTime $registeredAt;
+
     /**
      * Many Users have Many Groups.
      * @var ArrayCollection|Workspace[]
@@ -53,6 +59,8 @@ class User implements JsonSerializable
             throw UserEmailAlreadyRegisteredException::createFromEmail($userData->getEmail());
         }
 
+        $this->registeredAt = new \DateTime();
+
         $this->generateAndSetUuid();
 
         $this->workspaces = new ArrayCollection();
@@ -65,9 +73,12 @@ class User implements JsonSerializable
         $this->email = $userData->getEmail();
         $this->firstName = $userData->getFirstName();
         $this->lastName = $userData->getLastName();
-        $this->password = $passwordManager->hashPassword($userData->getPassword());
-        $this->firstName = $userData->getFirstName();
-        $this->lastName = $userData->getLastName();
+
+        if($userData->getPassword() !== null)
+        {
+            $this->password = $passwordManager->hashPassword($userData->getPassword());
+        }
+
     }
 
     public function jsonSerialize(): array
@@ -75,7 +86,6 @@ class User implements JsonSerializable
         return [
             'uuid' => $this->getUuid(),
             'username' => $this->getEmail(),
-            'password' => $this->getPassword(),
             'firstName' => $this->getFirstName(),
             'lastName' => $this->getLastName()
         ];
@@ -119,5 +129,26 @@ class User implements JsonSerializable
     {
         $this->workspaces->add($workspace);
         return $this;
+    }
+
+    public function getDefaultWorkspace(): Workspace
+    {
+        foreach ($this->workspaces as $workspace)
+        {
+            if($workspace->getUser() === $this)
+            {
+                return $workspace;
+            }
+        }
+
+        throw DomainObjectNotFoundException::createFromDomainObjectClass(Workspace::class);
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getRegisteredAt(): DateTime
+    {
+        return $this->registeredAt;
     }
 }

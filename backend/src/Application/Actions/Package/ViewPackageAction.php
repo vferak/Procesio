@@ -15,7 +15,6 @@ class ViewPackageAction extends PackageAction
     {
         $packageId = $this->resolveArg('id');
         $package = $this->packageFacade->getPackageByUuid($packageId);
-
         $this->logger->info("User of id {$packageId} was viewed.");
 
         return $this->respondWithData($package);

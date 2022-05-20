@@ -6,14 +6,14 @@ namespace Procesio\Domain\ProjectProcess;
 
 use Procesio\Domain\Process\Process;
 use Procesio\Domain\Project\Project;
-use Procesio\Domain\State\State;
 
 class ProjectProcessData
 {
     public function __construct(
         private Process $process,
         private Project $project,
-        private State $state
+        private string $state,
+        private int $priority,
     ) {
     }
 
@@ -34,12 +34,18 @@ class ProjectProcessData
     }
 
     /**
-     * @return State
+     * @return string
      */
-    public function getState(): State
+    public function getState(): string
     {
         return $this->state;
     }
 
-
+    /**
+     * @return int
+     */
+    public function getPriority(): int
+    {
+        return $this->priority;
+    }
 }

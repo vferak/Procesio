@@ -11,18 +11,11 @@ interface ProjectProcessRepositoryInterface extends BaseRepositoryInterface
     /**
      * @throws \Procesio\Domain\Exceptions\DomainObjectNotFoundException
      */
-    public function getProjectProcessesByUuid(string $uuid): ProjectProcess;
+    public function getProjectProcessesByUuid(string $project_uuid, string $process_uuid): ProjectProcess;
+//TODO VYJIMKY
 
-    /**
-     * @throws \Procesio\Domain\Exceptions\DomainObjectNotFoundException
-     */
-
-    /**
-     * @throws \Procesio\Domain\Exceptions\CouldNotDeleteDomainObjectException
-     */
-    public function deleteProjectProcesses(ProjectProcess $projectProcesses): void;
     /**
      * @throws \Procesio\Domain\Exceptions\CouldNotPersistDomainObjectException
      */
-    public function persistProjectProcesses(ProjectProcess $projectProcesses): ProjectProcess;
+    public function persistProjectProcess(ProjectProcess $projectProcesses): ProjectProcess;
 }

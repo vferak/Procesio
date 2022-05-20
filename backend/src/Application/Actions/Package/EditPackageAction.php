@@ -38,7 +38,7 @@ class EditPackageAction extends PackageAction
 
             $this->packageFacade->editPackage($package, $packageData);
         } catch (DomainObjectNotFoundException $exception) {
-            $this->respondWithData($exception->getMessage(), 404);
+            return $this->respondWithData($exception->getMessage(), 404);
         }
         return $this->respondWithData($package);
     }

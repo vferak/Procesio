@@ -21,10 +21,10 @@ class CreateProjectAction extends ProjectAction
 
         $name = $request['name'];
         $description = $request['description'];
-        $createdBy = $request['createdBy'];
+        $createdBy = $this->getCurrentUserUuid();
         $workspace_uuid = $request['workspace_uuid'];
         $package_uuid = $request['package_uuid'];
-        $createdAt = $request['createdAt'];
+        $createdAt = date("Y-m-d H:i:s");
 
         try {
             $createdAt = new DateTime($createdAt);
@@ -39,6 +39,7 @@ class CreateProjectAction extends ProjectAction
 
             $projectData = new ProjectData($name, $description, $user, $createdAt, $workspace, $package);
             $this->projectFacade->createProject($projectData);
+
         } catch (DomainObjectNotFoundException $exception) {
             return $this->respondWithData($exception->getMessage(), 404);
         } catch (CouldNotCreateProjectException $exception) {

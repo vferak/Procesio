@@ -13,7 +13,7 @@ class ViewUserAction extends UserAction
      */
     protected function action(): Response
     {
-        $userId = $this->resolveArg('id');
+        $userId = $this->request->getAttribute("userUuid");
         $user = $this->userFacade->getUserByUuid($userId);
         $this->logger->info("User of id '{$userId}' was viewed.");
 

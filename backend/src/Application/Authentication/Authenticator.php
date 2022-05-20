@@ -19,7 +19,6 @@ class Authenticator
 
     public function __construct(
         private SettingsInterface $settings,
-        private UserFacade $userFacade,
         private PasswordManager $passwordManager
     ) {
         $this->key = (string)$this->settings->get('jwt_secret');
@@ -29,13 +28,8 @@ class Authenticator
     /**
      * @throws AuthenticationException
      */
-    public function authenticateUser(string $username, string $requestPassword): string
+    public function authenticateUser(User $user, string $requestPassword): string
     {
-        try {
-            $user = $this->userFacade->getUserByEmail($username);
-        } catch (DomainObjectNotFoundException) {
-            throw new AuthenticationException();
-        }
 
         if (!$this->passwordManager->isPasswordValidForUser($requestPassword, $user)) {
             throw new AuthenticationException();

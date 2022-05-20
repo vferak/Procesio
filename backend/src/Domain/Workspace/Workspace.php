@@ -4,12 +4,11 @@ namespace Procesio\Domain\Workspace;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use JsonSerializable;
+use Procesio\Domain\Process\Process;
 use Procesio\Domain\User\User;
 use Procesio\Domain\UuidDomainObjectTrait;
 use Procesio\Domain\Workspace\Exceptions\CouldNotAddUserException;
-use Procesio\Domain\Workspace\Exceptions\CouldNotDeleteProjectException;
 use Procesio\Domain\Workspace\Exceptions\CouldNotDeleteWorkspaceException;
-use Procesio\Domain\Workspace\Exceptions\CouldNotDeleteWorkspaceExceptionException;
 use Procesio\Infrastructure\Doctrine\Repositories\PackageRepository;
 use Procesio\Infrastructure\Doctrine\Repositories\ProjectRepository;
 use Procesio\Infrastructure\Doctrine\Repositories\WorkspaceRepository;
@@ -34,6 +33,22 @@ class Workspace implements JsonSerializable
      */
     private mixed $users;
 
+    /**
+     * @ManyToOne(targetEntity="Procesio\Domain\User\User")
+     * @JoinColumn(name="user_uuid", referencedColumnName="uuid", nullable = true)
+     */
+    private ?User $user;
+/*
+    /**
+     * Many Users have Many Groups.
+     * @var ArrayCollection|Process[]
+     * @ManyToMany(targetEntity="Procesio\Domain\Process\Process", inversedBy="workspaces")
+     * @JoinTable(name="workspace_process",
+     *      joinColumns={@JoinColumn(name="workspace_uuid", referencedColumnName="uuid")},
+     *      inverseJoinColumns={@JoinColumn(name="process_uuid", referencedColumnName="uuid")}
+     *      )
+     */
+   // private mixed $processes;
 
     public function __construct(WorkspaceData $workspaceData)
     {
@@ -43,24 +58,30 @@ class Workspace implements JsonSerializable
         $this->description = $workspaceData->getDescription();
         $this->users = new ArrayCollection();
 
+        if($workspaceData->getUser() !== null)
+        {
+            $this->user = $workspaceData->getUser();
+        }
+
         $this->edit($workspaceData);
     }
 
     public function edit(WorkspaceData $workspaceData): void
     {
-        //TODO: zamyslet se jestli update useru v tomto danem workspacu?
         $this->name = $workspaceData->getName();
         $this->description = $workspaceData->getDescription();
-        //$this->users = $workspaceData->getUsers();
+        //TODO: zamyslet se jestli update useru v tomto danem workspacu?
+        //$this->users = $workspaceData->getUser();
     }
-
 
     public function jsonSerialize(): array
     {
         return [
             'uuid' => $this->getUuid(),
             'name' => $this->getName(),
-            'description' => $this->getDescription()
+            'description' => $this->getDescription(),
+            'user' => $this->getUser(),
+            'users' => $this->getUsers()
         ];
     }
 
@@ -87,20 +108,26 @@ class Workspace implements JsonSerializable
         return $this->users->toArray();
     }
 
+
     public function delete(
         WorkspaceRepository $workspaceRepository,
         PackageRepository $packageRepository,
         ProjectRepository $projectRepository
     ): void {
         //TODO: TSK
-        $packages = $packageRepository->findWorkspaces($this);
+        $packages = $packageRepository->findAllPackagesByWorkspaces($this);
         if ($packages !== null) {
             throw CouldNotDeleteWorkspaceException::createForPackages($packages);
         }
 
-        $projects = $projectRepository->findWorkspaces($this);
+        $projects = $projectRepository->findAllProjectsByWorkspaces($this);
         if ($projects !== null) {
             throw CouldNotDeleteWorkspaceException::createForProjects($projects);
+        }
+
+        if($this->getUser() !== null)
+        {
+            throw CouldNotDeleteWorkspaceException::createForDefaultUser();
         }
 
         $workspaceRepository->deleteWorkspace($this);
@@ -131,5 +158,13 @@ class Workspace implements JsonSerializable
     {
         $this->users->add($user);
         return $this;
+    }
+
+    /**
+     * @return User|null
+     */
+    public function getUser(): ?User
+    {
+        return $this->user;
     }
 }

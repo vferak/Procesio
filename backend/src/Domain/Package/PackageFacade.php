@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Procesio\Domain\Package;
 
-use Procesio\Domain\Process\Process;
+use Procesio\Domain\Workspace\Workspace;
 use Procesio\Infrastructure\Doctrine\Repositories\PackageRepository;
 
 class PackageFacade
@@ -15,22 +15,17 @@ class PackageFacade
     }
 
     /**
-     * @return Package[]
+     * @return ?Package[]
      */
-    public function findPackages(): array
+    public function findPackages(Workspace $workspace): array
     {
-        return $this->packageRepository->findAll();
+
+        return $this->packageRepository->findAllPackagesByWorkspaces($workspace);
     }
 
     public function getPackageByUuid(string $id): Package
     {
         return $this->packageRepository->getPackageByUuid($id);
-    }
-
-    public function addProcessToPackage(Package $package, Process $process): Package
-    {
-        $package = $package->addProcessToPackage($process);
-        return $this->packageRepository->persistPackage($package);
     }
 
     public function createPackage(PackageData $packageData): Package

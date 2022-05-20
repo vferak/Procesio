@@ -4,6 +4,7 @@ namespace Procesio\Infrastructure\Doctrine\Repositories;
 
 use Procesio\Domain\Project\Project;
 use Procesio\Domain\Project\ProjectRepositoryInterface;
+use Procesio\Domain\User\User;
 use Procesio\Domain\Workspace\Workspace;
 use Procesio\Infrastructure\Doctrine\BaseRepository;
 
@@ -37,8 +38,16 @@ class ProjectRepository extends BaseRepository implements ProjectRepositoryInter
     /**
      * @return ?Project[]
      */
-    public function findWorkspaces(Workspace $workspace): ?array
+    public function findAllProjectsByWorkspaces(Workspace $workspace): ?array
     {
         return $this->findBy(['workspace' => $workspace]);
+    }
+
+    /**
+     * @return ?Project[]
+     */
+    public function findAllProjectsByUser(User $user): ?array
+    {
+        return $this->findBy(['createdBy' => $user]);
     }
 }
