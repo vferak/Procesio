@@ -130,7 +130,11 @@ class Process implements JsonSerializable
      */
     public function getSubprocesses(): array
     {
-        return $this->subprocesses->toArray();
+        $subprocesses = $this->subprocesses->toArray();
+        usort($subprocesses, static function (Subprocess $a, Subprocess $b) {
+            return $a->getPriority() <=> $b->getPriority();
+        });
+        return $subprocesses;
     }
 
     /**
@@ -139,5 +143,15 @@ class Process implements JsonSerializable
     public function getProcessPackages(): array
     {
         return $this->processPackages->toArray();
+    }
+
+    public function removeSubprocess(Subprocess $subprocess): void
+    {
+        foreach ($this->subprocesses as $key => $thisSubprocess) {
+            if ($thisSubprocess->isSame($subprocess)) {
+                $this->subprocesses->remove($key);
+                break;
+            }
+        }
     }
 }

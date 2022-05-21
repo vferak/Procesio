@@ -17,13 +17,20 @@ class RemoveSubprocessFromProcessAction extends SubprocessAction
         $subprocessUuid = $this->resolveArg('id');
         $subprocess = $this->subprocessFacade->getSubprocessByUuid($subprocessUuid);
 
-        $subprocessData = new SubprocessData($subprocess->getName(), $subprocess->getDescription(), null, $subprocess, $subprocess->getPriority());
+        $subprocessData = new SubprocessData(
+            $subprocess->getName(),
+            $subprocess->getDescription(),
+            null,
+            $subprocess,
+            $subprocess->getPriority()
+        );
         $this->subprocessFacade->createSubprocess($subprocessData);
 
         $process = $subprocess->getProcess();
         $processData = new ProcessData($process?->getName(), $process?->getDescription(), $process);
-        $this->processFacade->createProcess($processData);
+        $process = $this->processFacade->createProcess($processData);
+        $this->processFacade->updateProcessWithRemovedSubprocess($process, $subprocess);
 
-        return $this->respondWithData(statusCode: 201);
+        return $this->respondWithData($process);
     }
 }

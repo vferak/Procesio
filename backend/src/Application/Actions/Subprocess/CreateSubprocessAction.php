@@ -21,21 +21,11 @@ class CreateSubprocessAction extends SubprocessAction
         $priority = $request['priority'];
         $process = $this->processFacade->getProcessByUuid($request['process']);
 
-        $comesFrom = $request['comesFrom'];
+        $process = $this->processFacade->createNewProcessVersion($process);
 
-        if (empty($comesFrom)) {
-            $comesFrom = null;
-        } else {
-            $comesFrom = $this->subprocessFacade->getSubprocessByUuid($comesFrom);
-        }
-
-        $subprocessData = new SubprocessData($name, $description, $process, $comesFrom, $priority);
-
+        $subprocessData = new SubprocessData($name, $description, $process, null, $priority);
         $this->subprocessFacade->createSubprocess($subprocessData);
 
-        $processData = new ProcessData($process->getName(), $process->getDescription(), $process);
-        $this->processFacade->createProcess($processData);
-
-        return $this->respondWithData(statusCode: 201);
+        return $this->respondWithData($process, 201);
     }
 }

@@ -56,6 +56,12 @@ class WorkspaceFacade
         return $this->workspaceRepository->persistWorkspace($workspace);
     }
 
+    public function removeUserFromWorkspace(Workspace $workspace, User $user): Workspace
+    {
+        $workspace = $workspace->removeUserFromWorkspace($user);
+        return $this->workspaceRepository->persistWorkspace($workspace);
+    }
+
     public function editWorkspace(Workspace $workspace, WorkspaceData $workspaceData): Workspace
     {
         $workspace->edit($workspaceData);

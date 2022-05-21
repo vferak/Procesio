@@ -62,7 +62,7 @@ class ProjectFacade
     /**
      * @return ?Project[]
      */
-    public function findProjects(Workspace $workspace): array
+    public function findProjects(Workspace $workspace): ?array
     {
         return $this->projectRepository->findAllProjectsByWorkspaces($workspace);
     }
@@ -72,7 +72,7 @@ class ProjectFacade
         $processesInOldPackage = $project->getPackage()->getProcesses();
         $processesInNewPackage = $newpackage->getProcesses();
 
-        $project = $project->applyNewPackageToProject($processesInOldPackage,$processesInNewPackage);
+        $project->applyNewPackageToProject($processesInOldPackage, $processesInNewPackage);
 
         return $project;
     }

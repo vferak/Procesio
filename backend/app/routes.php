@@ -37,6 +37,7 @@ use Procesio\Application\Actions\Workspace\DeleteWorkspaceAction;
 use Procesio\Application\Actions\Workspace\EditWorkspaceAction;
 use Procesio\Application\Actions\Workspace\ListOfUsersNotInWorkspaceAction;
 use Procesio\Application\Actions\Workspace\ListWorkspaceAction;
+use Procesio\Application\Actions\Workspace\RemoveUserFromWorkspaceAction;
 use Procesio\Application\Actions\Workspace\ViewDefaultUserWorkspaceAction;
 use Procesio\Application\Actions\Workspace\ViewWorkspaceAction;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -71,6 +72,7 @@ return function (App $app) {
             $group->get('/{id}', ViewWorkspaceAction::class);
             $group->post('', CreateWorkspaceAction::class);
             $group->post('/addUserToWorkspace', AddUserToWorkspaceAction::class);
+            $group->post('/removeUserFromWorkspace', RemoveUserFromWorkspaceAction::class);
             $group->post('/{id}', EditWorkspaceAction::class);
             $group->delete('/{id}', DeleteWorkspaceAction::class);
             $group->get('/all/{id}', ListWorkspaceAction::class);

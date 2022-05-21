@@ -4,7 +4,7 @@ namespace Procesio\Domain\Workspace;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use JsonSerializable;
-use Procesio\Domain\Process\Process;
+use Procesio\Domain\Package\Package;
 use Procesio\Domain\User\User;
 use Procesio\Domain\UuidDomainObjectTrait;
 use Procesio\Domain\Workspace\Exceptions\CouldNotAddUserException;
@@ -38,6 +38,12 @@ class Workspace implements JsonSerializable
      * @JoinColumn(name="user_uuid", referencedColumnName="uuid", nullable = true)
      */
     private ?User $user;
+
+    /**
+     * @var ArrayCollection|Package[]
+     * @OneToMany(targetEntity="Procesio\Domain\Package\Package", mappedBy="workspace")
+     */
+    private mixed $packages;
 /*
     /**
      * Many Users have Many Groups.
@@ -142,10 +148,6 @@ class Workspace implements JsonSerializable
             if ($us->getUuid() === $user->getUuid()) {
                 throw CouldNotAddUserException::createForDuplicateUser($us);
             }
-
-            if (count($us->getWorkspaces()) > 4) {
-                throw CouldNotAddUserException::createForUserWithTooManyWorkspaces($us);
-            }
         }
 
         $this->addUser($user);
@@ -166,5 +168,25 @@ class Workspace implements JsonSerializable
     public function getUser(): ?User
     {
         return $this->user;
+    }
+
+    /**
+     * @return Package[]
+     */
+    public function getPackages(): array
+    {
+        return $this->packages->toArray();
+    }
+
+    public function removeUserFromWorkspace(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            return $this;
+        }
+        
+        $this->users->removeElement($user);
+        $user->removeWorkspaceFromUser($this);
+
+        return $this;
     }
 }

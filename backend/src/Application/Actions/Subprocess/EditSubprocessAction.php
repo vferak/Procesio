@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Procesio\Application\Actions\Subprocess;
 
 use Procesio\Domain\Exceptions\DomainObjectNotFoundException;
+use Procesio\Domain\Process\ProcessData;
 use Procesio\Domain\Subprocess\SubprocessData;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -21,38 +22,21 @@ class EditSubprocessAction extends SubprocessAction
 
         try {
             $subprocess = $this->subprocessFacade->getSubprocessByUuid($subprocessUuid);
-            $exists_comesFrom = array_key_exists('comesFrom', $request);
 
-            if ($exists_comesFrom) {
-                if ($request['comesFrom'] == null) {
-                    $comesFrom = null;
-                } else {
-                    $comesFrom = $this->subprocessFacade->getSubprocessByUuid($request['comesFrom']);
-                }
-            } else {
-                $comesFrom = $subprocess->getComesFrom();
-            }
-
-            $exists_process = array_key_exists('process', $request);
-
-            if ($exists_process) {
-                if ($request['process'] == null) {
-                    $process = null;
-                } else {
-                    $process = $this->processFacade->getProcessByUuid($request['process']);
-                }
-            } else {
-                $process = $subprocess->getProcess();
-            }
+            $process = $subprocess->getProcess();
+            $processData = new ProcessData($process?->getName(), $process?->getDescription(), $process);
+            $process = $this->processFacade->createProcess($processData);
+            $process = $this->processFacade->updateProcessWithRemovedSubprocess($process, $subprocess);
 
             $subprocessData = new SubprocessData(
                 $request['name'] ?? $subprocess->getName(),
                 $request['description'] ?? $subprocess->getDescription(),
                 $process,
-                $comesFrom
+                $subprocess,
+                isset($request['priority']) ? (int)$request['priority'] : $subprocess->getPriority(),
             );
 
-            $this->subprocessFacade->editSubprocess($subprocess, $subprocessData);
+            $subprocess = $this->subprocessFacade->createSubprocess($subprocessData);
         } catch (DomainObjectNotFoundException $exception) {
             $this->respondWithData($exception->getMessage(), 404);
         }

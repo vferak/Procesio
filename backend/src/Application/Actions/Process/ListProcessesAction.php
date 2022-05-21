@@ -16,7 +16,7 @@ class ListProcessesAction extends ProcessAction
      */
     protected function action(): Response
     {
-        $processes = $this->processFacade->findProcesses();
+        $processes = $this->processFacade->findOnlyParentProcesses();
         return $this->respondWithData($processes);
     }
 }

@@ -151,4 +151,16 @@ class User implements JsonSerializable
     {
         return $this->registeredAt;
     }
+
+    public function removeWorkspaceFromUser(Workspace $workspace): User
+    {
+        if (!$this->workspaces->contains($workspace)) {
+            return $this;
+        }
+
+        $this->workspaces->removeElement($workspace);
+        $workspace->removeUserFromWorkspace($this);
+        
+        return $this;
+    }
 }
