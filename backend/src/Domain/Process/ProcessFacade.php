@@ -6,6 +6,7 @@ namespace Procesio\Domain\Process;
 
 use Doctrine\ORM\EntityManager;
 use Procesio\Domain\Subprocess\Subprocess;
+use Procesio\Domain\Subprocess\SubprocessData;
 use Procesio\Domain\Workspace\Workspace;
 use Procesio\Infrastructure\Doctrine\Repositories\ProcessRepository;
 use Procesio\Infrastructure\Doctrine\Repositories\ProjectProcessRepository;
@@ -50,12 +51,50 @@ class ProcessFacade
         return $process;
     }
 
+    public function updateProcessWithRemovedSubprocess(
+        Process $process,
+        Subprocess $subprocess
+    ): Process {
+        $process->getComesFrom()?->removeSubprocess($subprocess);
+        $subprocesses = $process->getComesFrom()?->getSubprocesses();
+        foreach ($subprocesses as $processSubprocess) {
+            $subprocessData = new SubprocessData(
+                $processSubprocess->getName(),
+                $processSubprocess->getDescription(),
+                $process,
+                $processSubprocess,
+                $processSubprocess->getPriority()
+            );
+            $subprocess = new Subprocess($subprocessData);
+            $this->subprocessRepository->persistSubprocess($subprocess);
+        }
+
+        return $process;
+    }
     /**
-     * @return ?Process[]
+     * @return Process[]
      */
     public function findProcesses(): array
     {
         return $this->processRepository->findAllProcesses();
+    }
+
+    public function findOnlyParentProcesses(): ?array
+    {
+        $processes = $this->findProcesses();
+
+        $processesUuid = [];
+        $processesParentsUuid = [];
+
+        foreach ($processes as $process) {
+            $processesUuid[] = $process->getUuid();
+            $processesParentsUuid[] = $process->getComesFrom()?->getUuid();
+        }
+        
+        $processesUuid = array_diff($processesUuid, $processesParentsUuid);
+        return array_values(array_filter($processes, static function (Process $process) use ($processesUuid) {
+            return in_array($process->getUuid(), $processesUuid, true);
+        }));
     }
 
     /**
@@ -78,4 +117,26 @@ class ProcessFacade
 
         return $this->processRepository->persistProcess($process);
     }*/
+
+    public function createNewProcessVersion(Process $process): Process
+    {
+        $subprocesses = $process->getSubprocesses();
+        $processData = new ProcessData($process->getName(), $process->getDescription(), $process);
+        $process = $this->createProcess($processData);
+
+        foreach ($subprocesses as $subprocess) {
+            $subprocessData = new SubprocessData(
+                $subprocess->getName(),
+                $subprocess->getDescription(),
+                $process,
+                $subprocess,
+                $subprocess->getPriority()
+            );
+
+            $subprocess = new Subprocess($subprocessData);
+            $this->subprocessRepository->persistSubprocess($subprocess);
+        }
+
+        return $process;
+    }
 }

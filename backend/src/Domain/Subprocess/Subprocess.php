@@ -67,6 +67,7 @@ class Subprocess implements JsonSerializable
             'description' => $this->getDescription(),
             'process_uuid' => $this->getProcess()?->getUuid(),
             'comesFrom' => $this->getComesFrom(),
+            'priority' => $this->getPriority(),
         ];
     }
 
@@ -99,5 +100,10 @@ class Subprocess implements JsonSerializable
     public function getPriority(): int
     {
         return $this->priority;
+    }
+    
+    public function isSame(Subprocess $subprocess): bool
+    {
+        return $this->getUuid() === $subprocess->getUuid();
     }
 }

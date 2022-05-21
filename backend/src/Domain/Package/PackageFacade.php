@@ -17,7 +17,7 @@ class PackageFacade
     /**
      * @return ?Package[]
      */
-    public function findPackages(Workspace $workspace): array
+    public function findPackages(Workspace $workspace): ?array
     {
 
         return $this->packageRepository->findAllPackagesByWorkspaces($workspace);

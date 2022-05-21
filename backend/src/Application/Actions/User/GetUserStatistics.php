@@ -16,10 +16,24 @@ class GetUserStatistics extends UserAction
         $userId = $this->request->getAttribute("userUuid");
         $user = $this->userFacade->getUserByUuid($userId);
 
-        $projectsCreated = $this->projectFacade->findProjectsByUser($user) === null ? 0 : count($this->projectFacade->findProjectsByUser($user));
-        $workspaces = $user->getWorkspaces() === null ? 0 : count($user->getWorkspaces());
+        $projectsCreated = $this->projectFacade->findProjectsByUser($user) === null ?
+                0 :
+                count($this->projectFacade->findProjectsByUser($user));
+        $workspaces = $user->getWorkspaces();
         $registered = $user->getRegisteredAt()->format("d. m. Y");
+        $processesCount = count($this->processFacade->findOnlyParentProcesses());
+        
+        $packagesCount = 0;
+        foreach ($workspaces as $workspace) {
+            $packagesCount += count($workspace->getPackages());
+        }
 
-        return $this->respondWithData(['projects' => $projectsCreated, 'workspaces' => $workspaces, 'registered' => $registered]);
+        return $this->respondWithData([
+            'projects' => $projectsCreated,
+            'workspaces' => count($workspaces),
+            'registered' => $registered,
+            'packages' => $packagesCount,
+            'processes' => $processesCount
+        ]);
     }
 }
