@@ -29,7 +29,7 @@ class ChangeStatusSubprocessAction extends SubprocessAction
             $priority = $projectSubprocess->getPriority();
             $subprocess = $this->subprocessFacade->getSubprocessByUuid($subprocess_uuid);
             $project = $this->projectFacade->getProjectByUuid($project_uuid);
-            if (!in_array($state, array('new', 'in progress', 'TODO'))) {
+            if (!in_array($state, array('DONE', 'in progress', 'TODO'))) {
                 throw new \InvalidArgumentException("Neplatná hodnota");
             }
 

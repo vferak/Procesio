@@ -28,7 +28,8 @@ class EditProjectAction extends ProjectAction
                 $project->getCreatedBy(),
                 $project->getCreatedAt(),
                 $project->getWorkspace(),
-                $project->getPackage()
+                $project->getPackage(),
+                $project->getState()
             );
 
             $this->projectFacade->editProject($project, $projectData);

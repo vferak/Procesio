@@ -4,6 +4,7 @@ namespace Procesio\Application\Actions\Project;
 
 use DateTime;
 use Exception;
+use Procesio\Application\States\State;
 use Procesio\Domain\Exceptions\DomainObjectNotFoundException;
 use Procesio\Domain\Project\Exceptions\CouldNotCreateProjectException;
 use Procesio\Domain\Project\ProjectData;
@@ -37,7 +38,7 @@ class CreateProjectAction extends ProjectAction
             $package = $this->packageFacade->getPackageByUuid($package_uuid);
             $workspace = $this->workspaceFacade->getWorkspaceByUuid($workspace_uuid);
 
-            $projectData = new ProjectData($name, $description, $user, $createdAt, $workspace, $package);
+            $projectData = new ProjectData($name, $description, $user, $createdAt, $workspace, $package, State::STATUS_TODO);
             $this->projectFacade->createProject($projectData);
 
         } catch (DomainObjectNotFoundException $exception) {

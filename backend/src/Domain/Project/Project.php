@@ -73,6 +73,7 @@ class Project implements JsonSerializable
         $this->createdBy = $projectData->getCreatedBy();
         $this->workspace = $projectData->getWorkspace();
         $this->package = $projectData->getPackage();
+        $this->state = $projectData->getState();
 
         $this->projectProcesses = new ArrayCollection();
 
@@ -200,10 +201,10 @@ class Project implements JsonSerializable
                 }
 
             }*/
-            //DELETE ALL project processes and subprocesses
-            // ADD ALL processes and subprocess to project
+        //DELETE ALL project processes and subprocesses
+        // ADD ALL processes and subprocess to project
 
-       // }
+        // }
         //return ;
     }
 
@@ -218,5 +219,61 @@ class Project implements JsonSerializable
     public function isSame(Project $project): bool
     {
         return $this->getUuid() === $project->getUuid();
+    }
+
+    /**
+     * @return string
+     */
+    public function getState(): string
+    {
+        return $this->state;
+    }
+
+    public function changeProjectStatus(ProjectRepository $projectRepository): void
+    {
+
+        $projectProcesses = $this->getProjectProcesses();
+        $i = 0;
+        $k = 0;
+        $l = 0;
+        foreach ($projectProcesses as $projectProcess) {
+            $projectProcessState = $projectProcess->getState();
+
+            if ($projectProcessState === "in progress")
+            {
+                $i++;
+            }
+
+            if ($projectProcessState === "DONE")
+            {
+                $l++;
+            }
+
+            if ($projectProcessState === "TODO")
+            {
+                $k++;
+            }
+        }
+
+        if ($i > 0 || ($l > 0 && $k > 0))
+        {
+            $this->state = State::STATUS_INPROGRESS;
+            $projectRepository->persistProject($this);
+            return;
+        }
+
+        if ($i === 0 && $l === 0 && $k > 0)
+        {
+            $this->state = State::STATUS_TODO;
+            $projectRepository->persistProject($this);
+            return;
+        }
+
+        if ($i === 0 && $l > 0 && $k === 0)
+        {
+            $this->state = State::STATUS_DONE;
+            $projectRepository->persistProject($this);
+            return;
+        }
     }
 }

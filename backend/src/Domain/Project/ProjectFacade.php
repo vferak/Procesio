@@ -6,10 +6,6 @@ namespace Procesio\Domain\Project;
 
 use Procesio\Application\States\State;
 use Procesio\Domain\Package\Package;
-use Procesio\Domain\ProjectProcess\ProjectProcess;
-use Procesio\Domain\ProjectProcess\ProjectProcessData;
-use Procesio\Domain\ProjectSubprocess\ProjectSubprocess;
-use Procesio\Domain\ProjectSubprocess\ProjectSubprocessData;
 use Procesio\Domain\User\User;
 use Procesio\Domain\Workspace\Workspace;
 use Procesio\Infrastructure\Doctrine\Repositories\ProjectProcessRepository;
@@ -33,6 +29,7 @@ class ProjectFacade
     public function createProject(ProjectData $projectData): Project
     {
         $project = new Project($projectData);
+
         $this->projectRepository->persistProject($project);
 
         $processes = $project->getPackage()->getProcesses();

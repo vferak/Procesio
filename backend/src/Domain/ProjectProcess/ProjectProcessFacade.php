@@ -6,12 +6,14 @@ namespace Procesio\Domain\ProjectProcess;
 
 use Doctrine\ORM\EntityManager;
 use Procesio\Infrastructure\Doctrine\Repositories\ProjectProcessRepository;
+use Procesio\Infrastructure\Doctrine\Repositories\ProjectRepository;
 
 
 class ProjectProcessFacade
 {
     public function __construct(
         private ProjectProcessRepository $projectProcessRepository,
+        private ProjectRepository $projectRepository,
         private EntityManager $entityManager
     ) {
     }
@@ -26,6 +28,7 @@ class ProjectProcessFacade
     {
         $projectProcess->changeState($projectProcessData);
 
+        $projectProcess->getProject()->changeProjectStatus($this->projectRepository);
         $this->projectProcessRepository->persistProjectProcess($projectProcess);
         return $projectProcess;
 
