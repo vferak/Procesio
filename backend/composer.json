@@ -74,7 +74,8 @@
         "migrations-migrate": "./vendor/bin/doctrine-migrations migrate",
 
         "procesio-build": [
-            "composer install"
+            "composer install",
+            "composer migrations-migrate --no-interaction"
         ]
     }
 }
