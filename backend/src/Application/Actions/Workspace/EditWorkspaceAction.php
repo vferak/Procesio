@@ -22,10 +22,9 @@ class EditWorkspaceAction extends WorkspaceAction
         try {
             $workspace = $this->workspaceFacade->getWorkspaceByUuid($workspaceUuid);
 
-            if($workspace->getUser() !== null)
-            {
+            if ($workspace->getUser() !== null) {
                 $user = $workspace->getUser();
-            } else{
+            } else {
                 $user = null;
             }
 

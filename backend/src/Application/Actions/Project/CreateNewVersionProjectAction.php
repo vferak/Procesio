@@ -23,8 +23,7 @@ class CreateNewVersionProjectAction extends ProjectAction
             $project = $this->projectFacade->getProjectByUuid($project_uuid);
             $newpackage = $this->packageFacade->getPackageByUuid($package_uuid);
 
-            $this->projectFacade->applyNewPackageToProject($project,$newpackage);
-
+            $this->projectFacade->applyNewPackageToProject($project, $newpackage);
         } catch (DomainObjectNotFoundException $exception) {
             return $this->respondWithData($exception->getMessage(), 404);
         } catch (CouldNotCreateProjectException $exception) {

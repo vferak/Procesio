@@ -61,7 +61,6 @@ class Package implements JsonSerializable
 
     public function edit(PackageData $packageData): void
     {
-        //TODO: popřemýšlet jestli se tady bude updatovat i comes_from nebo az v jiné metodě
         $this->name = $packageData->getName();
         $this->description = $packageData->getDescription();
         $this->workspace = $packageData->getWorkspace();
@@ -111,8 +110,7 @@ class Package implements JsonSerializable
     public function getProcesses(): array
     {
         $processes = [];
-        foreach ($this->processPackages as $processPackage)
-        {
+        foreach ($this->processPackages as $processPackage) {
             $processes[] = $processPackage->getProcess();
         }
 

@@ -90,7 +90,7 @@ class ProcessFacade
             $processesUuid[] = $process->getUuid();
             $processesParentsUuid[] = $process->getComesFrom()?->getUuid();
         }
-        
+
         $processesUuid = array_diff($processesUuid, $processesParentsUuid);
         return array_values(array_filter($processes, static function (Process $process) use ($processesUuid) {
             return in_array($process->getUuid(), $processesUuid, true);
@@ -107,7 +107,7 @@ class ProcessFacade
 
     public function deleteProcess(Process $process): void
     {
-        $process->delete($this->processRepository,$this->projectProcessRepository);
+        $process->delete($this->processRepository, $this->projectProcessRepository);
         $this->entityManager->flush();
     }
 

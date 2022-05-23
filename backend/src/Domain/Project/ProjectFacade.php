@@ -34,16 +34,14 @@ class ProjectFacade
 
         $processes = $project->getPackage()->getProcesses();
 
-        foreach ($processes as $process)
-        {
-            $projectProcessData = new ProjectProcessData($process, $project, State::STATUS_NEW,1);
+        foreach ($processes as $process) {
+            $projectProcessData = new ProjectProcessData($process, $project, State::STATUS_NEW, 1);
             $projectProcess = new ProjectProcess($projectProcessData);
             $this->projectProcessRepository->persistProjectProcess($projectProcess);
 
             $subprocesses = $process->getSubprocesses();
-            foreach ($subprocesses as $subprocess)
-            {
-                $projectSubprocessData = new ProjectSubprocessData($subprocess, $project, State::STATUS_NEW,1);
+            foreach ($subprocesses as $subprocess) {
+                $projectSubprocessData = new ProjectSubprocessData($subprocess, $project, State::STATUS_NEW, 1);
                 $projectSubprocess = new ProjectSubprocess($projectSubprocessData);
                 $this->projectSubprocessRepository->persistProjectSubprocesses($projectSubprocess);
             }

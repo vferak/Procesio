@@ -3,7 +3,6 @@
 namespace Procesio\Infrastructure\Doctrine\Repositories;
 
 use Procesio\Domain\ProcessPackage\ProcessPackage;
-
 use Procesio\Domain\ProcessPackage\ProcessPackageRepositoryInterface;
 use Procesio\Infrastructure\Doctrine\BaseRepository;
 

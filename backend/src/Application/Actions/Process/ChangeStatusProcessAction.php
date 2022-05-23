@@ -21,20 +21,19 @@ class ChangeStatusProcessAction extends ProcessAction
         $state = $request['state'];
 
         try {
-            $projectProcess = $this->projectProcessFacade->getProjectProcessByUuid($project_uuid,$process_uuid);
+            $projectProcess = $this->projectProcessFacade->getProjectProcessByUuid($project_uuid, $process_uuid);
             $priority = $projectProcess->getPriority();
             $process = $this->processFacade->getProcessByUuid($process_uuid);
             $project = $this->projectFacade->getProjectByUuid($project_uuid);
 
-            if (!in_array($state, array('DONE', 'in progress', 'TODO'))) {
+            if (!in_array($state, ['DONE', 'in progress', 'TODO'])) {
                 throw new \InvalidArgumentException("Neplatná hodnota");
             }
-
         } catch (DomainObjectNotFoundException $exception) {
             return $this->respondWithData($exception->getMessage(), 404);
         }
 
-        $projectProcessData = new ProjectProcessData($process,$project,$state,$priority);
+        $projectProcessData = new ProjectProcessData($process, $project, $state, $priority);
         $this->projectProcessFacade->changeState($projectProcess, $projectProcessData);
 
         return $this->respondWithData(statusCode: 201);

@@ -79,15 +79,12 @@ class WorkspaceFacade
         $usersNotInWorkspace = [];
         $usersNotInWorkspaceUuid = [];
 
-        foreach ($usersInWorkspace as $userInWorkspace)
-        {
+        foreach ($usersInWorkspace as $userInWorkspace) {
             $usersNotInWorkspaceUuid[] = $userInWorkspace->getUuid();
         }
 
-        foreach ($allUsersInSystem as $user)
-        {
-            if(!(in_array($user->getUuid(),$usersNotInWorkspaceUuid)))
-            {
+        foreach ($allUsersInSystem as $user) {
+            if (!(in_array($user->getUuid(), $usersNotInWorkspaceUuid))) {
                 $usersNotInWorkspace[] = $user;
             }
         }

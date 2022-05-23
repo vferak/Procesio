@@ -43,5 +43,4 @@ class WorkspaceData
     {
         return $this->user;
     }
-
 }

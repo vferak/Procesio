@@ -74,5 +74,4 @@ class ProcessPackage implements JsonSerializable
     {
         return $this->priority;
     }
-
 }

@@ -50,14 +50,14 @@ class AuthMiddleware implements Middleware
             try {
                 $jwtData = $this->authentication->verifyToken($jwt);
                 $request = $request->withAttribute("userUuid", $jwtData['uid']);
-            } catch (InvalidArgumentException |
+            } catch (
+                InvalidArgumentException |
                 UnexpectedValueException |
                 SignatureInvalidException |
                 BeforeValidException
             ) {
                 throw new HttpUnauthorizedException($request);
             } catch (ExpiredException) {
-                // TODO Expired redirect
             }
         }
 

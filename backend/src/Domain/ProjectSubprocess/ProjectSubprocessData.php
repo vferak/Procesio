@@ -48,6 +48,4 @@ class ProjectSubprocessData
     {
         return $this->priority;
     }
-
-
 }

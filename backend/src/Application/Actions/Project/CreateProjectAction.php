@@ -40,7 +40,6 @@ class CreateProjectAction extends ProjectAction
 
             $projectData = new ProjectData($name, $description, $user, $createdAt, $workspace, $package, State::STATUS_TODO);
             $this->projectFacade->createProject($projectData);
-
         } catch (DomainObjectNotFoundException $exception) {
             return $this->respondWithData($exception->getMessage(), 404);
         } catch (CouldNotCreateProjectException $exception) {

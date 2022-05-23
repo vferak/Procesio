@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManager;
 use Procesio\Infrastructure\Doctrine\Repositories\ProjectProcessRepository;
 use Procesio\Infrastructure\Doctrine\Repositories\ProjectRepository;
 
-
 class ProjectProcessFacade
 {
     public function __construct(
@@ -31,7 +30,6 @@ class ProjectProcessFacade
         $projectProcess->getProject()->changeProjectStatus($this->projectRepository);
         $this->projectProcessRepository->persistProjectProcess($projectProcess);
         return $projectProcess;
-
     }
 
     public function persistProjectProcess(ProjectProcessData $projectProcessData): ProjectProcess
@@ -46,5 +44,4 @@ class ProjectProcessFacade
         $projectProcess->delete($this->projectProcessRepository);
         $this->entityManager->flush();
     }
-
 }

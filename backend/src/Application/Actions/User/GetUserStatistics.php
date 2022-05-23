@@ -22,7 +22,7 @@ class GetUserStatistics extends UserAction
         $workspaces = $user->getWorkspaces();
         $registered = $user->getRegisteredAt()->format("d. m. Y");
         $processesCount = count($this->processFacade->findOnlyParentProcesses());
-        
+
         $packagesCount = 0;
         foreach ($workspaces as $workspace) {
             $packagesCount += count($workspace->getPackages());

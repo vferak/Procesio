@@ -74,11 +74,9 @@ class User implements JsonSerializable
         $this->firstName = $userData->getFirstName();
         $this->lastName = $userData->getLastName();
 
-        if($userData->getPassword() !== null)
-        {
+        if ($userData->getPassword() !== null) {
             $this->password = $passwordManager->hashPassword($userData->getPassword());
         }
-
     }
 
     public function jsonSerialize(): array
@@ -133,10 +131,8 @@ class User implements JsonSerializable
 
     public function getDefaultWorkspace(): Workspace
     {
-        foreach ($this->workspaces as $workspace)
-        {
-            if($workspace->getUser() === $this)
-            {
+        foreach ($this->workspaces as $workspace) {
+            if ($workspace->getUser() === $this) {
                 return $workspace;
             }
         }
@@ -160,7 +156,7 @@ class User implements JsonSerializable
 
         $this->workspaces->removeElement($workspace);
         $workspace->removeUserFromWorkspace($this);
-        
+
         return $this;
     }
 }

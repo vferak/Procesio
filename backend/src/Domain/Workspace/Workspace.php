@@ -64,8 +64,7 @@ class Workspace implements JsonSerializable
         $this->description = $workspaceData->getDescription();
         $this->users = new ArrayCollection();
 
-        if($workspaceData->getUser() !== null)
-        {
+        if ($workspaceData->getUser() !== null) {
             $this->user = $workspaceData->getUser();
         }
 
@@ -76,8 +75,6 @@ class Workspace implements JsonSerializable
     {
         $this->name = $workspaceData->getName();
         $this->description = $workspaceData->getDescription();
-        //TODO: zamyslet se jestli update useru v tomto danem workspacu?
-        //$this->users = $workspaceData->getUser();
     }
 
     public function jsonSerialize(): array
@@ -120,7 +117,6 @@ class Workspace implements JsonSerializable
         PackageRepository $packageRepository,
         ProjectRepository $projectRepository
     ): void {
-        //TODO: TSK
         $packages = $packageRepository->findAllPackagesByWorkspaces($this);
         if ($packages !== null) {
             throw CouldNotDeleteWorkspaceException::createForPackages($packages);
@@ -131,8 +127,7 @@ class Workspace implements JsonSerializable
             throw CouldNotDeleteWorkspaceException::createForProjects($projects);
         }
 
-        if($this->getUser() !== null)
-        {
+        if ($this->getUser() !== null) {
             throw CouldNotDeleteWorkspaceException::createForDefaultUser();
         }
 
@@ -141,7 +136,6 @@ class Workspace implements JsonSerializable
 
     public function addUserToWorkspace(User $user): self
     {
-        //TODO: TSK
         $users = $this->getUsers();
 
         foreach ($users as $us) {
@@ -183,7 +177,7 @@ class Workspace implements JsonSerializable
         if (!$this->users->contains($user)) {
             return $this;
         }
-        
+
         $this->users->removeElement($user);
         $user->removeWorkspaceFromUser($this);
 

@@ -139,36 +139,25 @@ class Project implements JsonSerializable
     public function applyNewPackageToProject(array $processesInOldPackage, array $processesInNewPackage): void
     {
 
-        foreach ($processesInOldPackage as $oldProcess)
-        {
+        foreach ($processesInOldPackage as $oldProcess) {
             $arrayOfOdlSubprocesses[] = $oldProcess->getSubprocesses();
         }
 
-        foreach ($processesInNewPackage as $newProcess)
-        {
+        foreach ($processesInNewPackage as $newProcess) {
             $arrayOfNewProcessesUuid[] = $newProcess->getSubprocesses();
         }
 
         $numberOfNewSubprocesses = count($arrayOfNewProcessesUuid);
         $numberOfOldSubprocesses = count($arrayOfOdlSubprocesses);
 
-        if($numberOfNewSubprocesses >= $numberOfOldSubprocesses)
-        {
-            foreach ($numberOfNewSubprocesses as $newSubprocess)
-            {
-                foreach ($arrayOfOdlSubprocesses as $odlSubprocess)
-                {
-
+        if ($numberOfNewSubprocesses >= $numberOfOldSubprocesses) {
+            foreach ($numberOfNewSubprocesses as $newSubprocess) {
+                foreach ($arrayOfOdlSubprocesses as $odlSubprocess) {
                 }
             }
-
         } else {
-
-            foreach ($arrayOfOdlSubprocesses as $odlSubprocess)
-            {
-                foreach ($numberOfNewSubprocesses as $newSubprocess)
-                {
-
+            foreach ($arrayOfOdlSubprocesses as $odlSubprocess) {
+                foreach ($numberOfNewSubprocesses as $newSubprocess) {
                 }
             }
         }
@@ -239,38 +228,32 @@ class Project implements JsonSerializable
         foreach ($projectProcesses as $projectProcess) {
             $projectProcessState = $projectProcess->getState();
 
-            if ($projectProcessState === "in progress")
-            {
+            if ($projectProcessState === "in progress") {
                 $i++;
             }
 
-            if ($projectProcessState === "DONE")
-            {
+            if ($projectProcessState === "DONE") {
                 $l++;
             }
 
-            if ($projectProcessState === "TODO")
-            {
+            if ($projectProcessState === "TODO") {
                 $k++;
             }
         }
 
-        if ($i > 0 || ($l > 0 && $k > 0))
-        {
+        if ($i > 0 || ($l > 0 && $k > 0)) {
             $this->state = State::STATUS_INPROGRESS;
             $projectRepository->persistProject($this);
             return;
         }
 
-        if ($i === 0 && $l === 0 && $k > 0)
-        {
+        if ($i === 0 && $l === 0 && $k > 0) {
             $this->state = State::STATUS_TODO;
             $projectRepository->persistProject($this);
             return;
         }
 
-        if ($i === 0 && $l > 0 && $k === 0)
-        {
+        if ($i === 0 && $l > 0 && $k === 0) {
             $this->state = State::STATUS_DONE;
             $projectRepository->persistProject($this);
             return;

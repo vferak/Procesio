@@ -20,7 +20,7 @@ class CreateProcessAction extends ProcessAction
         $description = $request['description'];
         $comesFrom = $request['comesFrom'] ?? null;
 
-        $processData = new ProcessData($name,$description,$comesFrom);
+        $processData = new ProcessData($name, $description, $comesFrom);
         $this->processFacade->createProcess($processData);
 
         return $this->respondWithData(statusCode: 201);

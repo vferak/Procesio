@@ -24,10 +24,8 @@ class ProjectSubprocessFacade
     public function changeState(ProjectSubprocess $projectSubprocess, ProjectSubprocessData $projectSubprocessData): ProjectSubprocess
     {
         $projectSubprocess->changeState($projectSubprocessData);
-//TODO tady asi kontrolovat stav projektu
         $this->projectSubprocessRepository->persistProjectSubprocesses($projectSubprocess);
         return $projectSubprocess;
-
     }
 
     public function deleteProjectSubprocess(ProjectSubprocess $projectSubprocess): void

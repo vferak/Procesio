@@ -111,8 +111,7 @@ class Process implements JsonSerializable
     public function getPackages(): array
     {
         $packages = [];
-        foreach ($this->processPackages as $processPackage)
-        {
+        foreach ($this->processPackages as $processPackage) {
             $packages[] = $processPackage->getProcess();
         }
 

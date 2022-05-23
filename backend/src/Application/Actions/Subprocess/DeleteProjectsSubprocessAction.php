@@ -21,7 +21,7 @@ class DeleteProjectsSubprocessAction extends SubprocessAction
         $project_uuid = $request['project_uuid'];
 
         try {
-            $projectProcess = $this->projectSubprocessFacade->getProjectSubpprocessByUuid($project_uuid,$process_uuid);
+            $projectProcess = $this->projectSubprocessFacade->getProjectSubpprocessByUuid($project_uuid, $process_uuid);
             $this->projectSubprocessFacade->deleteProjectSubprocess($projectProcess);
         } catch (DomainObjectNotFoundException $exception) {
             return $this->respondWithData($exception->getMessage(), 404);

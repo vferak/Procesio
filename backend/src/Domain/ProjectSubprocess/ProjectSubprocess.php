@@ -113,5 +113,4 @@ class ProjectSubprocess implements JsonSerializable
     {
         return $this->priority;
     }
-
 }

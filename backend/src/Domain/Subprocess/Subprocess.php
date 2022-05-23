@@ -101,7 +101,7 @@ class Subprocess implements JsonSerializable
     {
         return $this->priority;
     }
-    
+
     public function isSame(Subprocess $subprocess): bool
     {
         return $this->getUuid() === $subprocess->getUuid();
