@@ -3,9 +3,14 @@ import type { AuthStoreInterface } from "@/stores";
 
 export * from "./auth/index";
 export * from "./package/package";
+export * from "./workspace/workspace";
+export * from "./process/process";
+export * from "./user/user";
+export * from "./project/project";
+export * from "./subprocess/subprocess";
 
 import Axios from "axios";
-import type { AxiosInstance } from "axios";
+import type { AxiosResponse, AxiosInstance } from "axios";
 
 const axios: AxiosInstance = Axios.create({
   baseURL: "http://localhost:8081/v1",
@@ -51,6 +56,9 @@ export type ResponseType = {
 export interface ApiInterface {
   get(url: string): Promise<ResponseType>;
   post(url: string, formData: FormData): Promise<ResponseType>;
+  getAsync(url: string): Promise<AxiosResponse>;
+  postAsync(url: string, formData: FormData): Promise<AxiosResponse>;
+  deleteAsync(url: string): Promise<AxiosResponse>;
 }
 
 export const useApi = (): ApiInterface => {
@@ -62,8 +70,26 @@ export const useApi = (): ApiInterface => {
     return axios.post(url, formData);
   };
 
+  const getAsync = async (url: string): Promise<AxiosResponse> => {
+    return await axios.get(url);
+  };
+
+  const postAsync = async (
+    url: string,
+    formData: FormData
+  ): Promise<AxiosResponse> => {
+    return await axios.post(url, formData);
+  };
+
+  const deleteAsync = async (url: string): Promise<AxiosResponse> => {
+    return await axios.delete(url);
+  };
+
   return {
     get,
     post,
+    getAsync,
+    postAsync,
+    deleteAsync,
   };
 };

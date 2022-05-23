@@ -50,6 +50,14 @@ const routes = [
         },
       },
       {
+        path: "/admin/projects/edit/:uuid",
+        name: "editProject",
+        component: () => import("@/views/Admin/Projects/EditProjectView.vue"),
+        meta: {
+          title: "Edit project",
+        },
+      },
+      {
         path: "/admin/packages",
         name: "packages",
         component: () => import("@/views/Admin/Packages/PackagesView.vue"),
@@ -64,6 +72,101 @@ const routes = [
         component: () => import("@/views/Admin/Packages/CreatePackageView.vue"),
         meta: {
           title: "Create package",
+        },
+      },
+      {
+        path: "/admin/packages/edit/:uuid",
+        name: "editPackage",
+        component: () => import("@/views/Admin/Packages/EditPackageView.vue"),
+        meta: {
+          title: "Edit package",
+        },
+      },
+      {
+        path: "/admin/processes",
+        name: "processes",
+        component: () => import("@/views/Admin/Processes/ProcessesView.vue"),
+        meta: {
+          title: "Processes",
+          navIconClass: "fas fa-cube",
+        },
+      },
+      {
+        path: "/admin/processes/create",
+        name: "createProcess",
+        component: () =>
+          import("@/views/Admin/Processes/CreateProcessView.vue"),
+        meta: {
+          title: "Create process",
+        },
+      },
+      {
+        path: "/admin/processes/:uuid",
+        name: "process",
+        component: () => import("@/views/Admin/Processes/ProcessView.vue"),
+        meta: {
+          title: "Process",
+        },
+      },
+      {
+        path: "/admin/processes/subprocess/create/:uuid",
+        name: "createSubprocess",
+        component: () =>
+          import("@/views/Admin/Subprocesses/CreateSubprocessView.vue"),
+        meta: {
+          title: "Create subprocess",
+        },
+      },
+      {
+        path: "/admin/processes/subprocess/edit/:uuid",
+        name: "editSubprocess",
+        component: () =>
+          import("@/views/Admin/Subprocesses/EditSubprocessView.vue"),
+        meta: {
+          title: "Edit subprocess",
+        },
+      },
+      {
+        path: "/admin/workspaces",
+        name: "workspaces",
+        component: () => import("@/views/Admin/Workspaces/WorkspacesView.vue"),
+        meta: {
+          title: "Workspaces",
+          navIconClass: "fas fa-users",
+        },
+      },
+      {
+        path: "/admin/workspaces/create",
+        name: "createWorkspace",
+        component: () =>
+          import("@/views/Admin/Workspaces/CreateWorkspaceView.vue"),
+        meta: {
+          title: "Create workspace",
+        },
+      },
+      {
+        path: "/admin/workspaces/edit/:uuid",
+        name: "editWorkspaces",
+        component: () =>
+          import("@/views/Admin/Workspaces/EditWorkspaceView.vue"),
+        meta: {
+          title: "Edit workspace",
+        },
+      },
+      {
+        path: "/admin/workspaces/:uuid",
+        name: "workspace",
+        component: () => import("@/views/Admin/Workspaces/WorkspaceView.vue"),
+        meta: {
+          title: "Workspace",
+        },
+      },
+      {
+        path: "/admin/user",
+        name: "user",
+        component: () => import("@/views/Admin/Users/UserView.vue"),
+        meta: {
+          title: "User profile",
         },
       },
     ],

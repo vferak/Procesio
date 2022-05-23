@@ -1,47 +1,42 @@
-import { useApi } from "@/api";
-import type { ApiInterface, ProcessType, WorkspaceType } from "@/api";
-import { useWorkspaceStore } from "@/stores";
-import type { WorkspaceStoreInterface } from "@/stores";
 import type { AxiosResponse } from "axios";
+import { useApi } from "@/api";
+import type { PackageType, SubprocessType } from "@/api";
 
-export interface PackageType {
+export interface ProcessType {
   uuid: string;
   name: string;
   description: string;
-  workspace: WorkspaceType;
-  comesFrom: PackageType;
-  processes: ProcessType[];
+  packages: PackageType[];
+  comesFrom: ProcessType | null;
+  subprocesses: SubprocessType[];
 }
 
-export interface PackageRepositoryInterface {
-  getAll(): Promise<PackageType[]>;
-  getByUuid(uuid: string): Promise<PackageType>;
+export interface ProcessRepositoryInterface {
+  getByUuid(uuid: string): Promise<ProcessType>;
+  getAll(): Promise<ProcessType[]>;
   create(name: string, description: string): Promise<AxiosResponse>;
   edit(name: string, description: string, uuid: string): Promise<AxiosResponse>;
 }
 
-export const usePackageRepository = (): PackageRepositoryInterface => {
-  const api: ApiInterface = useApi();
-  const workspaceStore: WorkspaceStoreInterface = useWorkspaceStore();
+export const useProcessRepository = (): ProcessRepositoryInterface => {
+  const api = useApi();
 
-  const entityPath = "/package";
+  const entityPath = "/process";
 
-  const createFormData = (name: string, description: string): FormData => {
+  const createFormData = (name: string, description: string) => {
     const formData = new FormData();
     formData.set("name", name);
     formData.set("description", description);
-    formData.set("workspace", workspaceStore.getWorkspaceUuid());
     return formData;
   };
 
-  const getAll = async (): Promise<PackageType[]> => {
-    const response = await api.getAsync(
-      entityPath + "/all/" + workspaceStore.getWorkspaceUuid()
-    );
+  const getAll = async (): Promise<ProcessType[]> => {
+    const response = await api.getAsync(entityPath + "/all");
+
     return response.data.data;
   };
 
-  const getByUuid = async (uuid: string): Promise<PackageType> => {
+  const getByUuid = async (uuid: string): Promise<ProcessType> => {
     const response = await api.getAsync(entityPath + "/" + uuid);
     return response.data.data;
   };
@@ -64,8 +59,8 @@ export const usePackageRepository = (): PackageRepositoryInterface => {
   };
 
   return {
-    getAll,
     getByUuid,
+    getAll,
     create,
     edit,
   };

@@ -1,17 +1,16 @@
 <script setup lang="ts">
-import { useModalStore } from "@/stores/modal";
-import type { ModalStore } from "@/stores/modal";
-import { useAuthStore } from "@/stores/auth";
 import { ref } from "vue";
-import { useAuthRepository } from "@/api/auth";
-import type { AuthRepositoryInterface } from "@/api/auth";
 import { useRouter } from "vue-router";
 import AlertError from "@/components/alerts/AlertError.vue";
+import { useWorkspaceRepository, useAuthRepository } from "@/api";
+import { useModalStore, useAuthStore, useWorkspaceStore } from "@/stores";
 
 const router = useRouter();
 const authStore = useAuthStore();
-const modalStore: ModalStore = useModalStore();
-const authRepository: AuthRepositoryInterface = useAuthRepository();
+const modalStore = useModalStore();
+const workspaceStore = useWorkspaceStore();
+const authRepository = useAuthRepository();
+const workspaceRepository = useWorkspaceRepository();
 
 const invalidCredentials = ref<boolean>(false);
 
@@ -23,7 +22,7 @@ const formData = ref<{
   password: "",
 });
 
-const submitForm = function (): void {
+const submitForm = async function (): Promise<void> {
   const email = formData.value.email;
   const password = formData.value.password;
   if (email === "" || password === "") {
@@ -31,15 +30,22 @@ const submitForm = function (): void {
     return;
   }
 
+  authStore.logOut();
+
   authRepository
     .authenticate(email, password)
     .catch((error) => {
       invalidCredentials.value = true;
       throw error;
     })
-    .then((response) => {
+    .then(async (response) => {
       authStore.logIn(response.data.data.token);
       modalStore.closeModal();
+
+      const workspace =
+        await workspaceRepository.getDefaultWorkspaceForUserUuid();
+      console.log(workspace)
+      workspaceStore.setWorkspace(workspace);
 
       router.push({
         name: "dashboard",

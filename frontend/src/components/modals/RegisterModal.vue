@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { useAuthRepository } from "@/api/auth";
+import { useAuthRepository } from "@/api";
 import type { AuthRepositoryInterface } from "@/api/auth";
 
 import AlertError from "@/components/alerts/AlertError.vue";
