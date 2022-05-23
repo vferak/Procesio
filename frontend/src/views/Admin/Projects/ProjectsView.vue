@@ -15,8 +15,6 @@ onBeforeMount(async () => {
   if (projects.value === undefined) {
     projects.value = [];
   }
-
-  console.log(projects.value)
 });
 </script>
 

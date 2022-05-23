@@ -14,12 +14,8 @@ module.exports = {
   },
   overrides: [
     {
-      "files": [
-        "cypress/integration/**.spec.{js,ts,jsx,tsx}"
-      ],
-      "extends": [
-        "plugin:cypress/recommended"
-      ]
-    }
-  ]
+      files: ["cypress/integration/**.spec.{js,ts,jsx,tsx}"],
+      extends: ["plugin:cypress/recommended"],
+    },
+  ],
 };

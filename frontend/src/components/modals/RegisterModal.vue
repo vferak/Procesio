@@ -32,7 +32,14 @@ const submitForm = function (): void {
   const firstName = formData.value.firstName;
   const lastName = formData.value.lastName;
 
-  if (email === "" || password === "" || firstName === "" || lastName === "" || passwordAgain === "" || password !== passwordAgain) {
+  if (
+    email === "" ||
+    password === "" ||
+    firstName === "" ||
+    lastName === "" ||
+    passwordAgain === "" ||
+    password !== passwordAgain
+  ) {
     invalidFormData.value = true;
     return;
   }
@@ -59,9 +66,15 @@ const submitForm = function (): void {
 
   <label for="registerModal" class="modal cursor-pointer">
     <label class="modal-box relative prose">
-      <AlertError v-if="invalidFormData" :text="'Registration failed, please check your data.'" />
+      <AlertError
+        v-if="invalidFormData"
+        :text="'Registration failed, please check your data.'"
+      />
       <h2>Register</h2>
-      <AlertSuccess v-if="formSuccessful" :text="'Registration successful, please log in.'" />
+      <AlertSuccess
+        v-if="formSuccessful"
+        :text="'Registration successful, please log in.'"
+      />
       <form v-if="!formSuccessful" @submit.prevent="submitForm">
         <div class="form-control w-full">
           <label class="label">

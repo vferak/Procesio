@@ -70,7 +70,9 @@ const submitForm = (): void => {
       <div class="w-full flex flex-row">
         <div
           class="form-control"
-          :class="props.projectUuid === undefined ? 'basis-1/2 mr-6' : 'basis-full'"
+          :class="
+            props.projectUuid === undefined ? 'basis-1/2 mr-6' : 'basis-full'
+          "
         >
           <label class="label">
             <span class="label-text"> Project name </span>

@@ -25,6 +25,10 @@ const submitForm = async (name: string, description: string): Promise<void> => {
 <template>
   <div class="container mx-auto h-full">
     <BackButton :routeName="'packages'" />
-    <PackageForm :invalid-data="invalidData" :package-uuid="packageUuid" @formSubmit="submitForm" />
+    <PackageForm
+      :invalid-data="invalidData"
+      :package-uuid="packageUuid"
+      @formSubmit="submitForm"
+    />
   </div>
 </template>

@@ -42,7 +42,9 @@ const listAvailableWorkspaces = async (): Promise<void> => {
   workspaces.value = await workspaceRepository.getAll();
 };
 
-const changeWorkspace = async (workspaceObject: WorkspaceType): Promise<void> => {
+const changeWorkspace = async (
+  workspaceObject: WorkspaceType
+): Promise<void> => {
   workspaceStore.setWorkspace(workspaceObject);
   workspace.value = workspaceObject;
 };

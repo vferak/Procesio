@@ -36,10 +36,12 @@ const submitForm = (): void => {
   const name = formData.value.name;
   const description = formData.value.description;
 
-  if (name === "" ||
-      description === "" ||
-      name.length > 255 ||
-      description.length > 255) {
+  if (
+    name === "" ||
+    description === "" ||
+    name.length > 255 ||
+    description.length > 255
+  ) {
     invalidData.value = true;
     return;
   }
@@ -51,7 +53,10 @@ const submitForm = (): void => {
 <template>
   <div class="card w-full bg-base-200 shadow-xl mt-8 px-10 pt-8 pb-4">
     <form @submit.prevent="submitForm" class="card-body">
-      <AlertError v-if="props.invalidData || invalidData" :text="'Invalid form data!'" />
+      <AlertError
+        v-if="props.invalidData || invalidData"
+        :text="'Invalid form data!'"
+      />
       <div class="form-control w-full">
         <label class="label">
           <span class="label-text"> Package name </span>

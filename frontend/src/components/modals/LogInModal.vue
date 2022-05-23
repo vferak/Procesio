@@ -44,7 +44,7 @@ const submitForm = async function (): Promise<void> {
 
       const workspace =
         await workspaceRepository.getDefaultWorkspaceForUserUuid();
-      console.log(workspace)
+
       workspaceStore.setWorkspace(workspace);
 
       router.push({

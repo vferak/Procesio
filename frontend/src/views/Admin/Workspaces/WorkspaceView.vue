@@ -109,7 +109,9 @@ const submitForm = async (): Promise<void> => {
             Users in workspace {{ workspace.name }}
           </h3>
           <a
-            v-show="availableUsers === undefined && selectedUser.uuid === 'default'"
+            v-show="
+              availableUsers === undefined && selectedUser.uuid === 'default'
+            "
             @click="loadAvailableUsers()"
             class="btn btn-primary float-right mr-2"
             >Add users</a
@@ -118,10 +120,7 @@ const submitForm = async (): Promise<void> => {
             v-if="availableUsers !== undefined"
             class="input-group float-right mr-2 w-auto"
           >
-            <select
-              class="select select-bordered"
-              v-model="selectedUser.uuid"
-            >
+            <select class="select select-bordered" v-model="selectedUser.uuid">
               <option value="default" disabled selected>Select user</option>
               <option
                 v-for="user in availableUsers"
@@ -131,10 +130,7 @@ const submitForm = async (): Promise<void> => {
                 {{ user.firstName }} {{ user.lastName }}
               </option>
             </select>
-            <button
-              @click="addUserToWorkspace()"
-              class="btn btn-secondary"
-            >
+            <button @click="addUserToWorkspace()" class="btn btn-secondary">
               Add
             </button>
           </div>
@@ -154,16 +150,14 @@ const submitForm = async (): Promise<void> => {
             </tr>
           </thead>
           <tbody>
-            <tr
-              v-for="user in workspace.users"
-              :key="user.uuid"
-              class="hover"
-            >
+            <tr v-for="user in workspace.users" :key="user.uuid" class="hover">
               <th>{{ user.username }}</th>
               <td>{{ user.firstName }} {{ user.lastName }}</td>
               <td>
                 <a
-                  v-if="workspace.user === null || user.uuid !== workspace.user.uuid"
+                  v-if="
+                    workspace.user === null || user.uuid !== workspace.user.uuid
+                  "
                   @click="removeUserFromWorkspace(user.uuid)"
                   class="btn btn-primary float-right"
                   >Remove</a
